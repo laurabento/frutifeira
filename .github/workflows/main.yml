@@ -46,6 +46,9 @@ jobs:
     environment: 
        name: homolog
     needs: deploy-dev
+    steps: 
+      - name: Run a one-line script
+        run: echo Hello, world!
     
         
   deploy-prod: 
