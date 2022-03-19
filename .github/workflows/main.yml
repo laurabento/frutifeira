@@ -47,9 +47,8 @@ jobs:
        name: homolog
     needs: deploy-dev
     steps: 
-      - name: Run a one-line script
+      - name: Homolog testing
         run: echo Hello, world!
-    
         
   deploy-prod: 
     runs-on: ubuntu-latest
