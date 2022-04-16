@@ -108,6 +108,16 @@ export default {
         padding-left: @margin-menu-mobile;
         padding-right: @margin-menu-mobile;
 
+        &_items {
+            .categories {
+                margin-right: 10px;
+
+                label {
+                    display: none;
+                }
+            }
+        }
+
         .categories-list {
             ul {
                 columns: 3;
