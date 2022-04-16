@@ -1,32 +1,74 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/"></router-link>
     </div>
     <router-view />
   </div>
 </template>
 
 <style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+@import "assets/variables.less";
+
+* {
+  border: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-#nav {
-  padding: 30px;
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+ul li {
+  list-style: none;
+}
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+body {
+  font-family: "Quicksand", sans-serif;
+  font-size: 14px;
+  color: @darkGray;
+}
+
+input,
+textarea,
+select {
+  font-family: "Quicksand", sans-serif;
+}
+
+button {
+  font-family: "Quicksand", sans-serif;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-fade-enter-active {
+  transition: all .3s ease-in-out;
+}
+.slide-fade-leave-active {
+  transition: all .3s ease-in-out;
+}
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateY(-10px);
+  opacity: 0;
+}
+
+.display-none {
+  display: none;
 }
 </style>
