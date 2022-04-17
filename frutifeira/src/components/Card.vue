@@ -110,6 +110,10 @@ export default {
                 color: @red;
             }
 
+            .green {
+                color: @green;
+            }
+
             .price-info {
                 font-weight: 400;
                 font-size: 10px;
