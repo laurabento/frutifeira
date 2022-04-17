@@ -50,6 +50,10 @@ export default {
     @media (max-width: 768px) {
         padding-left: @margin-menu-mobile;
         padding-right: @margin-menu-mobile;
+
+        h1 {
+            font-size: 24px;
+        }
         
         &_items {
             grid-template-columns: 1fr 1fr;
