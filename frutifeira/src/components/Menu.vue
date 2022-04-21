@@ -63,7 +63,7 @@ export default {
 
     @media (max-width: 768px) {
         right: unset;
-        width: auto;
+        width: 100%;
         border-radius: unset;
         margin-top: @height-menu-mobile;
 
