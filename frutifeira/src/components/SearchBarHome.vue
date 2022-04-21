@@ -2,7 +2,7 @@
   <div class="search-bar">
       <div class="search-bar_items">
           <div class="categories" @click="isOpen = !isOpen">
-              <img src="../assets/menu.svg"/>
+              <div :class="changeIcon(isOpen)"></div>
               <label>Categorias</label>
           </div>
           <div class="search-bar_group">
@@ -10,23 +10,27 @@
               <input type="text"/>
           </div>    
       </div>
-      <div class="categories-list" v-if="isOpen">
-          <ul>
-              <li>Frutas</li>
-              <li>Verduras</li>
-              <li>Legumes</li>
-              <li>Pastel</li>
-              <li>Peixes</li>
-          </ul>
-      </div>
+      <transition name="slide-fade">
+        <Categories v-if="isOpen"/>
+      </transition>
   </div>
 </template> 
 
 <script>
+import Categories from "@/components/Categories.vue";
+
 export default {
+    components: {
+        Categories,
+    },
     data() {
         return {
             isOpen: false,
+        }
+    },
+    methods: {
+        changeIcon(isOpen) {
+            return !isOpen ? 'menu-icon' : 'close-icon';
         }
     },
 }
@@ -36,15 +40,16 @@ export default {
 @import "../assets/variables.less";
 
 .search-bar {
-    background-color: @green;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-right: @margin-body-desktop;
-    padding-left: @margin-body-desktop;
-    padding-top: 20px;
 
     &_items {
+        z-index: 1;
+        background-color: @green;
+        padding-right: @margin-body-desktop;
+        padding-left: @margin-body-desktop;
+        padding-top: 20px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -57,7 +62,7 @@ export default {
             margin-right: 60px;
             cursor: pointer;
 
-            img {
+            div {
                 margin-right: 10px;
                 cursor: pointer;
             }
@@ -66,6 +71,22 @@ export default {
                 color: white;
                 font-weight: 500;
                 cursor: pointer;
+            }
+
+            .menu-icon {
+                background: url("../assets/menu.svg");
+                height: 24px;
+                width: 24px;
+                transition: all 0.25s;
+                transform: rotate(0);
+            }
+
+            .close-icon {
+                background: url("../assets/close.svg");
+                height: 24px;
+                width: 24px;
+                transition: all 0.25s;
+                transform: rotate(90deg);
             }
         }
     }
@@ -90,25 +111,11 @@ export default {
         }
     }
 
-    .categories-list {
-        width: 100%;
-        color: white;
-        padding-bottom: 20px;
-
-        ul {
-            columns: 5;
-
-            li {
-                padding-bottom: 15px;
-            }
-        }
-    }
-
     @media (max-width: 768px) {
-        padding-left: @margin-menu-mobile;
-        padding-right: @margin-menu-mobile;
-
         &_items {
+            padding-left: @margin-menu-mobile;
+            padding-right: @margin-menu-mobile;
+
             .categories {
                 margin-right: 10px;
 
@@ -117,21 +124,7 @@ export default {
                 }
             }
         }
-
-        .categories-list {
-            ul {
-                columns: 3;
-            }
-        }
-    }
-
-    @media (max-width: 375px) {
-        .categories-list {
-            ul {
-                columns: 2;
-            }
-        }
-    }
+    } 
 }
 
 </style>

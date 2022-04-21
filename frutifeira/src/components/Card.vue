@@ -31,7 +31,7 @@ export default {
 
 .card {
     background-color: @lightGray;
-    height: 350px;
+    height: auto;
     border-radius: 16px;
 
     &-img {

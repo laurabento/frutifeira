@@ -60,12 +60,14 @@ select:focus {
 .slide-fade-enter-active {
   transition: all .3s ease-in-out;
 }
+
 .slide-fade-leave-active {
   transition: all .3s ease-in-out;
 }
+
 .slide-fade-enter, .slide-fade-leave-to {
-  transform: translateY(-10px);
-  opacity: 0;
+  transform: translateY(-45px);
+  opacity: 10;
 }
 
 .display-none {
