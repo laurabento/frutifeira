@@ -2,8 +2,8 @@
   <div class="main-header">
       <img src="../assets/logo-frutifeira.svg" />
       <div class="main-header_items">
-          <div class="location">
-              <img src="../assets/location.svg" />
+          <div class="location" @click="openLocation">
+              <img class="location-icon" src="../assets/location.svg" />
               <label>Qual seu condomínio?</label>
           </div>
           <div class="bag" @click="openCart">
@@ -30,6 +30,9 @@ export default {
         openCart() {
             this.$emit("openCart");
         },
+        openLocation() {
+            this.$emit("openLocation");
+        }
     }
 }
 </script>
@@ -75,6 +78,11 @@ export default {
         .location {
             display: flex;
             align-items: center;
+            cursor: pointer;
+
+            label {
+                cursor: pointer;
+            }
         }
 
         .bag {
