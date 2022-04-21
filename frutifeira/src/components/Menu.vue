@@ -28,12 +28,13 @@ export default {
 .menu {
     width: 495px;
     height: auto;
-    position: absolute;
+    position: fixed;
     z-index: 2;
     background-color: white;
     border-radius: 16px;
     box-shadow: -4px 1px 15px 0px #0000001a;
     right: @margin-body-desktop;
+    margin-top: calc(10px ~"+" @height-menu-desktop);
 
     &-items {
         &_item {
@@ -64,7 +65,7 @@ export default {
         right: unset;
         width: auto;
         border-radius: unset;
-
+        margin-top: @height-menu-mobile;
 
         &-items {
             &_item {

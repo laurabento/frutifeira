@@ -41,6 +41,11 @@ export default {
     height: @height-menu-desktop;
     padding-right: @margin-body-desktop;
     padding-left: @margin-body-desktop;
+    position: fixed;
+    width: 100%;
+    background-color: white;
+    z-index: 2;
+    box-shadow: -4px 1px 15px 0px #0000001a;
 
     img {
         height: 33px;

@@ -55,6 +55,7 @@ export default {
         justify-content: space-between;
         width: 100%;
         padding-bottom: 20px;
+        margin-top: @height-menu-desktop;
 
         .categories {
             display: flex;
@@ -115,6 +116,7 @@ export default {
         &_items {
             padding-left: @margin-menu-mobile;
             padding-right: @margin-menu-mobile;
+            margin-top: @height-menu-mobile;
 
             .categories {
                 margin-right: 10px;

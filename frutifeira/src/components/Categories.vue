@@ -40,7 +40,7 @@ export default {
             columns: 5;
 
             li {
-                padding-bottom: 15px;
+                padding-bottom: 20px;
                 cursor: pointer;
 
                 &:hover {
