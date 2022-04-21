@@ -61,9 +61,10 @@ export default {
     }
 
     @media (max-width: 768px) {
-        right: @margin-body-mobile;
-        left: @margin-body-mobile;
+        right: unset;
         width: auto;
+        border-radius: unset;
+
 
         &-items {
             &_item {
