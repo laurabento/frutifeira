@@ -1,7 +1,10 @@
 <template>
   <div class="home">
-    <Header @openMenu="openMenu"/>
-    <Menu v-if="isOpen"/>
+    <Header @openMenu="openMenu" @openCart="openCart"/>
+    <Menu v-if="isOpenMenu"/>
+    <transition name="slide">
+      <Cart v-if="isOpenCart"/>
+    </transition>  
     <SearchBarHome />
     <Banner />
     <CardListHome :titleList="titleList"/>
@@ -17,6 +20,7 @@ import Banner from "@/components/Banner.vue";
 import CardListHome from "@/components/CardListHome.vue";
 import Footer from "@/components/Footer.vue";
 import Menu from "@/components/Menu.vue";
+import Cart from "@/components/Cart.vue";
 
 
 export default {
@@ -28,17 +32,22 @@ export default {
     CardListHome,
     Footer,
     Menu,
+    Cart
   },
   data () {
     return {
       titleList: "Ofertas da Semana",
       titleSecondList: "Destaque da Semana",
-      isOpen: false,
+      isOpenMenu: false,
+      isOpenCart: false,
     }
   },
   methods: {
     openMenu() {
-      return this.isOpen = !this.isOpen;
+      return this.isOpenMenu = !this.isOpenMenu;
+    },
+    openCart() {
+      return this.isOpenCart = !this.isOpenCart;
     }
   }
 };

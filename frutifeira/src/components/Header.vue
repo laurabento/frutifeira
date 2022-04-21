@@ -6,7 +6,7 @@
               <img src="../assets/location.svg" />
               <label>Qual seu condomínio?</label>
           </div>
-          <div class="bag">
+          <div class="bag" @click="openCart">
               <img src="../assets/bag.svg" />
               <div class="bag_items">
                   <label>R$ 0,00</label>
@@ -26,7 +26,10 @@ export default {
     methods: {
         openMenu() {
             this.$emit("openMenu");
-        }
+        },
+        openCart() {
+            this.$emit("openCart");
+        },
     }
 }
 </script>
@@ -77,6 +80,11 @@ export default {
         .bag {
             display: flex;
             align-items: center;
+            cursor: pointer;
+
+            label {
+                cursor: pointer;
+            }
 
             &_items {
                 display: flex;
