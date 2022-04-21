@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <Header />
+    <Header @openMenu="openMenu"/>
+    <Menu v-if="isOpen"/>
     <SearchBarHome />
     <Banner />
     <CardListHome :titleList="titleList"/>
@@ -15,6 +16,8 @@ import SearchBarHome from "@/components/SearchBarHome.vue";
 import Banner from "@/components/Banner.vue";
 import CardListHome from "@/components/CardListHome.vue";
 import Footer from "@/components/Footer.vue";
+import Menu from "@/components/Menu.vue";
+
 
 export default {
   name: "Home",
@@ -24,11 +27,18 @@ export default {
     Banner,
     CardListHome,
     Footer,
+    Menu,
   },
   data () {
     return {
       titleList: "Ofertas da Semana",
       titleSecondList: "Destaque da Semana",
+      isOpen: false,
+    }
+  },
+  methods: {
+    openMenu() {
+      return this.isOpen = !this.isOpen;
     }
   }
 };

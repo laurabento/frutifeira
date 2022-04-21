@@ -13,7 +13,7 @@
                   <span>0 itens</span>
               </div>
           </div>
-          <div class="login">
+          <div class="login" @click="openMenu">
               <img src="../assets/person.svg" />
               <label>Entrar</label>
           </div>
@@ -23,7 +23,11 @@
 
 <script>
 export default {
-
+    methods: {
+        openMenu() {
+            this.$emit("openMenu");
+        }
+    }
 }
 </script>
 
@@ -78,6 +82,11 @@ export default {
         .login {
             display: flex;
             align-items: center;
+            cursor: pointer;
+
+            label {
+                cursor: pointer;
+            }
         }
 
         .location::after, .bag:after {
