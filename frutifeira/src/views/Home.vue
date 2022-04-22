@@ -1,15 +1,21 @@
 <template>
   <div class="home">
-    <Header @openMenu="openMenu" @openCart="openCart" @openLocation="openLocation"/>
-    <Menu v-if="isOpenMenu"/>
+    <Header
+      @openMenu="openMenu"
+      @openCart="openCart"
+      @openLocation="openLocation"
+      @openLogin="openLogin"
+    />
+    <Menu v-if="isOpenMenu" />
+    <Login v-if="isOpenLogin" @openLogin="openLogin" />
     <transition name="slide">
-      <Cart v-if="isOpenCart"/>
-    </transition>  
-    <ChangeCondominium v-if="isOpenLocation" @openLocation="openLocation"/>
+      <Cart v-if="isOpenCart" />
+    </transition>
+    <ChangeCondominium v-if="isOpenLocation" @openLocation="openLocation" />
     <SearchBarHome />
     <Banner />
-    <CardListHome :titleList="titleList"/>
-    <CardListHome :titleList="titleSecondList"/>
+    <CardListHome :titleList="titleList" />
+    <CardListHome :titleList="titleSecondList" />
     <Footer />
   </div>
 </template>
@@ -23,7 +29,7 @@ import Footer from "@/components/Footer.vue";
 import Menu from "@/components/Menu.vue";
 import Cart from "@/components/Cart.vue";
 import ChangeCondominium from "@/components/ChangeCondominium.vue";
-
+import Login from "@/components/Login.vue";
 
 export default {
   name: "Home",
@@ -35,27 +41,32 @@ export default {
     Footer,
     Menu,
     Cart,
-    ChangeCondominium
+    ChangeCondominium,
+    Login,
   },
-  data () {
+  data() {
     return {
       titleList: "Ofertas da Semana",
       titleSecondList: "Destaque da Semana",
       isOpenMenu: false,
       isOpenCart: false,
-      isOpenLocation: false
-    }
+      isOpenLocation: false,
+      isOpenLogin: false,
+    };
   },
   methods: {
     openMenu() {
-      return this.isOpenMenu = !this.isOpenMenu;
+      return (this.isOpenMenu = !this.isOpenMenu);
     },
     openCart() {
-      return this.isOpenCart = !this.isOpenCart;
+      return (this.isOpenCart = !this.isOpenCart);
     },
     openLocation() {
-      return this.isOpenLocation = !this.isOpenLocation;
-    }
-  }
+      return (this.isOpenLocation = !this.isOpenLocation);
+    },
+    openLogin() {
+      return (this.isOpenLogin = !this.isOpenLogin);
+    },
+  },
 };
 </script>
