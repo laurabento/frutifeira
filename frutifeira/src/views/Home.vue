@@ -5,9 +5,11 @@
       @openCart="openCart"
       @openLocation="openLocation"
       @openLogin="openLogin"
+      @openSignUp="openSignUp"
     />
     <Menu v-if="isOpenMenu" />
     <Login v-if="isOpenLogin" @openLogin="openLogin" />
+    <SignUp v-if="isOpenSignUp" @openSignUp="openSignUp" />
     <transition name="slide">
       <Cart v-if="isOpenCart" />
     </transition>
@@ -30,6 +32,7 @@ import Menu from "@/components/Menu.vue";
 import Cart from "@/components/Cart.vue";
 import ChangeCondominium from "@/components/ChangeCondominium.vue";
 import Login from "@/components/Login.vue";
+import SignUp from "@/components/SignUp.vue";
 
 export default {
   name: "Home",
@@ -43,6 +46,7 @@ export default {
     Cart,
     ChangeCondominium,
     Login,
+    SignUp,
   },
   data() {
     return {
@@ -52,6 +56,7 @@ export default {
       isOpenCart: false,
       isOpenLocation: false,
       isOpenLogin: false,
+      isOpenSignUp: false,
     };
   },
   methods: {
@@ -66,6 +71,9 @@ export default {
     },
     openLogin() {
       return (this.isOpenLogin = !this.isOpenLogin);
+    },
+    openSignUp() {
+      return (this.isOpenSignUp = !this.isOpenSignUp);
     },
   },
 };

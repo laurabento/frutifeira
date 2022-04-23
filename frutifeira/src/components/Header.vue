@@ -13,7 +13,7 @@
           <span>0 itens</span>
         </div>
       </div>
-      <div class="login" @click="openLogin">
+      <div class="login" @click="openSignUp">
         <img src="../assets/person.svg" />
         <label>Entrar</label>
       </div>
@@ -33,8 +33,8 @@ export default {
     openLocation() {
       this.$emit("openLocation");
     },
-    openLogin() {
-      this.$emit("openLogin");
+    openSignUp() {
+      this.$emit("openSignUp");
     },
   },
 };
@@ -53,7 +53,7 @@ export default {
   position: fixed;
   width: 100%;
   background-color: white;
-  z-index: 2;
+  z-index: 3;
   box-shadow: -4px 1px 15px 0px #0000001a;
 
   img {
