@@ -61,7 +61,7 @@ export default {
   width: 100%;
   height: 100%;
   position: fixed;
-  z-index: 2;
+  z-index: 3;
   justify-content: center;
   align-items: center;
   background-color: @white-50;
@@ -71,9 +71,10 @@ export default {
     width: 100%;
     max-width: 900px;
     margin: @margin-body-desktop;
+    height: auto;
     background-color: white;
     padding: 50px;
-    position: fixed;
+    position: relative;
     border-radius: 16px;
     overflow-y: none;
     box-shadow: -4px 1px 15px 0px #0000001a;
@@ -181,18 +182,17 @@ export default {
     }
   }
 
-  @media (max-width: 768px) {
-  }
-
   @media (max-width: 425px) {
     display: block;
     position: inherit;
     background-color: transparent;
     overflow: hidden;
+    z-index: 2;
 
     .modal {
       margin: (@height-menu-mobile - 1px) 0 0 0;
       z-index: 2;
+      position: fixed;
       box-shadow: none;
       height: calc(100% ~"-" @height-menu-mobile);
       border-radius: 0;
