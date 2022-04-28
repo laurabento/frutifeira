@@ -6,7 +6,10 @@
       @openLocation="openLocation"
       @openLogin="openLogin"
       @openSignUp="openSignUp"
+      @openModalSuccess="openModalSuccess"
     />
+    <ModalSuccess @openModalSuccess="openModalSuccess" v-if="isOpenSuccess" />
+    <ProductDetails v-if="isOpenDetails" @openDetails="openDetails" />
     <Menu v-if="isOpenMenu" />
     <Login v-if="isOpenLogin" @openLogin="openLogin" />
     <SignUp v-if="isOpenSignUp" @openSignUp="openSignUp" />
@@ -16,8 +19,8 @@
     <ChangeCondominium v-if="isOpenLocation" @openLocation="openLocation" />
     <SearchBarHome />
     <Banner />
-    <CardListHome :titleList="titleList" />
-    <CardListHome :titleList="titleSecondList" />
+    <CardListHome :titleList="titleList" @openDetails="openDetails" />
+    <CardListHome :titleList="titleSecondList" @openDetails="openDetails" />
     <Footer />
   </div>
 </template>
@@ -33,6 +36,8 @@ import Cart from "@/components/Cart.vue";
 import ChangeCondominium from "@/components/ChangeCondominium.vue";
 import Login from "@/components/Login.vue";
 import SignUp from "@/components/SignUp.vue";
+import ProductDetails from "@/components/ProductDetails.vue";
+import ModalSuccess from "@/components/ModalSuccess.vue";
 
 export default {
   name: "Home",
@@ -47,6 +52,8 @@ export default {
     ChangeCondominium,
     Login,
     SignUp,
+    ProductDetails,
+    ModalSuccess,
   },
   data() {
     return {
@@ -57,6 +64,8 @@ export default {
       isOpenLocation: false,
       isOpenLogin: false,
       isOpenSignUp: false,
+      isOpenDetails: false,
+      isOpenSuccess: false,
     };
   },
   methods: {
@@ -74,6 +83,12 @@ export default {
     },
     openSignUp() {
       return (this.isOpenSignUp = !this.isOpenSignUp);
+    },
+    openDetails() {
+      return (this.isOpenDetails = !this.isOpenDetails);
+    },
+    openModalSuccess() {
+      return (this.isOpenSuccess = !this.isOpenSuccess);
     },
   },
 };

@@ -13,7 +13,7 @@
           <span>0 itens</span>
         </div>
       </div>
-      <div class="login" @click="openSignUp">
+      <div class="login" @click="openModalSuccess">
         <img src="../assets/person.svg" />
         <label>Entrar</label>
       </div>
@@ -35,6 +35,9 @@ export default {
     },
     openSignUp() {
       this.$emit("openSignUp");
+    },
+    openModalSuccess() {
+      this.$emit("openModalSuccess");
     },
   },
 };
