@@ -13,9 +13,10 @@
           <span>0 itens</span>
         </div>
       </div>
-      <div class="login" @click="openSignUp">
+      <div class="login" @click="openMenu">
         <img src="../assets/person.svg" />
         <label>Entrar</label>
+        <div :class="changeArrowIcon(isOpenMenuProps)"></div>
       </div>
     </div>
   </div>
@@ -23,6 +24,9 @@
 
 <script>
 export default {
+  props: {
+    isOpenMenuProps: Boolean
+  },
   methods: {
     openMenu() {
       this.$emit("openMenu");
@@ -35,6 +39,9 @@ export default {
     },
     openSignUp() {
       this.$emit("openSignUp");
+    },
+    changeArrowIcon(isOpenMenuProps) {
+      return !isOpenMenuProps ? 'arrow-start' : 'arrow';
     },
   },
 };
@@ -110,6 +117,23 @@ export default {
 
       label {
         cursor: pointer;
+        margin-right: 10px;
+      }
+
+      .arrow-start {
+        background-image: url("../assets/arrow-green-start.svg");
+        height: 24px;
+        width: 24px;
+        transition: all 0.25s;
+        transform: rotate(0);
+      }
+
+      .arrow {
+        background-image: url("../assets/arrow-green-start.svg");
+        height: 24px;
+        width: 24px;
+        transition: all 0.25s;
+        transform: rotate(180deg);
       }
     }
 
@@ -153,6 +177,12 @@ export default {
       .location::after,
       .bag:after {
         display: none;
+      }
+
+      .login {
+        .arrow, .arrow-start {
+          display: none;
+        }
       }
     }
   }

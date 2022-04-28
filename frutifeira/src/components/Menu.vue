@@ -18,7 +18,6 @@
 
 <script>
 export default {
-
 }
 </script>
 
@@ -31,10 +30,10 @@ export default {
     position: fixed;
     z-index: 2;
     background-color: white;
-    border-radius: 16px;
-    box-shadow: -4px 1px 15px 0px #0000001a;
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0px 30px 30px 7px #0000001a;
     right: @margin-body-desktop;
-    margin-top: calc(10px ~"+" @height-menu-desktop);
+    margin-top: @height-menu-desktop;
 
     &-items {
         &_item {

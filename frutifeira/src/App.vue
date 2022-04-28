@@ -65,7 +65,7 @@ select:focus {
   transition: all .3s ease-in-out;
 }
 
-.slide-enter, .slide-fade-leave-to {
+.slide-fade-enter, .slide-fade-leave-to {
   transform: translateY(-45px);
   opacity: 10;
 }
@@ -80,6 +80,19 @@ select:focus {
 
 .slide-enter, .slide-leave-to {
   transform: translateX(500px);
+  opacity: 10;
+}
+
+.slide-up-enter-active {
+  transition: all .3s ease-in-out;
+}
+
+.slide-up-leave-active {
+  transition: all .3s ease-in-out;
+}
+
+.slide-up-enter, .slide-up-leave-to {
+  transform: translateY(-500px);
   opacity: 10;
 }
 

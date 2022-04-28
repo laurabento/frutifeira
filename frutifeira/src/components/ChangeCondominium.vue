@@ -26,7 +26,7 @@ export default {
     width: 200px;
     height: auto;
     position: fixed;
-    z-index: 2;
+    z-index: 4;
     background-color: white;
     border-radius: 16px;
     box-shadow: -4px 1px 15px 0px #0000001a;
