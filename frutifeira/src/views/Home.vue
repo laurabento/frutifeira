@@ -6,11 +6,13 @@
       @openLocation="openLocation"
       @openLogin="openLogin"
       @openSignUp="openSignUp"
+      :isOpenMenuProps="this.isOpenMenu"
       @openModalSuccess="openModalSuccess"
     />
-    <ModalSuccess @openModalSuccess="openModalSuccess" v-if="isOpenSuccess" />
     <ProductDetails v-if="isOpenDetails" @openDetails="openDetails" />
-    <Menu v-if="isOpenMenu" />
+    <transition name="slide-up">
+      <Menu v-if="isOpenMenu" />
+    </transition>
     <Login v-if="isOpenLogin" @openLogin="openLogin" />
     <SignUp v-if="isOpenSignUp" @openSignUp="openSignUp" />
     <transition name="slide">
