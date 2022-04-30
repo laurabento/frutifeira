@@ -7,7 +7,6 @@
       @openLogin="openLogin"
       @openSignUp="openSignUp"
       :isOpenMenuProps="this.isOpenMenu"
-      @openModalSuccess="openModalSuccess"
     />
     <ProductDetails v-if="isOpenDetails" @openDetails="openDetails" />
     <transition name="slide-up">
@@ -39,7 +38,6 @@ import ChangeCondominium from "@/components/ChangeCondominium.vue";
 import Login from "@/components/Login.vue";
 import SignUp from "@/components/SignUp.vue";
 import ProductDetails from "@/components/ProductDetails.vue";
-import ModalSuccess from "@/components/ModalSuccess.vue";
 
 export default {
   name: "Home",
@@ -55,7 +53,6 @@ export default {
     Login,
     SignUp,
     ProductDetails,
-    ModalSuccess,
   },
   data() {
     return {
@@ -67,7 +64,6 @@ export default {
       isOpenLogin: false,
       isOpenSignUp: false,
       isOpenDetails: false,
-      isOpenSuccess: false,
     };
   },
   methods: {
@@ -88,9 +84,6 @@ export default {
     },
     openDetails() {
       return (this.isOpenDetails = !this.isOpenDetails);
-    },
-    openModalSuccess() {
-      return (this.isOpenSuccess = !this.isOpenSuccess);
     },
   },
 };
