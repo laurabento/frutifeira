@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import LoginAdm from "../views/LoginAdm.vue";
 import CreateAccount from "../views/CreateAccount.vue";
+import Condominium from "../views/Condominium.vue";
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,11 @@ const routes = [
     path: "/CreateAccount",
     name: "Criar conta",
     component: CreateAccount,
+  },
+  {
+    path: "/Condominium",
+    name: "Condomínio",
+    component: Condominium,
   },
 ];
 
