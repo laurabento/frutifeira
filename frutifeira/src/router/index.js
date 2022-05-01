@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import LoginAdm from "../views/LoginAdm.vue";
+import CreateAccount from "../views/CreateAccount.vue";
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,11 @@ const routes = [
     path: "/LoginAdm",
     name: "Login",
     component: LoginAdm,
+  },
+  {
+    path: "/CreateAccount",
+    name: "Criar conta",
+    component: CreateAccount,
   },
 ];
 
