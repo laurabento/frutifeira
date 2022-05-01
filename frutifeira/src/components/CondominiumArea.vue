@@ -17,15 +17,19 @@
       <transition name="slide-fade" mode="out-in">
         <div v-if="activeTab === 'feirantes'" key="feirantes">a</div>
         <div v-if="activeTab === 'solicitacoes'" key="solicitacoes">b</div>
-        <div v-if="activeTab === 'info'" key="info">c</div>
+        <div v-if="activeTab === 'info'" key="info"><CondominiumInfo /></div>
       </transition>
     </div>
   </div>
 </template>
 
 <script>
+import CondominiumInfo from "@/components/CondominiumInfo.vue";
 export default {
   name: "CondominiumArea",
+  components: {
+    CondominiumInfo,
+  },
   data() {
     return {
       activeTab: "",

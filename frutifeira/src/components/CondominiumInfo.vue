@@ -1,16 +1,16 @@
 <template>
   <div class="form">
-    <div class="form-title">
-      <h1>Criar conta</h1>
-      <p>CONDOMÍNIO</p>
-    </div>
     <div class="form-name">
-      <p>Nome</p>
+      <p>Nome do condomínio</p>
       <input type="text" />
     </div>
     <div class="form-email">
       <p>E-mail</p>
-      <input type="email" />
+      <input type="text" />
+    </div>
+    <div class="form-tel">
+      <p>Telefone</p>
+      <input type="text" />
     </div>
     <div class="form-cep">
       <p>CEP</p>
@@ -36,19 +36,14 @@
       <p>Número</p>
       <input type="text" />
     </div>
-    <div class="form-tel">
-      <p>Telefone</p>
+    <div class="form-time">
+      <p>Horário da feira</p>
       <input type="text" />
     </div>
-    <div class="form-password">
-      <p>Senha</p>
-      <input type="password" />
+    <div class="form-day">
+      <p>Dia da semana</p>
+      <select name="" id=""></select>
     </div>
-    <div class="form-confirm">
-      <p>Confirmar senha</p>
-      <input type="password" />
-    </div>
-    <button>CRIAR</button>
   </div>
 </template>
 
@@ -58,32 +53,19 @@ export default {};
 
 <style lang="less" scoped>
 @import "../assets/variables.less";
+
 .form {
-  margin: @margin-body-desktop;
   display: grid;
-  column-gap: 30px;
-  row-gap: 30px;
+  margin-top: @margin-body-desktop;
+  column-gap: 20px;
+  row-gap: 20px;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-areas:
-    "title title title title"
     "name name email email"
-    "cep state city neighborhood"
-    "address address number tel"
-    "password password confirm confirm"
-    "button button button button";
-
-  &-title {
-    grid-area: title;
-    margin-bottom: 45px;
-    h1 {
-      color: @green;
-    }
-    p {
-      font-size: 20px;
-      font-weight: bold;
-      color: @gray;
-    }
-  }
+    "tel cep state state"
+    "city city neighborhood neighborhood"
+    "address address address number"
+    "time time day day";
 
   input,
   select {
@@ -102,6 +84,7 @@ export default {};
   }
 
   select {
+    padding: 15px;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -117,75 +100,52 @@ export default {};
   &-email {
     grid-area: email;
   }
-  &-city {
-    grid-area: city;
-  }
-  &-state {
-    grid-area: state;
-  }
-  &-number {
-    grid-area: number;
-  }
-  &-neighborhood {
-    grid-area: neighborhood;
+  &-tel {
+    grid-area: tel;
   }
   &-cep {
     grid-area: cep;
   }
-  &-tel {
-    grid-area: tel;
+  &-state {
+    grid-area: state;
+  }
+  &-city {
+    grid-area: city;
+  }
+  &-neighborhood {
+    grid-area: neighborhood;
   }
   &-address {
     grid-area: address;
   }
-  &-password {
-    grid-area: password;
+  &-number {
+    grid-area: number;
   }
-  &-confirm {
-    grid-area: confirm;
+  &-time {
+    grid-area: time;
   }
-
-  button {
-    grid-area: button;
-    width: 100%;
-    max-width: 375px;
-    justify-self: center;
-    background-color: @green;
-    height: 50px;
-    border-radius: 6px;
-    color: white;
-    font-weight: bold;
-    letter-spacing: 0.1em;
-    margin-top: 50px;
-    cursor: pointer;
+  &-day {
+    grid-area: day;
   }
 
   @media (max-width: 768px) {
+    grid-template-columns: 1fr;
     grid-template-areas:
-      "title"
       "name"
       "email"
+      "tel"
       "cep"
       "state"
       "city"
       "neighborhood"
       "address"
       "number"
-      "tel"
-      "password"
-      "confirm"
-      "button";
-
-    &-title {
-      margin-bottom: 10px;
-    }
+      "time"
+      "day";
   }
 
   @media (max-width: 425px) {
-    margin: @margin-body-mobile;
-    button {
-      margin-top: 20px;
-    }
+    margin-top: @margin-body-mobile;
   }
 }
 </style>
