@@ -28,23 +28,28 @@
       <p>Por unidade</p>
     </div>
     <div class="form-weight">
-      <div class="radio">
+      <div class="form-weight-radio">
         <input type="radio" name="weight" />
         <p>Gramas</p>
       </div>
-      <div class="radio">
+      <div class="form-weight-radio">
         <input type="radio" name="weight" />
         <p>Kilo</p>
       </div>
     </div>
     <div class="form-img">
       <p>Imagem</p>
-      <input type="file" />
+      <div class="form-img-field" @click="chooseImage()">
+        <input type="file" id="selectImg" />
+        <img src="../assets/shift.svg" alt="" />
+      </div>
     </div>
     <div class="form-discount">
       <p>Desconto</p>
-      <input type="text" />
-      <span>%</span>
+      <div class="form-discount-field">
+        <input type="text" />
+        <span>%</span>
+      </div>
     </div>
     <button>SALVAR</button>
   </div>
@@ -53,6 +58,11 @@
 <script>
 export default {
   name: "CreateProduct",
+  methods: {
+    chooseImage() {
+      document.getElementById("selectImg").click();
+    },
+  },
 };
 </script>
 
@@ -150,20 +160,99 @@ export default {
   &-unity,
   &-weight {
     display: flex;
+    align-items: center;
 
     input {
       width: 20px;
       height: 20px;
       cursor: pointer;
+      margin-right: 10px;
     }
 
-    input:after {
-      content: "";
-      border: 1px solid @green;
-      width: 20px;
-      height: 20px;
-      position: relative;
+    &-radio {
+      display: flex;
+      align-items: center;
     }
+  }
+
+  &-weight {
+    gap: 90px;
+  }
+
+  &-img {
+    &-field {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: flex-end;
+      cursor: pointer;
+
+      input {
+        padding: 15px 0 0 15px;
+        border-radius: 0 6px 6px 0;
+        color: @gray;
+      }
+
+      img {
+        background-color: @lightGray;
+        border-radius: 6px 0 0 6px;
+        padding: 16px 0 16px 16px;
+      }
+    }
+  }
+
+  input[type="file"]::file-selector-button {
+    display: none;
+  }
+
+  &-discount {
+    &-field {
+      display: flex;
+      width: 100%;
+      align-items: flex-end;
+      input {
+        border-radius: 6px 0 0 6px;
+      }
+
+      span {
+        background-color: @lightGray;
+        padding: 16px;
+        height: 50px;
+        border-radius: 0 6px 6px 0;
+        color: @gray;
+      }
+    }
+  }
+
+  button {
+    width: 100%;
+    background-color: @green;
+    color: white;
+    padding: 16px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 30px;
+    letter-spacing: 0.1em;
+    grid-column-start: auto;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "name"
+      "type"
+      "description"
+      "price"
+      "qnt"
+      "unity"
+      "weight"
+      "img"
+      "discount"
+      "button";
+  }
+
+  @media (max-width: 425px) {
+    margin-top: @margin-body-mobile;
   }
 }
 </style>
