@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import LoginAdm from "../views/LoginAdm.vue";
 import CreateAccount from "../views/CreateAccount.vue";
 import Condominium from "../views/Condominium.vue";
+import Marketer from "../views/Marketer.vue";
 
 Vue.use(VueRouter);
 
@@ -27,6 +28,11 @@ const routes = [
     path: "/Condominium",
     name: "Condomínio",
     component: Condominium,
+  },
+  {
+    path: "/Feirante",
+    name: "Feirante",
+    component: Marketer,
   },
 ];
 
