@@ -29,10 +29,11 @@
               </div>
               <div class="card-buttons">
                   <button @click="openTimeline">Acompanhar pedido</button>
-                  <button>Ver Detalhes</button>
+                  <button @click="openDetailsOrder">Ver Detalhes</button>
                   <button>QR Code</button>
               </div>
               <Timeline v-if="isOpenTimeline"/>
+              <DetailsOrder v-if="isOpenDetailsOrder"/>
           </div>
       </div>
   </div>
@@ -40,17 +41,25 @@
 
 <script>
 import Timeline from "@/components/Timeline.vue";
+import DetailsOrder from "@/components/DetailsOrder.vue";
 
 export default {
-  components: { Timeline },
+  components: { 
+      Timeline,
+      DetailsOrder,
+  },
   data() {
     return {
       isOpenTimeline: false,
+      isOpenDetailsOrder: false,
     };
   },
   methods: {
       openTimeline() {
         return (this.isOpenTimeline = !this.isOpenTimeline);
+      },
+      openDetailsOrder() {
+        return (this.isOpenDetailsOrder = !this.isOpenDetailsOrder);
       },
       openOrder() {
         this.$emit("openOrder");
