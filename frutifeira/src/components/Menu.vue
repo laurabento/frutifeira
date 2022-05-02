@@ -5,7 +5,7 @@
               <h1>Perfil</h1>
               <p>Aqui você pode acessar seu perfil, alterar dados e senhas.</p>
           </div>
-          <div class="menu-items_item">
+          <div class="menu-items_item" @click="openOrder">
               <h1>Pedidos</h1>
               <p>Aqui você pode acompanhar e rever seus pedidos</p>
           </div>
@@ -18,6 +18,11 @@
 
 <script>
 export default {
+    methods: {
+        openOrder() {
+            this.$emit("openOrder");
+        },
+    }
 }
 </script>
 
