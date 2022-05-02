@@ -25,7 +25,7 @@
 <script>
 export default {
   props: {
-    isOpenMenuProps: Boolean
+    isOpenMenuProps: Boolean,
   },
   methods: {
     openMenu() {
@@ -41,7 +41,7 @@ export default {
       this.$emit("openSignUp");
     },
     changeArrowIcon(isOpenMenuProps) {
-      return !isOpenMenuProps ? 'arrow-start' : 'arrow';
+      return !isOpenMenuProps ? "arrow-start" : "arrow";
     },
   },
 };
@@ -180,7 +180,8 @@ export default {
       }
 
       .login {
-        .arrow, .arrow-start {
+        .arrow,
+        .arrow-start {
           display: none;
         }
       }

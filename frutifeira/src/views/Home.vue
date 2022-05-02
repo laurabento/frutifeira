@@ -8,6 +8,7 @@
       @openSignUp="openSignUp"
       :isOpenMenuProps="this.isOpenMenu"
     />
+    <ProductDetails v-if="isOpenDetails" @openDetails="openDetails" />
     <transition name="slide-up">
       <Menu v-if="isOpenMenu" @openOrder="openOrder"/>
     </transition>
@@ -20,8 +21,8 @@
     <Order v-if="isOpenOrder" @openOrder="openOrder"/>
     <SearchBarHome />
     <Banner />
-    <CardListHome :titleList="titleList" />
-    <CardListHome :titleList="titleSecondList" />
+    <CardListHome :titleList="titleList" @openDetails="openDetails" />
+    <CardListHome :titleList="titleSecondList" @openDetails="openDetails" />
     <Footer />
   </div>
 </template>
@@ -38,6 +39,7 @@ import ChangeCondominium from "@/components/ChangeCondominium.vue";
 import Login from "@/components/Login.vue";
 import SignUp from "@/components/SignUp.vue";
 import Order from "@/components/Order.vue";
+import ProductDetails from "@/components/ProductDetails.vue";
 
 export default {
   name: "Home",
@@ -53,6 +55,7 @@ export default {
     Login,
     SignUp,
     Order,
+    ProductDetails,
   },
   data() {
     return {
@@ -64,6 +67,7 @@ export default {
       isOpenLogin: false,
       isOpenSignUp: false,
       isOpenOrder: false,
+      isOpenDetails: false,
     };
   },
   methods: {
@@ -84,6 +88,9 @@ export default {
     },
     openOrder() {
       return (this.isOpenOrder = !this.isOpenOrder);
+    },
+    openDetails() {
+      return (this.isOpenDetails = !this.isOpenDetails);
     },
   },
 };
