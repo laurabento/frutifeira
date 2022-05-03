@@ -1,5 +1,5 @@
 <template>
-  <div class="main-header">
+  <div class="main-header" :class="hasUserClass(this.UserClient)">
     <img src="../assets/logo-frutifeira.svg" />
     <div class="main-header_items" v-if="UserClient">
       <div class="location" @click="openLocation">
@@ -19,6 +19,12 @@
         <div :class="changeArrowIcon(isOpenMenuProps)"></div>
       </div>
     </div>
+    <div class="main-header_marketer" v-if="UserMarketer">
+      <ul>
+        <li>Produtos</li>
+        <li>Feiras</li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -27,6 +33,7 @@ export default {
   props: {
     isOpenMenuProps: Boolean,
     UserClient: Boolean,
+    UserMarketer: Boolean,
   },
   methods: {
     openMenu() {
@@ -44,6 +51,9 @@ export default {
     changeArrowIcon(isOpenMenuProps) {
       return !isOpenMenuProps ? "arrow-start" : "arrow";
     },
+    hasUserClass(UserClient) {
+      return UserClient ? 'justify-between' : '';
+    }
   },
 };
 </script>
@@ -53,7 +63,6 @@ export default {
 
 .main-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   height: @height-menu-desktop;
   padding-right: @margin-body-desktop;
@@ -150,6 +159,21 @@ export default {
     }
   }
 
+  &_marketer {
+    ul {
+      display: flex;
+
+      li {
+        padding-left: 50px;
+        cursor: pointer;
+
+        &:hover {
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
   @media (max-width: 768px) {
     height: @height-menu-mobile;
     padding-left: @margin-menu-mobile;
@@ -190,4 +214,10 @@ export default {
     }
   }
 }
+
+.justify-between {
+  justify-content: space-between;
+}
+
+
 </style>
