@@ -7,6 +7,7 @@
       @openLogin="openLogin"
       @openSignUp="openSignUp"
       :isOpenMenuProps="this.isOpenMenu"
+      :UserClient="this.client"
     />
     <ProductDetails v-if="isOpenDetails" @openDetails="openDetails" />
     <transition name="slide-up">
@@ -68,6 +69,7 @@ export default {
       isOpenSignUp: false,
       isOpenOrder: false,
       isOpenDetails: false,
+      client: true,
     };
   },
   methods: {

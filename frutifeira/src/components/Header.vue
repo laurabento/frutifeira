@@ -1,7 +1,7 @@
 <template>
   <div class="main-header">
     <img src="../assets/logo-frutifeira.svg" />
-    <div class="main-header_items">
+    <div class="main-header_items" v-if="UserClient">
       <div class="location" @click="openLocation">
         <img class="location-icon" src="../assets/location.svg" />
         <label>Qual seu condomínio?</label>
@@ -26,6 +26,7 @@
 export default {
   props: {
     isOpenMenuProps: Boolean,
+    UserClient: Boolean,
   },
   methods: {
     openMenu() {
@@ -62,6 +63,7 @@ export default {
   background-color: white;
   z-index: 3;
   box-shadow: -4px 1px 15px 0px #0000001a;
+  top: 0;
 
   img {
     height: 33px;

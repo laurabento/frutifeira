@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="marketer-area">
     <div class="tabs">
       <ul>
         <li
@@ -56,11 +56,15 @@ export default {
 
 <style lang="less" scoped>
 @import "../assets/variables.less";
-.container {
-  margin: @margin-body-desktop;
+
+.marketer-area {
+  padding-right: @margin-body-desktop;
+  padding-left: @margin-body-desktop;
   display: grid;
   grid-template-columns: 1fr 3fr;
   grid-gap: 20px;
+  margin-top: calc(@height-menu-desktop ~'+' 10px);
+
   .tabs {
     ul {
       margin-top: 35px;
