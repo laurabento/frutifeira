@@ -64,7 +64,7 @@ export default {
   z-index: 3;
   justify-content: center;
   align-items: center;
-  background-color: @white-50;
+  background-color: @black-50;
   overflow: none;
 
   .modal {
