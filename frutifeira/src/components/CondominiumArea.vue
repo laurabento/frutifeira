@@ -58,10 +58,12 @@ export default {
 @import "../assets/variables.less";
 
 .container {
-  margin: @margin-body-desktop;
+  padding-right: @margin-body-desktop;
+  padding-left: @margin-body-desktop;
   display: grid;
   grid-template-columns: 1fr 3fr;
   grid-gap: 20px;
+  margin-top: calc(@height-menu-desktop ~'+' 10px);
 
   .tabs {
     ul {
@@ -99,5 +101,38 @@ export default {
       }
     }
   }
+
+  @media (max-width: 768px) {
+    padding-right: @margin-body-mobile;
+    padding-left: @margin-body-mobile;
+    margin-top: calc(@height-menu-mobile ~'+' 10px);
+    grid-template-columns: 1fr;
+    margin-bottom: @margin-body-mobile;
+
+    .tabs {
+      ul {
+        display: flex;
+        margin-top: 10px;
+
+        li {  
+          width: 50%;
+          flex-direction: column;
+          text-align: center;
+          padding: 15px;
+          margin-bottom: unset;
+
+          label {
+            font-size: 10px;
+          }
+
+          img {
+            margin-right: unset;
+            margin-bottom: 5px;
+          }
+        }
+      }
+    }  
+  }
+  
 }
 </style>
