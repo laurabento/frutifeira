@@ -113,6 +113,7 @@ export default {
       ul {
         display: flex;
         margin-top: 10px;
+        justify-content: center;
 
         li {
           flex-direction: column;

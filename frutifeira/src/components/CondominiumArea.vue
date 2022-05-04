@@ -113,6 +113,7 @@ export default {
       ul {
         display: flex;
         margin-top: 10px;
+        justify-content: center;
 
         li {  
           width: 50%;
@@ -133,6 +134,6 @@ export default {
       }
     }  
   }
-  
+
 }
 </style>
