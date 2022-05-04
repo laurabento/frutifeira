@@ -174,6 +174,20 @@ export default {
             }
         }
     }
+
+    @media (max-width: 768px) {
+        &_group {
+            margin-top: @margin-body-mobile;
+
+            h2 {
+                font-size: 18px;
+            }
+
+            ul {
+                grid-template-columns: 1fr;
+            }
+        }
+    }
 }
 
 </style>

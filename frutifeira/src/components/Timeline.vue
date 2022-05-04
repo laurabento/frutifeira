@@ -1,7 +1,7 @@
 <template>
   <div class="timeline">
       <h1>Acompanhe seu pedido</h1>
-      <label>Acompanhe as novidades e a evolução de seu pedido.</label>
+      <label class="subtitle">Acompanhe as novidades e a evolução de seu pedido.</label>
       <div class="timeline-group">
           <div class="timeline-group_items">
               <div class="img-items">
@@ -74,12 +74,17 @@ export default {
         font-size: 24px;
         letter-spacing: 0.1em;
         text-transform: uppercase;
+        text-align: center;
+    }
+
+    .subtitle{
+        text-align: center;
     }
 
     &-group{
         display: flex;
         flex-direction: column;
-        margin-top: 40px;
+        margin-top: @margin-body-desktop;
         width: 100%;
 
         &_items {
@@ -146,6 +151,34 @@ export default {
             }
 
         }
+    }
+
+    @media (max-width: 540px) {
+
+        &-group{
+            margin-top: @margin-body-mobile;
+
+            &_items {
+                grid-template-columns: 2fr 4fr ;
+                grid-template-areas: "img text";
+
+                .img-items {
+                    &_picture {
+                        width: 30px;
+                        height: 30px;
+                    }
+                }
+
+                .text-items {
+                    margin-bottom: 5px;
+
+                    label {
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+
     }
 }
 </style>

@@ -89,7 +89,7 @@ export default {
   &-return {
     display: flex;
     width: 100%;
-    margin-top: 40px;
+    margin-top: @margin-body-desktop;
     align-items: center;
     cursor: pointer;
 
@@ -205,6 +205,49 @@ export default {
         }
       }
     }
+  }
+
+  @media (max-width: 768px) {
+    height: calc(100vh ~"-" @height-menu-mobile);
+    top: @height-menu-mobile;
+    padding-right: @margin-body-mobile;
+    padding-left: @margin-body-mobile;
+
+    h1 {
+      padding: 25px 0;
+    }
+
+    &-return {
+      margin-top: @margin-body-mobile;
+    }
+
+    .order-card {
+    .card {
+      padding: 30px;
+
+      &-info {
+        padding-bottom: unset;
+
+        &__item {
+          margin-right: unset;
+          margin-bottom: 30px;
+
+          img {
+            width: 30px;
+            height: 30px;
+          }
+        }
+      }
+
+      &-buttons {
+        grid-template-columns: 1fr;
+
+        button {
+          font-size: 11px;
+        }
+      }
+    }
+  }
   }
 }
 
