@@ -47,6 +47,14 @@ select:focus {
   outline: none;
 }
 
+input[type="text"] {
+  width: 100%;
+  height: 50px;
+  border-radius: 6px;
+  padding: 16px;
+  background-color: @lightGray;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s;
@@ -58,40 +66,43 @@ select:focus {
 }
 
 .slide-fade-enter-active {
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .slide-fade-leave-active {
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
-.slide-fade-enter, .slide-fade-leave-to {
+.slide-fade-enter,
+.slide-fade-leave-to {
   transform: translateY(-45px);
   opacity: 10;
 }
 
 .slide-enter-active {
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .slide-leave-active {
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
-.slide-enter, .slide-leave-to {
+.slide-enter,
+.slide-leave-to {
   transform: translateX(500px);
   opacity: 10;
 }
 
 .slide-up-enter-active {
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .slide-up-leave-active {
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
-.slide-up-enter, .slide-up-leave-to {
+.slide-up-enter,
+.slide-up-leave-to {
   transform: translateY(-500px);
   opacity: 10;
 }

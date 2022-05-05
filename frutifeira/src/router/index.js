@@ -5,6 +5,7 @@ import LoginAdm from "../views/LoginAdm.vue";
 import CreateAccount from "../views/CreateAccount.vue";
 import Condominium from "../views/Condominium.vue";
 import Marketer from "../views/Marketer.vue";
+import Payment from "../views/Payment.vue";
 
 Vue.use(VueRouter);
 
@@ -34,6 +35,11 @@ const routes = [
     name: "Feirante",
     component: Marketer,
   },
+  {
+    path: "/Payment",
+    name:"Pagamento",
+    component: Payment
+  }
 ];
 
 const router = new VueRouter({
