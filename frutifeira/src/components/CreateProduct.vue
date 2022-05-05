@@ -6,7 +6,17 @@
     </div>
     <div class="form-type">
       <p>Tipo</p>
-      <select name="" id=""></select>
+      <multiselect
+        v-model="value"
+        tag-placeholder="Adicionar tipo"
+        placeholder="Procurar ou adicionar tipo"
+        label="name"
+        track-by="code"
+        :options="options"
+        :multiple="true"
+        :taggable="true"
+        @tag="addTag"
+      ></multiselect>
     </div>
     <div class="form-description">
       <p>Descrição</p>
@@ -56,16 +66,38 @@
 </template>
 
 <script>
+import Multiselect from "vue-multiselect";
 export default {
   name: "CreateProduct",
+  components: {
+    Multiselect,
+  },
+  data() {
+    return {
+      value: [],
+      options: [
+        { name: "Frutas", code: "fr" },
+        { name: "Legumes", code: "le" },
+        { name: "Pastel", code: "pa" },
+      ],
+    };
+  },
   methods: {
     chooseImage() {
       document.getElementById("selectImg").click();
     },
+    addTag(newTag) {
+      const tag = {
+        name: newTag,
+        code: newTag.substring(0, 2) + Math.floor(Math.random() * 10000000),
+      };
+      this.options.push(tag);
+      this.value.push(tag);
+    },
   },
 };
 </script>
-
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style lang="less" scoped>
 @import "../assets/variables.less";
 
@@ -87,6 +119,10 @@ export default {
   }
   &-type {
     grid-area: type;
+
+    .multiselect {
+      background-color: @lightGray;
+    }
   }
   &-description {
     grid-area: description;
