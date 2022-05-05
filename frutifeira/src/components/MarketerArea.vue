@@ -15,7 +15,9 @@
     </div>
     <div class="tabs-content">
       <transition name="slide-fade" mode="out-in">
-        <div v-if="activeTab === 'cart'" key="cart">a</div>
+        <div v-if="activeTab === 'cart'" key="cart">
+          <Table />
+        </div>
         <div v-if="activeTab === 'cart-add'" key="cart-add">
           <CreateProduct />
         </div>
@@ -26,10 +28,13 @@
 
 <script>
 import CreateProduct from "@/components/CreateProduct.vue";
+import Table from "@/components/Table.vue";
+
 export default {
   name: "MarketerArea",
   components: {
     CreateProduct,
+    Table
   },
   data() {
     return {
