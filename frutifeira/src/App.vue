@@ -49,10 +49,10 @@ select:focus {
 
 input[type="text"] {
   width: 100%;
-  height: 50px;
+  // height: 50px;
   border-radius: 6px;
   padding: 16px;
-  background-color: @lightGray;
+  // background-color: @lightGray;
 }
 
 .fade-enter-active,

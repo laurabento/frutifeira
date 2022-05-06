@@ -97,9 +97,9 @@ export default {
   },
 };
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style lang="less" scoped>
 @import "../assets/variables.less";
+@import "../assets/vue-multiselect.min.css";
 
 .form {
   display: grid;
@@ -120,8 +120,8 @@ export default {
   &-type {
     grid-area: type;
 
-    .multiselect {
-      background-color: @lightGray;
+    p {
+      margin-bottom: 5px;
     }
   }
   &-description {
