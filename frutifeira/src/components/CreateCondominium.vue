@@ -106,8 +106,8 @@ export default {};
     -moz-appearance: none;
     appearance: none;
     /* Some browsers will not display the caret when using calc, so we put the fallback first */
-    background: url("../assets/chevron-down.png") @lightGray no-repeat 98.5% !important; /* !important used for overriding all other customisations */
-    background: url("../assets/chevron-down.png") @lightGray no-repeat
+    background: url("../assets/chevron-down.svg") @lightGray no-repeat 98.5% !important; /* !important used for overriding all other customisations */
+    background: url("../assets/chevron-down.svg") @lightGray no-repeat
       calc(100% - 15px) !important; /* Better placement regardless of input width */
   }
 

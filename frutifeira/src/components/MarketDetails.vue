@@ -1,9 +1,9 @@
 <template>
-  <div class="marketer-area">
+  <div class="modal">
     <div class="tabs">
       <ul>
         <li
-          v-for="item in this.products ? tabsListProducts : tabsListMarkets"
+          v-for="item in tabsList"
           :key="item.id"
           :class="isActiveTab(item.id) ? 'active' : ''"
           @click="setActiveTab(item.id)"
@@ -15,16 +15,13 @@
     </div>
     <div class="tabs-content">
       <transition name="slide-fade" mode="out-in">
-        <div v-if="activeTab === 'cart' || activeTab === 'basket'" key="cart">
-          <Table
-            :products="this.products"
-            @openMarketDetails="openMarketDetails"
-          />
+        <div v-if="activeTab === 'clipboard'" key="clipboard">
+          <CardCondominium />
         </div>
-        <div
-          v-if="activeTab === 'cart-add' || activeTab === 'help'"
-          key="cart-add"
-        >
+        <div v-if="activeTab === 'cart'" key="cart">
+          <CreateProduct />
+        </div>
+        <div v-if="activeTab === 'dolar'" key="dolar">
           <CreateProduct />
         </div>
       </transition>
@@ -33,35 +30,23 @@
 </template>
 
 <script>
-import CreateProduct from "@/components/CreateProduct.vue";
-import Table from "@/components/Table.vue";
-
+import CardCondominium from "@/components/CardCondominium.vue";
 export default {
-  name: "MarketerArea",
   components: {
-    CreateProduct,
-    Table,
-  },
-  props: {
-    products: Boolean,
+    CardCondominium,
   },
   data() {
     return {
       activeTab: "",
-      tabsListProducts: [
-        { id: "cart", label: "LISTA DE PRODUTOS" },
-        { id: "cart-add", label: "CADASTRO DE PRODUTOS" },
-      ],
-      tabsListMarkets: [
-        { id: "basket", label: "FEIRAS" },
-        { id: "help", label: "SOLICITAÇÕES" },
+      tabsList: [
+        { id: "clipboard", label: "DADOS GERAIS" },
+        { id: "cart", label: "PRODUTOS" },
+        { id: "dolar", label: "PEDIDOS" },
       ],
     };
   },
   created() {
-    this.activeTab = this.products
-      ? this.tabsListProducts[0].id
-      : this.tabsListMarkets[0].id;
+    this.activeTab = this.tabsList[0].id;
   },
   methods: {
     isActiveTab(id) {
@@ -70,9 +55,6 @@ export default {
     setActiveTab(id) {
       this.activeTab = id;
     },
-    openMarketDetails() {
-      this.$emit("openMarketDetails");
-    },
   },
 };
 </script>
@@ -80,13 +62,14 @@ export default {
 <style lang="less" scoped>
 @import "../assets/variables.less";
 
-.marketer-area {
+.modal {
   padding-right: @margin-body-desktop;
   padding-left: @margin-body-desktop;
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  grid-gap: 20px;
-  margin-top: calc(@height-menu-desktop ~"+" 10px);
+  background-color: white;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  height: calc(100% ~"-" @height-menu-desktop);
 
   .tabs {
     ul {

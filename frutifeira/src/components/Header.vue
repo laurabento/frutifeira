@@ -1,7 +1,7 @@
 <template>
   <div class="main-header" :class="hasUserClass(this.UserClient)">
     <div class="menu-mobile" v-if="UserMarketer" @click="openMarketerMenu">
-      <div :class="changeMenuIcon(isOpenMarketerMenu)"/>
+      <div :class="changeMenuIcon(isOpenMarketerMenu)" />
     </div>
     <img src="../assets/logo-frutifeira.svg" />
     <div class="main-header_items" v-if="UserClient">
@@ -24,13 +24,17 @@
     </div>
     <div class="main-header_marketer" v-if="UserMarketer">
       <ul>
-        <li>Produtos</li>
-        <li>Feiras</li>
+        <li :class="this.products ? 'active' : ''" @click="openProducts">
+          Produtos
+        </li>
+        <li :class="!this.products ? 'active' : ''" @click="openMarkets">
+          Feiras
+        </li>
       </ul>
     </div>
     <div class="main-header_nav" v-if="UserMarketer">
       <div class="notification">
-        <img src="../assets/bell-green.svg"/>
+        <img src="../assets/bell-green.svg" />
       </div>
       <div class="user">
         <img src="../assets/person.svg" />
@@ -38,7 +42,7 @@
     </div>
     <div class="main-header_nav" v-if="UserCondominium">
       <div class="notification">
-        <img src="../assets/bell-green.svg"/>
+        <img src="../assets/bell-green.svg" />
       </div>
       <div class="user">
         <img src="../assets/person.svg" />
@@ -55,6 +59,7 @@ export default {
     UserMarketer: Boolean,
     UserCondominium: Boolean,
     isOpenMarketerMenu: Boolean,
+    products: Boolean,
   },
   methods: {
     openMenu() {
@@ -72,11 +77,17 @@ export default {
     openMarketerMenu() {
       this.$emit("openMarketerMenu");
     },
+    openMarkets() {
+      this.$router.push({ name: "Markets" });
+    },
+    openProducts() {
+      this.$router.push({ name: "Products" });
+    },
     changeArrowIcon(isOpenMenuProps) {
       return !isOpenMenuProps ? "arrow-start" : "arrow";
     },
     hasUserClass(UserClient) {
-      return UserClient ? 'justify-between' : '';
+      return UserClient ? "justify-between" : "";
     },
     changeMenuIcon(isOpenMarketerMenu) {
       return !isOpenMarketerMenu ? "menu-img" : "menu-img-close";
@@ -87,6 +98,10 @@ export default {
 
 <style lang="less" scoped>
 @import "../assets/variables.less";
+
+.active {
+  font-weight: bold;
+}
 
 .main-header {
   display: flex;
@@ -122,19 +137,19 @@ export default {
     }
 
     .user {
-        display: flex;
-        align-items: center;
+      display: flex;
+      align-items: center;
 
-        &::before {
-          content: "";
-          height: 47px;
-          width: 1px;
-          border-radius: 1px;
-          background-color: @lightGray;
-          margin: 0 25px 0 25px;
-        }
+      &::before {
+        content: "";
+        height: 47px;
+        width: 1px;
+        border-radius: 1px;
+        background-color: @lightGray;
+        margin: 0 25px 0 25px;
       }
     }
+  }
 
   &_items {
     display: flex;
@@ -226,7 +241,7 @@ export default {
         cursor: pointer;
 
         &:hover {
-          font-weight: 600;
+          font-weight: bold;
         }
       }
     }
@@ -246,7 +261,7 @@ export default {
       justify-content: center;
       align-items: center;
       margin-right: 15px;
-    
+
       .menu-img {
         height: 27px;
         width: 27px;
@@ -311,6 +326,4 @@ export default {
 .justify-between {
   justify-content: space-between;
 }
-
-
 </style>

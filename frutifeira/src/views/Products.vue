@@ -1,11 +1,13 @@
 <template>
   <div class="marketer">
-    <Header 
-      :UserMarketer="this.marketer" 
+    <Header
+      :UserMarketer="this.marketer"
       :isOpenMarketerMenu="isOpenMarketerMenu"
-      @openMarketerMenu="openMarketerMenu"/>
-    <MarketerArea />
-    <MenuMobileMarketer v-if="isOpenMarketerMenu"/>
+      @openMarketerMenu="openMarketerMenu"
+      :products="true"
+    />
+    <MarketerArea :products="true" />
+    <MenuMobileMarketer v-if="isOpenMarketerMenu" />
   </div>
 </template>
 
@@ -19,19 +21,19 @@ export default {
   components: {
     MarketerArea,
     Header,
-    MenuMobileMarketer
+    MenuMobileMarketer,
   },
   data() {
     return {
       marketer: true,
       isOpenMarketerMenu: false,
-    }
+    };
   },
   methods: {
     openMarketerMenu() {
       return (this.isOpenMarketerMenu = !this.isOpenMarketerMenu);
     },
-  }
+  },
 };
 </script>
 

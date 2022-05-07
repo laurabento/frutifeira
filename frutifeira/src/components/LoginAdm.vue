@@ -13,7 +13,7 @@
         <p>Senha</p>
         <input type="password" />
       </div>
-      <button>ENTRAR</button>
+      <button @click="openPage(title)">ENTRAR</button>
       <div class="login-form-info">
         <p>Entre em contato! Mande um e-mail para:</p>
         <span>frutifeira@gmail.com</span>
@@ -26,6 +26,12 @@
 export default {
   props: {
     title: String,
+  },
+  methods: {
+    openPage(name) {
+      if (name === "Área do Feirante") this.$router.push({ name: "Products" });
+      else this.$router.push({ name: "Condominium" });
+    },
   },
 };
 </script>

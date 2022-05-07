@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header :UserCondominium="this.condominium"/>
+    <Header :UserCondominium="this.condominium" />
     <CondominiumArea />
   </div>
 </template>
@@ -10,16 +10,16 @@ import CondominiumArea from "@/components/CondominiumArea.vue";
 import Header from "@/components/Header.vue";
 
 export default {
-  name: "Condomínio",
+  name: "Condominium",
   components: {
     CondominiumArea,
-    Header
+    Header,
   },
   data() {
     return {
       condominium: true,
-    }
-  }
+    };
+  },
 };
 </script>
 
