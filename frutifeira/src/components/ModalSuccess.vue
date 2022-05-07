@@ -28,7 +28,7 @@ export default {};
   width: 100%;
   height: 100%;
   position: fixed;
-  z-index: 3;
+  z-index: 6;
   justify-content: center;
   align-items: center;
   background-color: @black-50;

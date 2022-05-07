@@ -1,22 +1,47 @@
 <template>
   <div class="card-home-list">
     <h1>{{ this.titleList }}</h1>
-    <div class="card-home-list_items">
+    <carousel 
+        :perPageCustom="[[320, 1], [375, 1], [425, 1], [580, 2], [890, 3], [1024, 3], [1440, 5]]" 
+        :loop="true"
+        paginationColor="#f2f2f2" 
+        paginationActiveColor="#5f5f5f">
+          <slide>
+              <Card @openDetails="openDetails" />
+          </slide>
+          <slide>
+              <Card @openDetails="openDetails" />
+          </slide>
+          <slide>
+              <Card @openDetails="openDetails" />
+          </slide>
+          <slide>
+              <Card @openDetails="openDetails" />
+          </slide>
+          <slide>
+              <Card @openDetails="openDetails" />
+          </slide>
+      </carousel>
+    <!-- <div class="card-home-list_items">
       <Card @openDetails="openDetails" />
       <Card @openDetails="openDetails" />
       <Card @openDetails="openDetails" />
       <Card @openDetails="openDetails" />
       <Card @openDetails="openDetails" />
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import Card from "@/components/Card.vue";
+import { Carousel, Slide } from 'vue-carousel';
+
 
 export default {
   components: {
     Card,
+    Carousel,
+    Slide,
   },
   props: {
     titleList: String,
@@ -77,5 +102,11 @@ export default {
       grid-template-columns: 1fr;
     }
   }
+}
+
+.VueCarousel-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 </style>

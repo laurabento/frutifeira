@@ -38,6 +38,7 @@ export default {
   height: auto;
   border-radius: 16px;
   cursor: pointer;
+  width: 260px;
 
   &-img {
     display: flex;

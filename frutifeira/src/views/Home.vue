@@ -22,6 +22,7 @@
     <Order v-if="isOpenOrder" @openOrder="openOrder"/>
     <SearchBarHome />
     <Banner />
+    <Carousel/>
     <CardListHome :titleList="titleList" @openDetails="openDetails" />
     <CardListHome :titleList="titleSecondList" @openDetails="openDetails" />
     <Footer />
@@ -41,6 +42,7 @@ import Login from "@/components/Login.vue";
 import SignUp from "@/components/SignUp.vue";
 import Order from "@/components/Order.vue";
 import ProductDetails from "@/components/ProductDetails.vue";
+import Carousel from "@/components/Carousel.vue";
 
 export default {
   name: "Home",
@@ -57,6 +59,7 @@ export default {
     SignUp,
     Order,
     ProductDetails,
+    Carousel
   },
   data() {
     return {
