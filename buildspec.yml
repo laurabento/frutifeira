@@ -9,16 +9,13 @@ phases:
       - pip install --upgrade awscli
   pre_build:
     commands:
-      - cd frutifeira
       - echo Pre_build Phase
       - npm install
   build:
     commands:
-      - cd frutifeira
       - echo Build Phase
       - npm run build
   post_build:
     commands:
-      - cd frutifeira
       - echo PostBuild Phase
       - aws s3 sync ./dist $S3_BUCKET
