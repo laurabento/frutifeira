@@ -1,6 +1,6 @@
-# frutifeira
+### frutifeira
 
-## Project setup
+### Project setup
 ```
 npm install
 ```
