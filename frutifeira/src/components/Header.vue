@@ -7,7 +7,7 @@
     <div class="main-header_items" v-if="UserClient">
       <div class="location" @click="openLocation">
         <img class="location-icon" src="../assets/location.svg" />
-        <label>Qual seu condomínio? Teste</label>
+        <label>Qual seu condomínio?</label>
       </div>
       <div class="bag" @click="openCart">
         <img src="../assets/bag.svg" />
