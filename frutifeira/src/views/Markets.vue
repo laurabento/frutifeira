@@ -1,12 +1,19 @@
 <template>
-  <div class="marketer">
+  <div class="market">
     <Header
       :UserMarketer="this.marketer"
       :isOpenMarketerMenu="isOpenMarketerMenu"
       @openMarketerMenu="openMarketerMenu"
       :products="false"
     />
-    <MarketDetails v-if="isOpenMarketDetails" />
+    <transition name="slide">
+      <AddProducts v-if="isOpenProducts" @openProducts="openProducts" />
+    </transition>
+    <MarketDetails
+      v-if="isOpenMarketDetails"
+      @openProducts="openProducts"
+      @openMarketDetails="openMarketDetails"
+    />
     <MarketerArea :products="false" @openMarketDetails="openMarketDetails" />
     <MenuMobileMarketer v-if="isOpenMarketerMenu" />
   </div>
@@ -17,6 +24,7 @@ import Header from "@/components/Header.vue";
 import MarketerArea from "@/components/MarketerArea.vue";
 import MenuMobileMarketer from "@/components/MenuMobileMarketer.vue";
 import MarketDetails from "@/components/MarketDetails.vue";
+import AddProducts from "@/components/AddProducts.vue";
 
 export default {
   name: "Marketer",
@@ -25,6 +33,7 @@ export default {
     Header,
     MenuMobileMarketer,
     MarketDetails,
+    AddProducts,
   },
 
   data() {
@@ -32,6 +41,7 @@ export default {
       marketer: true,
       isOpenMarketerMenu: false,
       isOpenMarketDetails: false,
+      isOpenProducts: false,
     };
   },
   methods: {
@@ -41,8 +51,11 @@ export default {
     openMarketDetails() {
       return (this.isOpenMarketDetails = !this.isOpenMarketDetails);
     },
+    openProducts() {
+      return (this.isOpenProducts = !this.isOpenProducts);
+    },
   },
 };
 </script>
 
-<style></style>
+<style lang="less" scoped></style>

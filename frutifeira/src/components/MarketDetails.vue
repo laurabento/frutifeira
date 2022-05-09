@@ -1,39 +1,55 @@
 <template>
   <div class="modal">
-    <div class="tabs">
-      <ul>
-        <li
-          v-for="item in tabsList"
-          :key="item.id"
-          :class="isActiveTab(item.id) ? 'active' : ''"
-          @click="setActiveTab(item.id)"
-        >
-          <img :src="require(`../assets/${item.id}.svg`)" alt="" />
-          <label>{{ item.label }}</label>
-        </li>
-      </ul>
+    <div class="modal-return" @click="openMarketDetails">
+      <img src="../assets/go-back-icon.svg" />
+      <label>voltar</label>
     </div>
-    <div class="tabs-content">
-      <transition name="slide-fade" mode="out-in">
-        <div v-if="activeTab === 'clipboard'" key="clipboard">
-          <CardCondominium />
-        </div>
-        <div v-if="activeTab === 'cart'" key="cart">
-          <CreateProduct />
-        </div>
-        <div v-if="activeTab === 'dolar'" key="dolar">
-          <CreateProduct />
-        </div>
-      </transition>
+    <div class="modal-content">
+      <div class="tabs">
+        <ul>
+          <li
+            v-for="item in tabsList"
+            :key="item.id"
+            :class="isActiveTab(item.id) ? 'active' : ''"
+            @click="setActiveTab(item.id)"
+          >
+            <img :src="require(`../assets/${item.id}.svg`)" alt="" />
+            <label>{{ item.label }}</label>
+          </li>
+        </ul>
+      </div>
+      <div class="tabs-content">
+        <transition name="slide-fade" mode="out-in">
+          <div class="tab" v-if="activeTab === 'clipboard'" key="clipboard">
+            <CardCondominium :address="true" :title="'Nome do condomínio'" />
+            <CardCondominium
+              :contact="true"
+              :title="'E-mail do Condomínio'"
+              :tel="'(99) 99999-9999'"
+            />
+            <CardCondominium :time="true" :title="'Terça-feira, 19h-22h'" />
+          </div>
+          <div class="tab" v-if="activeTab === 'cart'" key="cart">
+            <Products @openProducts="openProducts" />
+          </div>
+          <div class="tab" v-if="activeTab === 'dolar'" key="dolar">
+            <MarketOrders />
+          </div>
+        </transition>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import CardCondominium from "@/components/CardCondominium.vue";
+import Products from "@/components/Products.vue";
+import MarketOrders from "@/components/MarketOrders.vue";
 export default {
   components: {
     CardCondominium,
+    Products,
+    MarketOrders,
   },
   data() {
     return {
@@ -55,6 +71,12 @@ export default {
     setActiveTab(id) {
       this.activeTab = id;
     },
+    openProducts() {
+      this.$emit("openProducts");
+    },
+    openMarketDetails() {
+      this.$emit("openMarketDetails");
+    },
   },
 };
 </script>
@@ -70,6 +92,34 @@ export default {
   position: fixed;
   z-index: 1;
   height: calc(100% ~"-" @height-menu-desktop);
+
+  &-return {
+    display: flex;
+    width: 100%;
+    margin-top: @margin-body-desktop;
+    align-items: center;
+    cursor: pointer;
+
+    label {
+      margin-left: 10px;
+      text-transform: uppercase;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+
+  &-content {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-gap: 20px;
+
+    .tab {
+      margin-top: 35px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
 
   .tabs {
     ul {
