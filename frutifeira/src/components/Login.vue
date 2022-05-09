@@ -21,7 +21,7 @@
       </div>
       <button class="modal-button">ENTRAR</button>
       <div class="modal-info">
-        <p>Não possui conta? <span>Crie aqui!</span></p>
+        <p>Não possui conta? <span @click="openSignUp">Crie aqui!</span></p>
       </div>
     </div>
   </div>
@@ -32,6 +32,9 @@ export default {
   methods: {
     openLogin() {
       this.$emit("openLogin");
+    },
+    openSignUp() {
+      this.$emit("openSignUp");
     },
   },
 };
@@ -45,7 +48,7 @@ export default {
   width: 100%;
   height: 100%;
   position: fixed;
-  z-index: 2;
+  z-index: 5;
   justify-content: center;
   align-items: center;
   background-color: @black-50;

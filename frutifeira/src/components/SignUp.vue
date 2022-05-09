@@ -5,49 +5,97 @@
         <h1>Crie uma conta</h1>
         <img src="../assets/close-gray.svg" @click="openSignUp" />
       </div>
-      <div class="modal-form">
-        <div class="modal-form-nome">
-          <p>Nome</p>
-          <input type="text" />
+      <form @submit.prevent="saveUser">
+        <div class="modal-form">
+          <div class="modal-form-nome">
+            <p>Nome</p>
+            <input type="text" v-model="firstName" @change='concatName' required/>
+          </div>
+          <div class="modal-form-sobrenome">
+            <p>Sobrenome</p>
+            <input type="text" v-model="lastName" @change='concatName' required/>
+          </div>
+          <div class="modal-form-email">
+            <p>E-mail</p>
+            <input type="email" v-model="formData.email" required/>
+          </div>
+          <div class="modal-form-tel">
+            <p>Telefone</p>
+            <input type="tel" v-model="formData.phone" required/>
+          </div>
+          <div class="modal-form-cpf">
+            <p>CPF</p>
+            <input type="text" v-model="formData.cpf" required/>
+          </div>
+          <div class="modal-form-senha">
+            <p>Senha</p>
+            <input type="password" v-model="firstPassword" required/>
+          </div>
+          <div class="modal-form-conf">
+            <p>Confirmar senha</p>
+            <input type="password" v-model="secondPassword" required/>
+          </div>
+          <div class="modal-form-error" v-if="errorLabel">
+            <label>As senhas não coincidem.</label>
+          </div>
+          <button class="modal-form-button">CRIAR</button>
+          <p class="modal-form-info">
+            Já possui uma conta? <span>Entre aqui!</span>
+          </p>
         </div>
-        <div class="modal-form-sobrenome">
-          <p>Sobrenome</p>
-          <input type="text" />
-        </div>
-        <div class="modal-form-email">
-          <p>E-mail</p>
-          <input type="email" />
-        </div>
-        <div class="modal-form-tel">
-          <p>Telefone</p>
-          <input type="tel" />
-        </div>
-        <div class="modal-form-cpf">
-          <p>CPF</p>
-          <input type="text" />
-        </div>
-        <div class="modal-form-senha">
-          <p>Senha</p>
-          <input type="password" />
-        </div>
-        <div class="modal-form-conf">
-          <p>Confirmar senha</p>
-          <input type="password" />
-        </div>
-        <button class="modal-form-button">CRIAR</button>
-        <p class="modal-form-info">
-          Já possui uma conta? <span>Entre aqui!</span>
-        </p>
-      </div>
+      </form>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      errorLabel: false,
+      formData: {
+        name: "",
+        email: "",
+        phone: "",
+        cpf: "",
+        password: "",
+      },
+    }
+  },
   methods: {
     openSignUp() {
       this.$emit("openSignUp");
+    },
+    concatName() {
+      return this.formData.name = this.firstName.concat(' ', this.lastName)
+    },
+    hasPasswordEqual() {
+      if (this.firstPassword == this.secondPassword) {
+        return this.formData.password = this.firstPassword
+      }
+      else {
+        this.errorLabel = true;
+        return false
+      }
+    },
+    async saveUser() {
+        if (this.hasPasswordEqual()) {
+          await fetch("http://localhost:5000/api/v1.0/users", {
+          method: "POST",
+          body: JSON.stringify(this.formData),
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          })
+          .then((response) => {
+            if (response.ok) {
+              // this.openModalSuccess();
+              console.log('usuário cadastrado!')
+            }
+          })
+          .catch((error) => console.log(error));
+        }
     },
   },
 };
@@ -61,7 +109,7 @@ export default {
   width: 100%;
   height: 100%;
   position: fixed;
-  z-index: 3;
+  z-index: 5;
   justify-content: center;
   align-items: center;
   background-color: @black-50;
@@ -103,6 +151,7 @@ export default {
         "email email"
         "tel cpf"
         "senha conf"
+        "error error"
         "button button"
         "info info";
       column-gap: 20px;
@@ -146,6 +195,15 @@ export default {
       }
       &-conf {
         grid-area: conf;
+      }
+
+      &-error {
+        grid-area: error;
+        
+        label {
+          font-size: 12px;
+          color: @red;
+        }
       }
 
       &-button {

@@ -13,7 +13,7 @@
     <transition name="slide-up">
       <Menu v-if="isOpenMenu" @openOrder="openOrder"/>
     </transition>
-    <Login v-if="isOpenLogin" @openLogin="openLogin" />
+    <Login v-if="isOpenLogin" @openLogin="openLogin" @openSignUp="openSignUp"/>
     <SignUp v-if="isOpenSignUp" @openSignUp="openSignUp" />
     <transition name="slide">
       <Cart v-if="isOpenCart" />

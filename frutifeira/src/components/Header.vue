@@ -74,6 +74,9 @@ export default {
     openSignUp() {
       this.$emit("openSignUp");
     },
+    openLogin() {
+      this.$emit("openLogin");
+    },
     openMarketerMenu() {
       this.$emit("openMarketerMenu");
     },
