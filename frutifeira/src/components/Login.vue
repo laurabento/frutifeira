@@ -36,6 +36,7 @@ export default {
     openSignUp() {
       this.$emit("openSignUp");
     },
+    
   },
 };
 </script>
