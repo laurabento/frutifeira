@@ -1,59 +1,112 @@
 <template>
-  <div class="form">
-    <div class="form-title">
-      <h1>Criar conta</h1>
-      <p>CONDOMÍNIO</p>
+  <form @submit.prevent="saveCondominium">
+    <div class="form">
+      <div class="form-title">
+        <h1>Criar conta</h1>
+        <p>CONDOMÍNIO</p>
+      </div>
+      <div class="form-name">
+        <p>Nome</p>
+        <input type="text" v-model="formData.name" />
+      </div>
+      <div class="form-email">
+        <p>E-mail</p>
+        <input type="email" v-model="formData.email" />
+      </div>
+      <div class="form-cep">
+        <p>CEP</p>
+        <input type="text" v-model="formData.cep" />
+      </div>
+      <div class="form-state">
+        <p>Estado</p>
+        <select name="" id=""></select>
+      </div>
+      <div class="form-city">
+        <p>Cidade</p>
+        <select name="" id=""></select>
+      </div>
+      <div class="form-neighborhood">
+        <p>Bairro</p>
+        <input type="text" />
+      </div>
+      <div class="form-address">
+        <p>Endereço</p>
+        <input type="text" />
+      </div>
+      <div class="form-number">
+        <p>Número</p>
+        <input type="text" />
+      </div>
+      <div class="form-tel">
+        <p>Telefone</p>
+        <input type="text" />
+      </div>
+      <div class="form-password">
+        <p>Senha</p>
+        <input type="password" />
+      </div>
+      <div class="form-confirm">
+        <p>Confirmar senha</p>
+        <input type="password" />
+      </div>
+      <button>CRIAR</button>
     </div>
-    <div class="form-name">
-      <p>Nome</p>
-      <input type="text" />
-    </div>
-    <div class="form-email">
-      <p>E-mail</p>
-      <input type="email" />
-    </div>
-    <div class="form-cep">
-      <p>CEP</p>
-      <input type="text" />
-    </div>
-    <div class="form-state">
-      <p>Estado</p>
-      <select name="" id=""></select>
-    </div>
-    <div class="form-city">
-      <p>Cidade</p>
-      <select name="" id=""></select>
-    </div>
-    <div class="form-neighborhood">
-      <p>Bairro</p>
-      <input type="text" />
-    </div>
-    <div class="form-address">
-      <p>Endereço</p>
-      <input type="text" />
-    </div>
-    <div class="form-number">
-      <p>Número</p>
-      <input type="text" />
-    </div>
-    <div class="form-tel">
-      <p>Telefone</p>
-      <input type="text" />
-    </div>
-    <div class="form-password">
-      <p>Senha</p>
-      <input type="password" />
-    </div>
-    <div class="form-confirm">
-      <p>Confirmar senha</p>
-      <input type="password" />
-    </div>
-    <button>CRIAR</button>
-  </div>
+  </form>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      firstPassword: "",
+      secondPassword: "",
+      errorLabel: false,
+      formData: {
+        name: "",
+        email: "",
+        password: "",
+        cep: "",
+        state: "",
+        city: "",
+        neighborhood: "",
+        address: "",
+        number: "",
+        contact: "",
+      },
+    };
+  },
+  methods: {
+    hasPasswordEqual() {
+      if (this.firstPassword == this.secondPassword) {
+        this.errorLabel = false;
+        return (this.formData.password = this.firstPassword);
+      } else {
+        this.errorLabel = true;
+        return false;
+      }
+    },
+    async saveCondominium() {
+      if (this.hasPasswordEqual()) {
+        await fetch("http://localhost:5000/api/v1.0/marketvendors", {
+          method: "POST",
+          body: JSON.stringify(this.formData),
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              // this.openModalSuccess();
+              console.log("usuário cadastrado!");
+              this.$router.push({ name: "LoginAdm" });
+            }
+          })
+          .catch((error) => console.log(error));
+      }
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>

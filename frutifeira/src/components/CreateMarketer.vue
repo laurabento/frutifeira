@@ -1,43 +1,131 @@
 <template>
-  <div class="form">
-    <div class="form-title">
-      <h1>Criar conta</h1>
-      <p>FEIRANTE</p>
+  <form @submit.prevent="saveMarketer">
+    <div class="form">
+      <div class="form-title">
+        <h1>Criar conta</h1>
+        <p>FEIRANTE</p>
+      </div>
+      <div class="form-name">
+        <p>Nome</p>
+        <input type="text" v-model="formData.name" required />
+      </div>
+      <div class="form-stand">
+        <p>Nome da barraca</p>
+        <input type="text" v-model="formData.standName" required />
+      </div>
+      <div class="form-email">
+        <p>E-mail</p>
+        <input type="email" v-model="formData.email" required />
+      </div>
+      <div class="form-product">
+        <p>Tipos de produto</p>
+        <multiselect
+          v-model="value"
+          tag-placeholder=""
+          placeholder=""
+          label="name"
+          track-by="code"
+          :options="options"
+          :multiple="true"
+          :taggable="true"
+          @tag="addTag"
+        ></multiselect>
+      </div>
+      <div class="form-password">
+        <p>Senha</p>
+        <input type="password" v-model="firstPassword" required />
+      </div>
+      <div class="form-confirm">
+        <p>Confirmar senha</p>
+        <input type="password" v-model="secondPassword" required />
+      </div>
+      <div class="form-error" v-if="errorLabel">
+        <label>As senhas não coincidem.</label>
+      </div>
+      <button>CRIAR</button>
     </div>
-    <div class="form-name">
-      <p>Nome</p>
-      <input type="text" />
-    </div>
-    <div class="form-stand">
-      <p>Nome da barraca</p>
-      <input type="text" />
-    </div>
-    <div class="form-email">
-      <p>E-mail</p>
-      <input type="email" />
-    </div>
-    <div class="form-product">
-      <p>Tipos de produto</p>
-      <input type="text" />
-    </div>
-    <div class="form-password">
-      <p>Senha</p>
-      <input type="password" />
-    </div>
-    <div class="form-confirm">
-      <p>Confirmar senha</p>
-      <input type="password" />
-    </div>
-    <button>CRIAR</button>
-  </div>
+  </form>
 </template>
 
 <script>
-export default {};
+import Multiselect from "vue-multiselect";
+export default {
+  name: "CreateMarketer",
+  components: {
+    Multiselect,
+  },
+  data() {
+    return {
+      value: [],
+      product_type: [],
+      errorLabel: false,
+      firstPassword: "",
+      secondPassword: "",
+      options: [
+        { name: "Frutas", code: "frutas" },
+        { name: "Legumes", code: "legumes" },
+        { name: "Pastel", code: "pastel" },
+      ],
+      formData: {
+        name: "",
+        email: "",
+        standName: "",
+        password: "",
+        product_type: [],
+      },
+    };
+  },
+  methods: {
+    addTag(newTag) {
+      const tag = {
+        name: newTag,
+        code: newTag.substring(0, 2) + Math.floor(Math.random() * 10000000),
+      };
+      this.options.push(tag);
+      this.value.push(tag);
+    },
+    hasPasswordEqual() {
+      if (this.firstPassword == this.secondPassword) {
+        this.errorLabel = false;
+        return (this.formData.password = this.firstPassword);
+      } else {
+        this.errorLabel = true;
+        return false;
+      }
+    },
+    saveProductTypes(item, index) {
+      this.formData.product_type.push(item.name);
+    },
+    async saveMarketer() {
+      this.value.forEach(this.saveProductTypes);
+      console.log(this.formData.product_type);
+
+      if (this.hasPasswordEqual()) {
+        await fetch("http://localhost:5000/api/v1.0/marketvendors", {
+          method: "POST",
+          body: JSON.stringify(this.formData),
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              // this.openModalSuccess();
+              console.log("usuário cadastrado!");
+              this.$router.push({ name: "LoginAdm" });
+            }
+          })
+          .catch((error) => console.log(error));
+      }
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
 @import "../assets/variables.less";
+@import "../assets/vue-multiselect.min.css";
 
 .form {
   margin: @margin-body-desktop;
@@ -49,6 +137,7 @@ export default {};
     "name stand"
     "email product"
     "password confirm"
+    "error error"
     "button button";
 
   &-title {
@@ -84,12 +173,23 @@ export default {};
   }
   &-product {
     grid-area: product;
+    p {
+      margin-bottom: 5px;
+    }
   }
   &-password {
     grid-area: password;
   }
   &-confirm {
     grid-area: confirm;
+  }
+  &-error {
+    grid-area: error;
+
+    label {
+      font-size: 12px;
+      color: @red;
+    }
   }
 
   button {

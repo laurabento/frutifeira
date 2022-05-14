@@ -80,6 +80,17 @@ export default {
         { name: "Legumes", code: "le" },
         { name: "Pastel", code: "pa" },
       ],
+      formData: {
+        name: "",
+        product_type: "",
+        description: "",
+        price: "",
+        amount: "",
+        unity: "",
+        weight: "",
+        image: "",
+        discount: "",
+      },
     };
   },
   methods: {

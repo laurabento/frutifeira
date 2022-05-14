@@ -17,7 +17,7 @@ const routes = [{
     },
     {
         path: "/LoginAdm",
-        name: "Login",
+        name: "LoginAdm",
         component: LoginAdm,
     },
     {

@@ -7,7 +7,7 @@
 <script>
 import CreateCondominium from "@/components/CreateCondominium.vue";
 export default {
-  name: "Criar conta",
+  name: "CreateAccount",
   components: {
     CreateCondominium,
   },

@@ -9,31 +9,41 @@
         <div class="modal-form">
           <div class="modal-form-nome">
             <p>Nome</p>
-            <input type="text" v-model="firstName" @change='concatName' required/>
+            <input
+              type="text"
+              v-model="firstName"
+              @change="concatName"
+              required
+            />
           </div>
           <div class="modal-form-sobrenome">
             <p>Sobrenome</p>
-            <input type="text" v-model="lastName" @change='concatName' required/>
+            <input
+              type="text"
+              v-model="lastName"
+              @change="concatName"
+              required
+            />
           </div>
           <div class="modal-form-email">
             <p>E-mail</p>
-            <input type="email" v-model="formData.email" required/>
+            <input type="email" v-model="formData.email" required />
           </div>
           <div class="modal-form-tel">
             <p>Telefone</p>
-            <input type="tel" v-model="formData.phone" required/>
+            <input type="tel" v-model="formData.phone" required />
           </div>
           <div class="modal-form-cpf">
             <p>CPF</p>
-            <input type="text" v-model="formData.cpf" required/>
+            <input type="text" v-model="formData.cpf" required />
           </div>
           <div class="modal-form-senha">
             <p>Senha</p>
-            <input type="password" v-model="firstPassword" required/>
+            <input type="password" v-model="firstPassword" required />
           </div>
           <div class="modal-form-conf">
             <p>Confirmar senha</p>
-            <input type="password" v-model="secondPassword" required/>
+            <input type="password" v-model="secondPassword" required />
           </div>
           <div class="modal-form-error" v-if="errorLabel">
             <label>As senhas não coincidem.</label>
@@ -60,42 +70,42 @@ export default {
         cpf: "",
         password: "",
       },
-    }
+    };
   },
   methods: {
     openSignUp() {
       this.$emit("openSignUp");
     },
     concatName() {
-      return this.formData.name = this.firstName.concat(' ', this.lastName)
+      return (this.formData.name = this.firstName.concat(" ", this.lastName));
     },
     hasPasswordEqual() {
       if (this.firstPassword == this.secondPassword) {
-        return this.formData.password = this.firstPassword
-      }
-      else {
+        return (this.formData.password = this.firstPassword);
+      } else {
         this.errorLabel = true;
-        return false
+        return false;
       }
     },
     async saveUser() {
-        if (this.hasPasswordEqual()) {
-          await fetch("http://localhost:5000/api/v1.0/users", {
+      if (this.hasPasswordEqual()) {
+        await fetch("http://localhost:5000/api/v1.0/users", {
           method: "POST",
           body: JSON.stringify(this.formData),
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
+            //Authorization: "Bearer " + access token
           },
-          })
+        })
           .then((response) => {
             if (response.ok) {
               // this.openModalSuccess();
-              console.log('usuário cadastrado!')
+              console.log("usuário cadastrado!");
             }
           })
           .catch((error) => console.log(error));
-        }
+      }
     },
   },
 };
@@ -199,7 +209,7 @@ export default {
 
       &-error {
         grid-area: error;
-        
+
         label {
           font-size: 12px;
           color: @red;
