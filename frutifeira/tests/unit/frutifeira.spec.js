@@ -1,6 +1,5 @@
-import { shallowMount, mount } from "@vue/test-utils";
+import { shallowMount } from "@vue/test-utils";
 import SignUp from "@/components/SignUp.vue";
-import flushPromises from 'flush-promises'
 jest.mock('axios')
 
 describe("Sign Up Component", () => {
