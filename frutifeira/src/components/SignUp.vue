@@ -5,11 +5,12 @@
         <h1>Crie uma conta</h1>
         <img src="../assets/close-gray.svg" @click="openSignUp" />
       </div>
-      <form @submit.prevent="saveUser">
+      <form id="formUserSave" @submit.prevent="saveUser">
         <div class="modal-form">
           <div class="modal-form-nome">
             <p>Nome</p>
             <input
+              name="name"
               type="text"
               v-model="firstName"
               @change="concatName"
@@ -19,6 +20,7 @@
           <div class="modal-form-sobrenome">
             <p>Sobrenome</p>
             <input
+              name="surname"
               type="text"
               v-model="lastName"
               @change="concatName"
@@ -27,28 +29,43 @@
           </div>
           <div class="modal-form-email">
             <p>E-mail</p>
-            <input type="email" v-model="formData.email" required />
+            <input
+              name="email"
+              type="email"
+              v-model="formData.email"
+              required
+            />
           </div>
           <div class="modal-form-tel">
             <p>Telefone</p>
-            <input type="tel" v-model="formData.phone" required />
+            <input name="phone" type="tel" v-model="formData.phone" required />
           </div>
           <div class="modal-form-cpf">
             <p>CPF</p>
-            <input type="text" v-model="formData.cpf" required />
+            <input name="cpf" type="text" v-model="formData.cpf" required />
           </div>
           <div class="modal-form-senha">
             <p>Senha</p>
-            <input type="password" v-model="firstPassword" required />
+            <input
+              name="firstPassword"
+              type="password"
+              v-model="firstPassword"
+              required
+            />
           </div>
           <div class="modal-form-conf">
             <p>Confirmar senha</p>
-            <input type="password" v-model="secondPassword" required />
+            <input
+              name="secondPassword"
+              type="password"
+              v-model="secondPassword"
+              required
+            />
           </div>
           <div class="modal-form-error" v-if="errorLabel">
             <label>As senhas não coincidem.</label>
           </div>
-          <button class="modal-form-button">CRIAR</button>
+          <button id="saveUserButton" class="modal-form-button">CRIAR</button>
           <p class="modal-form-info">
             Já possui uma conta? <span>Entre aqui!</span>
           </p>
@@ -59,10 +76,14 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
       errorLabel: false,
+      firstPassword: "",
+      secondPassword: "",
       formData: {
         name: "",
         email: "",
@@ -89,15 +110,14 @@ export default {
     },
     async saveUser() {
       if (this.hasPasswordEqual()) {
-        await fetch("http://localhost:5000/api/v1.0/users", {
-          method: "POST",
-          body: JSON.stringify(this.formData),
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            //Authorization: "Bearer " + access token
-          },
-        })
+        await axios
+          .post("http://localhost:5000/api/v1.0/users", this.formData, {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              //Authorization: "Bearer " + access token
+            },
+          })
           .then((response) => {
             if (response.ok) {
               // this.openModalSuccess();
