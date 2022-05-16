@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="saveMarketer">
+  <form id="formMarketerSave" @submit.prevent="saveMarketer">
     <div class="form">
       <div class="form-title">
         <h1>Criar conta</h1>
@@ -7,19 +7,20 @@
       </div>
       <div class="form-name">
         <p>Nome</p>
-        <input type="text" v-model="formData.name" required />
+        <input name="name" type="text" v-model="formData.name" required />
       </div>
       <div class="form-stand">
         <p>Nome da barraca</p>
-        <input type="text" v-model="formData.standName" required />
+        <input name="standName" type="text" v-model="formData.standName" required />
       </div>
       <div class="form-email">
         <p>E-mail</p>
-        <input type="email" v-model="formData.email" required />
+        <input name="email" type="email" v-model="formData.email" required />
       </div>
       <div class="form-product">
         <p>Tipos de produto</p>
         <multiselect
+          name="productType"
           v-model="value"
           tag-placeholder=""
           placeholder=""
@@ -33,16 +34,16 @@
       </div>
       <div class="form-password">
         <p>Senha</p>
-        <input type="password" v-model="firstPassword" required />
+        <input name="firstPassword" type="password" v-model="firstPassword" required />
       </div>
       <div class="form-confirm">
         <p>Confirmar senha</p>
-        <input type="password" v-model="secondPassword" required />
+        <input name="secondPassword" type="password" v-model="secondPassword" required />
       </div>
       <div class="form-error" v-if="errorLabel">
         <label>As senhas não coincidem.</label>
       </div>
-      <button>CRIAR</button>
+      <button id="saveMarketerButton">CRIAR</button>
     </div>
   </form>
 </template>
@@ -101,9 +102,7 @@ export default {
       console.log(this.formData.product_type);
 
       if (this.hasPasswordEqual()) {
-        await fetch("http://localhost:5000/api/v1.0/marketvendors", {
-          method: "POST",
-          body: JSON.stringify(this.formData),
+        await axios.post("http://localhost:5000/api/v1.0/marketvendors", this.formData, {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",

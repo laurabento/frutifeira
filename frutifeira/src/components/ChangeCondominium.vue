@@ -31,7 +31,7 @@ export default {
     border-radius: 16px;
     box-shadow: -4px 1px 15px 0px #0000001a;
     margin-top: @height-menu-desktop;
-    right: 470px;
+    right: 425px;
 
     .box-header{
         display: flex;
@@ -81,7 +81,7 @@ export default {
         width: 28px;
         height: 28px;
         transform: rotate(45deg);
-        right: 510px;
+        right: 458px;
         border-bottom: 0;
         border-right: 0;
         box-shadow: -10px -10px 19px -5px #0000001a;

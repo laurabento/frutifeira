@@ -16,9 +16,8 @@
           <span>0 itens</span>
         </div>
       </div>
-      <div class="login" @click="openLogin">
+      <div class="login" @click="openMenu">
         <img src="../assets/person.svg" />
-        <label>Entrar</label>
         <div :class="changeArrowIcon(isOpenMenuProps)"></div>
       </div>
     </div>

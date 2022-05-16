@@ -1,6 +1,10 @@
 <template>
   <div class="menu">
       <div class="menu-items">
+          <div class="menu-items_item dark">
+              <h1>Olá, Laura!</h1>
+              <p>Bem-vindo(a) ao Frutifeira!</p>
+          </div>
           <div class="menu-items_item">
               <h1>Perfil</h1>
               <p>Aqui você pode acessar seu perfil, alterar dados e senhas.</p>
@@ -50,6 +54,14 @@ export default {
                 font-size: 14px;
                 color: @green;
                 text-transform: uppercase;
+            }
+        }
+
+        .dark {
+            cursor: unset;
+
+            h1 {
+                color: @darkGray;
             }
         }
 
