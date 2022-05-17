@@ -11,7 +11,12 @@
       </div>
       <div class="form-stand">
         <p>Nome da barraca</p>
-        <input name="standName" type="text" v-model="formData.standName" required />
+        <input
+          name="standName"
+          type="text"
+          v-model="formData.standName"
+          required
+        />
       </div>
       <div class="form-email">
         <p>E-mail</p>
@@ -34,11 +39,21 @@
       </div>
       <div class="form-password">
         <p>Senha</p>
-        <input name="firstPassword" type="password" v-model="firstPassword" required />
+        <input
+          name="firstPassword"
+          type="password"
+          v-model="firstPassword"
+          required
+        />
       </div>
       <div class="form-confirm">
         <p>Confirmar senha</p>
-        <input name="secondPassword" type="password" v-model="secondPassword" required />
+        <input
+          name="secondPassword"
+          type="password"
+          v-model="secondPassword"
+          required
+        />
       </div>
       <div class="form-error" v-if="errorLabel">
         <label>As senhas não coincidem.</label>
@@ -49,6 +64,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import Multiselect from "vue-multiselect";
 export default {
   name: "CreateMarketer",
@@ -102,12 +118,13 @@ export default {
       console.log(this.formData.product_type);
 
       if (this.hasPasswordEqual()) {
-        await axios.post("http://localhost:5000/api/v1.0/marketvendors", this.formData, {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-        })
+        await axios
+          .post("http://localhost:5000/api/v1.0/marketvendors", this.formData, {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          })
           .then((response) => {
             if (response.ok) {
               // this.openModalSuccess();

@@ -7,47 +7,54 @@
       </div>
       <div class="form-name">
         <p>Nome</p>
-        <input type="text" v-model="formData.name" />
+        <input type="text" v-model="formData.name" required />
       </div>
       <div class="form-email">
         <p>E-mail</p>
-        <input type="email" v-model="formData.email" />
+        <input type="email" v-model="formData.email" required />
       </div>
       <div class="form-cep">
         <p>CEP</p>
-        <input type="text" v-model="formData.cep" />
+        <input type="text" v-model="formData.cep" required />
       </div>
       <div class="form-state">
         <p>Estado</p>
-        <select name="" id=""></select>
+        <select name="" id="" v-model="formData.state" required>
+          <option value="SP">São Paulo</option>
+        </select>
       </div>
       <div class="form-city">
         <p>Cidade</p>
-        <select name="" id=""></select>
+        <select name="" id="" v-model="formData.city" required>
+          <option value="SBC">São Bernardo do Campo</option>
+        </select>
       </div>
       <div class="form-neighborhood">
         <p>Bairro</p>
-        <input type="text" />
+        <input type="text" v-model="formData.neighborhood" required />
       </div>
       <div class="form-address">
         <p>Endereço</p>
-        <input type="text" />
+        <input type="text" v-model="formData.address" required />
       </div>
       <div class="form-number">
         <p>Número</p>
-        <input type="text" />
+        <input type="text" v-model="formData.number" required />
       </div>
       <div class="form-tel">
         <p>Telefone</p>
-        <input type="text" />
+        <input type="text" v-model="formData.contact" required />
       </div>
       <div class="form-password">
         <p>Senha</p>
-        <input type="password" />
+        <input type="password" v-model="firstPassword" required />
       </div>
       <div class="form-confirm">
         <p>Confirmar senha</p>
-        <input type="password" />
+        <input type="password" v-model="secondPassword" required />
+      </div>
+      <div class="form-error" v-if="errorLabel">
+        <label>As senhas não coincidem.</label>
       </div>
       <button>CRIAR</button>
     </div>
@@ -55,6 +62,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -87,18 +96,17 @@ export default {
     },
     async saveCondominium() {
       if (this.hasPasswordEqual()) {
-        await fetch("http://localhost:5000/api/v1.0/marketvendors", {
-          method: "POST",
-          body: JSON.stringify(this.formData),
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-        })
+        await axios
+          .post("http://localhost:5000/api/v1.0/condominium", this.formData, {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          })
           .then((response) => {
             if (response.ok) {
               // this.openModalSuccess();
-              console.log("usuário cadastrado!");
+              console.log("condomínio cadastrado!");
               this.$router.push({ name: "LoginAdm" });
             }
           })
@@ -162,6 +170,7 @@ export default {
     background: url("../assets/chevron-down.svg") @lightGray no-repeat 98.5% !important; /* !important used for overriding all other customisations */
     background: url("../assets/chevron-down.svg") @lightGray no-repeat
       calc(100% - 15px) !important; /* Better placement regardless of input width */
+    padding: 0 15px;
   }
 
   &-name {

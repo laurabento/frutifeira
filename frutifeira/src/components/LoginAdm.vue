@@ -14,6 +14,9 @@
           <p>Senha</p>
           <input type="password" v-model="formData.password" />
         </div>
+        <div class="login-form-error" v-if="errorLabel">
+          <label>{{ this.errorMessage }}</label>
+        </div>
         <button>ENTRAR</button>
         <div class="login-form-info">
           <p>Entre em contato! Mande um e-mail para:</p>
@@ -35,7 +38,6 @@ export default {
       else this.$router.push({ name: "Condominium" });
     },
     async loginAdm() {
-      console.log(this.formData);
       await fetch("http://localhost:5000/api/v1.0/marketvendors/login", {
         method: "POST",
         body: JSON.stringify(this.formData),
@@ -49,16 +51,24 @@ export default {
           return response.json();
         })
         .then((response_json) => {
-          localStorage.setItem("accessToken", response_json.accessToken);
-          localStorage.setItem("userType", response_json.userType);
-          this.openPage(this.title);
+          if (response_json.status === "200") {
+            console.log(response_json.status);
+            this.errorLabel = false;
+            localStorage.setItem("accessToken", response_json.accessToken);
+            localStorage.setItem("userType", response_json.userType);
+            this.openPage(this.title);
+          } else {
+            this.errorMessage = response_json.message;
+            this.errorLabel = true;
+          }
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log("error: ", error));
     },
   },
   data() {
     return {
       errorLabel: false,
+      errorMessage: "",
       formData: {
         email: "",
         password: "",
@@ -91,6 +101,12 @@ export default {
   &-form {
     margin: 50px 0;
 
+    &-field:first-of-type {
+      input {
+        margin-bottom: 30px;
+      }
+    }
+
     &-field {
       font-weight: 500;
 
@@ -98,7 +114,7 @@ export default {
         background-color: @lightGray;
         height: 50px;
         border-radius: 6px;
-        margin: 5px 0 30px 0;
+        margin-top: 5px;
         padding: 15px 20px;
         width: 100%;
       }
@@ -112,7 +128,7 @@ export default {
       color: white;
       font-weight: bold;
       letter-spacing: 0.1em;
-      margin-top: 10px;
+      margin-top: 30px;
       cursor: pointer;
     }
 
@@ -122,6 +138,13 @@ export default {
       span {
         color: @green;
         font-weight: bold;
+      }
+    }
+
+    &-error {
+      label {
+        font-size: 12px;
+        color: @red;
       }
     }
   }
