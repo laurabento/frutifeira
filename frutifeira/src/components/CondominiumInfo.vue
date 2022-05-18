@@ -48,7 +48,28 @@
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+export default {
+  created() {
+    this.loadCondominium();
+  },
+  methods: {
+    async loadCondominium() {
+      await axios
+        .get("http://localhost:5000/api/v1.0/condominium", {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: "Bearer" + localStorage.getItem("accessToken"),
+          },
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => console.log(error));
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>

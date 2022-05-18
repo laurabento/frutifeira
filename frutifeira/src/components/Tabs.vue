@@ -14,10 +14,10 @@
     <div class="tabs-container">
       <transition name="tab-fade" mode="out-in">
         <div v-if="activeTab === 'feirante'" key="feirante">
-          <LoginAdm :title="titleMarketer" />
+          <LoginAdm :title="titleMarketer" :market="true" />
         </div>
         <div v-if="activeTab === 'condominio'" key="condominio">
-          <LoginAdm :title="titleCondominium" />
+          <LoginAdm :title="titleCondominium" :market="false" />
         </div>
       </transition>
     </div>
