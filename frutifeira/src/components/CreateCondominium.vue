@@ -26,7 +26,7 @@
       <div class="form-city">
         <p>Cidade</p>
         <select name="" id="" v-model="formData.city" required>
-          <option value="SBC">São Bernardo do Campo</option>
+          <option value="São Bernardo do Campo">São Bernardo do Campo</option>
         </select>
       </div>
       <div class="form-neighborhood">
@@ -81,6 +81,8 @@ export default {
         address: "",
         number: "",
         contact: "",
+        weekDay: "",
+        schedule: "",
       },
     };
   },
@@ -104,11 +106,8 @@ export default {
             },
           })
           .then((response) => {
-            if (response.ok) {
-              // this.openModalSuccess();
-              console.log("condomínio cadastrado!");
-              this.$router.push({ name: "LoginAdm" });
-            }
+            this.$router.push({ name: "LoginAdm" });
+            return response;
           })
           .catch((error) => console.log(error));
       }
@@ -154,7 +153,7 @@ export default {
     padding: 20px 15px;
     margin-top: 5px;
     width: 100%;
-    cursor: pointer;
+    cursor: text;
   }
 
   /*For IE*/
