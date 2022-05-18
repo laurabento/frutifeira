@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="list-products">
     <Header
       @openMenu="openMenu"
       @openCart="openCart"
@@ -9,7 +9,6 @@
       :isOpenMenuProps="this.isOpenMenu"
       :UserClient="this.client"
     />
-    <ModalCondominiumStart v-if="isOpenCondominiunModal && hasCondominium" @closeOpenModal="closeOpenModal"/>
     <ProductDetails v-if="isOpenDetails" @openDetails="openDetails" />
     <transition name="slide-up">
       <Menu v-if="isOpenMenu" @openOrder="openOrder"/>
@@ -19,13 +18,10 @@
     <transition name="slide">
       <Cart v-if="isOpenCart" />
     </transition>
-    <ChangeCondominium v-if="isOpenLocation" @openLocation="openLocation" @closeOpenModal="closeOpenModal"/>
+    <ChangeCondominium v-if="isOpenLocation" @openLocation="openLocation" />
     <Order v-if="isOpenOrder" @openOrder="openOrder"/>
     <SearchBarHome />
-    <Banner />
-    <Carousel/>
-    <CardListHome :titleList="titleList" @openDetails="openDetails" />
-    <CardListHome :titleList="titleSecondList" @openDetails="openDetails" />
+    <List/>
     <Footer />
   </div>
 </template>
@@ -33,8 +29,6 @@
 <script>
 import Header from "@/components/Header.vue";
 import SearchBarHome from "@/components/SearchBarHome.vue";
-import Banner from "@/components/Banner.vue";
-import CardListHome from "@/components/CardListHome.vue";
 import Footer from "@/components/Footer.vue";
 import Menu from "@/components/Menu.vue";
 import Cart from "@/components/Cart.vue";
@@ -43,16 +37,13 @@ import Login from "@/components/Login.vue";
 import SignUp from "@/components/SignUp.vue";
 import Order from "@/components/Order.vue";
 import ProductDetails from "@/components/ProductDetails.vue";
-import Carousel from "@/components/Carousel.vue";
-import ModalCondominiumStart from "@/components/ModalCondominiumStart.vue";
+import List from "@/components/List.vue";
 
 export default {
-  name: "Home",
+  name: "ListProduct",
   components: {
     Header,
     SearchBarHome,
-    Banner,
-    CardListHome,
     Footer,
     Menu,
     Cart,
@@ -61,8 +52,7 @@ export default {
     SignUp,
     Order,
     ProductDetails,
-    Carousel,
-    ModalCondominiumStart,
+    List
   },
   data() {
     return {
@@ -75,14 +65,9 @@ export default {
       isOpenSignUp: false,
       isOpenOrder: false,
       isOpenDetails: false,
-      isOpenCondominiunModal: true,
-      hasCondominium: true,
       client: true,
     };
   },
-  created() {
-    localStorage.getItem("condominium") ? this.hasCondominium = false : this.hasCondominium = true;
-  },  
   methods: {
     openMenu() {
       return (this.isOpenMenu = !this.isOpenMenu);
@@ -104,12 +89,6 @@ export default {
     },
     openDetails() {
       return (this.isOpenDetails = !this.isOpenDetails);
-    },
-    closeOpenModal() {
-      return (this.isOpenCondominiunModal = !this.isOpenCondominiunModal);
-    },
-    hasCondominiumOnLocalStorage() {
-      return localStorage.getItem("condominium") ? this.hasCondominium = false : this.hasCondominium = true;
     },
   },
 };

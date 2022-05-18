@@ -7,6 +7,7 @@ import Condominium from "../views/Condominium.vue";
 import Products from "../views/Products.vue";
 import Payment from "../views/Payment.vue";
 import Markets from "../views/Markets.vue";
+import ListProduct from "../views/ListProduct.vue";
 
 Vue.use(VueRouter);
 
@@ -44,6 +45,11 @@ const routes = [{
         path: "/Markets",
         name: "Markets",
         component: Markets
+    },
+    {
+        path: "/ListProduct",
+        name: "ListProduct",
+        component: ListProduct
     }
 ];
 

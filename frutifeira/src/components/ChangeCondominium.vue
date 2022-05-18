@@ -4,16 +4,31 @@
         <img src="../assets/close-gray.svg" @click="openLocation"/>
         <label>Você está em</label>
       </div>
-      <h3>Condomínio X</h3>
-      <button class="btn">Trocar</button>
+      <h3>{{ condominiumSelectedInfo.name }} - {{ condominiumSelectedInfo.city}}, {{condominiumSelectedInfo.state}}</h3>
+      <button class="btn" @click="closeOpenModal(); openLocation();">Trocar</button>
   </div>
 </template>
 
 <script>
 export default {
+    data() {
+        return {
+            condominiumSelectedInfo: [],
+        }
+    },
+    created() {
+        this.setCondominiumLabel();
+    },
     methods: {
         openLocation() {
             this.$emit("openLocation");
+        },
+        closeOpenModal() {
+            localStorage.clear("condominium");
+            this.$emit("closeOpenModal");
+        },
+        setCondominiumLabel(){
+            this.condominiumSelectedInfo = JSON.parse(localStorage.getItem("condominium"))
         }
     }
 }
@@ -51,7 +66,8 @@ export default {
     }
 
     h3 {
-        padding: 25px 15px;
+        padding: 25px 20px;
+        font-size: 14px;
         text-align: center;
     }
 
