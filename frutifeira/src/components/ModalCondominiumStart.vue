@@ -128,6 +128,17 @@ export default {
         }
     }
   }
+
+  @media (max-width: 426px) {
+      .modal {
+        max-width: 376px;
+        padding: 37px;
+
+        h1 {
+          font-size: 20px;
+        }
+      }
+  }
 }
 
 </style>

@@ -178,6 +178,10 @@ export default {
 
       label {
         cursor: pointer;
+        width: 150px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
       }
     }
 
