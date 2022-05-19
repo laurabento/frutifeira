@@ -115,7 +115,6 @@ export default {
     },
     async saveMarketer() {
       this.value.forEach(this.saveProductTypes);
-      console.log(this.formData.product_type);
 
       if (this.hasPasswordEqual()) {
         await axios
