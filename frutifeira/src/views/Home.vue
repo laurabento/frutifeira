@@ -10,7 +10,7 @@
       :isOpenMenuProps="this.isOpenMenu"
       :UserClient="this.client"
     />
-    <ModalCondominiumStart v-if="isOpenCondominiunModal" @closeOpenModal="closeOpenModal"/>
+    <ModalCondominiumStart v-if="isOpenCondominiunModal && hasCondominium" @closeOpenModal="closeOpenModal"/>
     <ProductDetails v-if="isOpenDetails" @openDetails="openDetails" />
     <transition name="slide-up">
       <Menu v-if="isOpenMenu" @openOrder="openOrder"/>
@@ -128,11 +128,12 @@ export default {
     async loadCondominiumMarketers() {
       try {
         this.active = true
+        this.marketersCondominiumList = []
         const getCondominium = JSON.parse(localStorage.getItem("condominium"));
         const condominiumMarketers = await axios.get(`http://localhost:5000/api/v1.0/marketcondominium/condominio/${getCondominium._id}`);
         const response = condominiumMarketers.data;
         response.forEach(item => {
-          this.marketersCondominiumList.push(item.name)
+          this.marketersCondominiumList.push(item)
         });
         this.active = false
       } catch (error) {

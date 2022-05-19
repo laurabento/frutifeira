@@ -6,9 +6,11 @@
         paginationColor="#f2f2f2" 
         paginationActiveColor="#5f5f5f">
           <slide v-for="item in marketersCondominiumList" :key="item.id">
-              <div class="circle">
-                  <label>{{item}}</label>
-              </div>
+              <router-link :to="{ path: '/ListProduct/' + item._id }">
+                <div class="circle">
+                  <label>{{item.name}}</label>
+                </div>
+              </router-link>
           </slide>
       </carousel>
   </div>
@@ -24,6 +26,16 @@ export default {
     },
     props: {
         marketersCondominiumList: Array
+    },
+    data() {
+        return {
+            isMarketer: true
+        }
+    },
+    methods: {
+        openMarketerProducts() {
+            this.$router.push({ name: "Markets" });
+        }
     }
 }
 </script>
@@ -42,12 +54,14 @@ export default {
         height: 157px;
         border-radius: 50%;
         padding: 30px;
+        cursor: pointer;
 
         label {
             color: white;
             font-size: 22px;
             font-weight: 600;
             text-align: center;
+            cursor: pointer;
         }
     }
 }
