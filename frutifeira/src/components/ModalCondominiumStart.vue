@@ -36,6 +36,7 @@ export default {
     },
     created(){
         this.loadCondominium()
+        localStorage.clear()
     },
     methods: {
         async loadCondominium() {
@@ -51,7 +52,6 @@ export default {
 
             if (this.searchTerm) {
                 this.listCondominiumSearch = this.listCondominium.filter(d => d.name.toLowerCase().includes(this.searchTerm.toLowerCase()));
-                console.log(this.listCondominium)
             }
 
             if (this.searchTerm && this.searchTerm.lenght <= 3) {

@@ -5,39 +5,9 @@
         :loop="true"
         paginationColor="#f2f2f2" 
         paginationActiveColor="#5f5f5f">
-          <slide>
+          <slide v-for="item in marketersCondominiumList" :key="item.id">
               <div class="circle">
-                  <label>Barraca da Meire</label>
-              </div>
-          </slide>
-          <slide>
-              <div class="circle">
-                  <label>Barraca da Meire</label>
-              </div>
-          </slide>
-          <slide>
-              <div class="circle">
-                  <label>Barraca da Meire</label>
-              </div>
-          </slide>
-          <slide>
-              <div class="circle">
-                  <label>Barraca da Meire</label>
-              </div>
-          </slide>
-          <slide>
-              <div class="circle">
-                  <label>Barraca da Meire</label>
-              </div>
-          </slide>
-          <slide>
-              <div class="circle">
-                  <label>Barraca da Meire</label>
-              </div>
-          </slide>
-          <slide>
-              <div class="circle">
-                  <label>Barraca da Meire</label>
+                  <label>{{item}}</label>
               </div>
           </slide>
       </carousel>
@@ -51,6 +21,9 @@ export default {
     components: {
         Carousel,
         Slide,
+    },
+    props: {
+        marketersCondominiumList: Array
     }
 }
 </script>

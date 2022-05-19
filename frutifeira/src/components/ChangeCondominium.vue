@@ -4,7 +4,7 @@
         <img src="../assets/close-gray.svg" @click="openLocation"/>
         <label>Você está em</label>
       </div>
-      <h3>{{ condominiumSelectedInfo.name }} - {{ condominiumSelectedInfo.city}}, {{condominiumSelectedInfo.state}}</h3>
+      <h3>{{condominiumSelectedInfo ? condominiumSelectedInfo.name + ' - ' + condominiumSelectedInfo.city + ', ' + condominiumSelectedInfo.state : 'Nenhum condomínio selecionado.'}}</h3>
       <button class="btn" @click="closeOpenModal(); openLocation();">Trocar</button>
   </div>
 </template>
@@ -28,7 +28,9 @@ export default {
             this.$emit("closeOpenModal");
         },
         setCondominiumLabel(){
-            this.condominiumSelectedInfo = JSON.parse(localStorage.getItem("condominium"))
+            if (localStorage.getItem("condominium") != null) {
+                this.condominiumSelectedInfo = JSON.parse(localStorage.getItem("condominium"))
+            }
         }
     }
 }

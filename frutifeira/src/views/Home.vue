@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <Spiner :active="active" />
     <Header
       @openMenu="openMenu"
       @openCart="openCart"
@@ -10,7 +11,7 @@
       :UserClient="this.client"
     />
     <ModalCondominiumStart
-      v-if="isOpenCondominiunModal && hasCondominium"
+      v-if="isOpenCondominiunModal"
       @closeOpenModal="closeOpenModal"
     />
     <ProductDetails v-if="isOpenDetails" @openDetails="openDetails" />
@@ -30,7 +31,7 @@
     <Order v-if="isOpenOrder" @openOrder="openOrder" />
     <SearchBarHome />
     <Banner />
-    <Carousel />
+    <Carousel :marketersCondominiumList="marketersCondominiumList" />
     <CardListHome :titleList="titleList" @openDetails="openDetails" />
     <CardListHome :titleList="titleSecondList" @openDetails="openDetails" />
     <Footer />
@@ -38,6 +39,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 import Header from "@/components/Header.vue";
 import SearchBarHome from "@/components/SearchBarHome.vue";
 import Banner from "@/components/Banner.vue";
@@ -52,6 +55,7 @@ import Order from "@/components/Order.vue";
 import ProductDetails from "@/components/ProductDetails.vue";
 import Carousel from "@/components/Carousel.vue";
 import ModalCondominiumStart from "@/components/ModalCondominiumStart.vue";
+import Spiner from "@/components/Spiner.vue";
 
 export default {
   name: "Home",
@@ -70,6 +74,7 @@ export default {
     ProductDetails,
     Carousel,
     ModalCondominiumStart,
+    Spiner,
   },
   data() {
     return {
@@ -85,12 +90,18 @@ export default {
       isOpenCondominiunModal: true,
       hasCondominium: true,
       client: true,
+      active: false,
+      marketersCondominiumList: [],
     };
   },
   created() {
     localStorage.getItem("condominium")
       ? (this.hasCondominium = false)
       : (this.hasCondominium = true);
+
+    if (localStorage.getItem("condominium") != null) {
+      this.loadCondominiumMarketers();
+    }
   },
   methods: {
     openMenu() {
@@ -115,12 +126,33 @@ export default {
       return (this.isOpenDetails = !this.isOpenDetails);
     },
     closeOpenModal() {
+      if (localStorage.getItem("condominium") != null) {
+        this.loadCondominiumMarketers();
+      }
       return (this.isOpenCondominiunModal = !this.isOpenCondominiunModal);
     },
     hasCondominiumOnLocalStorage() {
       return localStorage.getItem("condominium")
         ? (this.hasCondominium = false)
         : (this.hasCondominium = true);
+    },
+    async loadCondominiumMarketers() {
+      try {
+        this.active = true;
+        const getCondominium = JSON.parse(localStorage.getItem("condominium"));
+        const condominiumMarketers = await axios.get(
+          `http://localhost:5000/api/v1.0/marketcondominium/condominio/${getCondominium._id}`,
+        );
+        const response = condominiumMarketers.data;
+        response.forEach((item) => {
+          this.marketersCondominiumList.push(item.name);
+        });
+        this.active = false;
+      } catch (error) {
+        console.error("Not found Marketers");
+        this.marketersCondominiumList = [];
+        this.active = false;
+      }
     },
   },
 };

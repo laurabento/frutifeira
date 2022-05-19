@@ -73,7 +73,6 @@ export default {
         })
         .then((response_json) => {
           if (response_json.status === "200") {
-            console.log(response_json.status);
             this.errorLabel = false;
             localStorage.setItem("accessToken", response_json.accessToken);
             localStorage.setItem("userType", response_json.userType);
