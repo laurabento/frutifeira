@@ -34,6 +34,9 @@ export default {
     market: Boolean,
     id: String,
   },
+  created() {
+    this.checkLogin();
+  },
   methods: {
     openPage(name) {
       if (name === "Área do Feirante") this.$router.push({ name: "Products" });
@@ -41,6 +44,15 @@ export default {
         this.$router.push({
           name: "Condominium",
         });
+    },
+    checkLogin() {
+      const id = localStorage.getItem("id");
+      const userType = localStorage.getItem("userType");
+      if (id != null) {
+        this.$router.push({
+          name: userType == "3" ? "Condominium" : "Markets",
+        });
+      }
     },
     async loginAdm() {
       await fetch(

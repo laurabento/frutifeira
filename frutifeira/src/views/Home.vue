@@ -9,21 +9,28 @@
       :isOpenMenuProps="this.isOpenMenu"
       :UserClient="this.client"
     />
-    <ModalCondominiumStart v-if="isOpenCondominiunModal && hasCondominium" @closeOpenModal="closeOpenModal"/>
+    <ModalCondominiumStart
+      v-if="isOpenCondominiunModal && hasCondominium"
+      @closeOpenModal="closeOpenModal"
+    />
     <ProductDetails v-if="isOpenDetails" @openDetails="openDetails" />
     <transition name="slide-up">
-      <Menu v-if="isOpenMenu" @openOrder="openOrder"/>
+      <Menu v-if="isOpenMenu" @openOrder="openOrder" :admArea="false" />
     </transition>
-    <Login v-if="isOpenLogin" @openLogin="openLogin" @openSignUp="openSignUp"/>
+    <Login v-if="isOpenLogin" @openLogin="openLogin" @openSignUp="openSignUp" />
     <SignUp v-if="isOpenSignUp" @openSignUp="openSignUp" />
     <transition name="slide">
       <Cart v-if="isOpenCart" />
     </transition>
-    <ChangeCondominium v-if="isOpenLocation" @openLocation="openLocation" @closeOpenModal="closeOpenModal"/>
-    <Order v-if="isOpenOrder" @openOrder="openOrder"/>
+    <ChangeCondominium
+      v-if="isOpenLocation"
+      @openLocation="openLocation"
+      @closeOpenModal="closeOpenModal"
+    />
+    <Order v-if="isOpenOrder" @openOrder="openOrder" />
     <SearchBarHome />
     <Banner />
-    <Carousel/>
+    <Carousel />
     <CardListHome :titleList="titleList" @openDetails="openDetails" />
     <CardListHome :titleList="titleSecondList" @openDetails="openDetails" />
     <Footer />
@@ -81,8 +88,10 @@ export default {
     };
   },
   created() {
-    localStorage.getItem("condominium") ? this.hasCondominium = false : this.hasCondominium = true;
-  },  
+    localStorage.getItem("condominium")
+      ? (this.hasCondominium = false)
+      : (this.hasCondominium = true);
+  },
   methods: {
     openMenu() {
       return (this.isOpenMenu = !this.isOpenMenu);
@@ -109,7 +118,9 @@ export default {
       return (this.isOpenCondominiunModal = !this.isOpenCondominiunModal);
     },
     hasCondominiumOnLocalStorage() {
-      return localStorage.getItem("condominium") ? this.hasCondominium = false : this.hasCondominium = true;
+      return localStorage.getItem("condominium")
+        ? (this.hasCondominium = false)
+        : (this.hasCondominium = true);
     },
   },
 };

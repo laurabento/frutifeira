@@ -17,15 +17,16 @@
       <transition name="slide-fade" mode="out-in">
         <div v-if="activeTab === 'cart' || activeTab === 'basket'" key="cart">
           <Table
-            :products="this.products"
             @openMarketDetails="openMarketDetails"
+            :table="products ? tableProducts : tableMarkets"
           />
         </div>
         <div
           v-if="activeTab === 'cart-add' || activeTab === 'help'"
           key="cart-add"
         >
-          <CreateProduct />
+          <MarketSolicitations v-if="!products" />
+          <CreateProduct v-if="products" />
         </div>
       </transition>
     </div>
@@ -35,12 +36,14 @@
 <script>
 import CreateProduct from "@/components/CreateProduct.vue";
 import Table from "@/components/Table.vue";
+import MarketSolicitations from "@/components/MarketSolicitations.vue";
 
 export default {
   name: "MarketerArea",
   components: {
     CreateProduct,
     Table,
+    MarketSolicitations,
   },
   props: {
     products: Boolean,
@@ -56,6 +59,8 @@ export default {
         { id: "basket", label: "FEIRAS" },
         { id: "help", label: "SOLICITAÇÕES" },
       ],
+      tableProducts: ["Nome do produto", "Quantidade", "Unidade", "Preço", ""],
+      tableMarkets: ["Condomínio", "Dia da semana", "Hora", "Próximo dia", ""],
     };
   },
   created() {

@@ -5,7 +5,12 @@
       :isOpenMarketerMenu="isOpenMarketerMenu"
       @openMarketerMenu="openMarketerMenu"
       :products="false"
+      :isOpenMenuProps="this.isOpenMenu"
+      @openMenu="openMenu"
     />
+    <transition name="slide-up">
+      <Menu v-if="isOpenMenu" :admArea="true" />
+    </transition>
     <transition name="slide">
       <AddProducts v-if="isOpenProducts" @openProducts="openProducts" />
     </transition>
@@ -25,6 +30,7 @@ import MarketerArea from "@/components/MarketerArea.vue";
 import MenuMobileMarketer from "@/components/MenuMobileMarketer.vue";
 import MarketDetails from "@/components/MarketDetails.vue";
 import AddProducts from "@/components/AddProducts.vue";
+import Menu from "@/components/Menu.vue";
 
 export default {
   name: "Marketer",
@@ -34,14 +40,18 @@ export default {
     MenuMobileMarketer,
     MarketDetails,
     AddProducts,
+    Menu,
   },
-
+  created() {
+    this.checkUser();
+  },
   data() {
     return {
       marketer: true,
       isOpenMarketerMenu: false,
       isOpenMarketDetails: false,
       isOpenProducts: false,
+      isOpenMenu: false,
     };
   },
   methods: {
@@ -53,6 +63,16 @@ export default {
     },
     openProducts() {
       return (this.isOpenProducts = !this.isOpenProducts);
+    },
+    openMenu() {
+      return (this.isOpenMenu = !this.isOpenMenu);
+    },
+    checkUser() {
+      const id = localStorage.getItem("id");
+
+      if (id === null) {
+        this.$router.push({ name: "LoginAdm" });
+      }
     },
   },
 };
