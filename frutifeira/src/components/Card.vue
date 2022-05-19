@@ -1,5 +1,5 @@
 <template>
-  <div class="card" @click="openDetails">
+  <div class="card" id="clickProduto" @click="openDetails">
     <div class="card-img">
       <div class="flag">
         <label>%</label>

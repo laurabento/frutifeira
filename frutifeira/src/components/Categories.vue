@@ -2,11 +2,11 @@
   <div class="categories-group">
       <div class="categories-group_list">
           <ul>
-              <li>Frutas</li>
-              <li>Verduras</li>
-              <li>Legumes</li>
-              <li>Pastel</li>
-              <li>Peixes</li>
+              <li id="clickCategorias1">Frutas</li>
+              <li id="clickCategorias2">Verduras</li>
+              <li id="clickCategorias3">Legumes</li>
+              <li id="clickCategorias4">Pastel</li>
+              <li id="clickCategorias5">Peixes</li>
           </ul>
       </div>
   </div>

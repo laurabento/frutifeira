@@ -1,8 +1,8 @@
 <template>
   <div class="background">
-    <div class="modal">
+    <div class="modal" id="modalCondominios">
       <h1>Temos um conteúdo exclusivo dependendo de seu condomínio.</h1>
-      <input 
+      <input id="inputModalCondominios"
         type="text" 
         placeholder="Procure seu condomínio"
         @change="findCondominium($event)"

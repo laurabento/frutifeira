@@ -1,7 +1,7 @@
 <template>
   <div class="background">
     <div class="modal">
-      <img
+      <img id="clickFecharProduto"
         class="modal-close"
         src="../assets/close-gray.svg"
         alt="fechar"
@@ -25,19 +25,19 @@
           em fibras, vitaminas e minerais.
         </p>
         <div class="modal-content-amount">
-          <img
+          <img id="clickAumentarProduto"
             class="modal-content-amount-remove"
             @click="addRemoveAmount(false)"
             src="../assets/remove.svg"
           />
           <p id="amount">1</p>
-          <img
+          <img id="clickReduzirProduto"
             class="modal-content-amount-add"
             @click="addRemoveAmount(true)"
             src="../assets/add.svg"
           />
         </div>
-        <button class="modal-content-button">
+        <button id="btnAdicionarProduto" class="modal-content-button">
           <p>Adicionar</p>
           <p>R$ 4,99</p>
         </button>
