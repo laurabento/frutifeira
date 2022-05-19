@@ -10,7 +10,7 @@
       :isOpenMenuProps="this.isOpenMenu"
       :UserClient="this.client"
     />
-    <ModalCondominiumStart v-if="isOpenCondominiunModal || hasCondominium" @closeOpenModal="closeOpenModal"/>
+    <ModalCondominiumStart v-if="isOpenCondominiunModal" @closeOpenModal="closeOpenModal"/>
     <ProductDetails v-if="isOpenDetails" @openDetails="openDetails" />
     <transition name="slide-up">
       <Menu v-if="isOpenMenu" @openOrder="openOrder"/>
