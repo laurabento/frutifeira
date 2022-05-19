@@ -31,22 +31,31 @@
 export default {
   props: {
     title: String,
+    market: Boolean,
+    id: String,
   },
   methods: {
     openPage(name) {
       if (name === "Área do Feirante") this.$router.push({ name: "Products" });
-      else this.$router.push({ name: "Condominium" });
+      else
+        this.$router.push({
+          name: "Condominium",
+        });
     },
     async loginAdm() {
-      await fetch("http://localhost:5000/api/v1.0/marketvendors/login", {
-        method: "POST",
-        body: JSON.stringify(this.formData),
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          //Authorization: "Bearer " + access token
+      await fetch(
+        `http://localhost:5000/api/v1.0/${
+          this.market ? "marketvendors" : "condominium"
+        }/login`,
+        {
+          method: "POST",
+          body: JSON.stringify(this.formData),
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
         },
-      })
+      )
         .then((response) => {
           return response.json();
         })
@@ -55,6 +64,7 @@ export default {
             this.errorLabel = false;
             localStorage.setItem("accessToken", response_json.accessToken);
             localStorage.setItem("userType", response_json.userType);
+            localStorage.setItem("id", response_json.id);
             this.openPage(this.title);
           } else {
             this.errorMessage = response_json.message;
