@@ -1,7 +1,7 @@
 <template>
   <div class="background">
     <div class="modal">
-      <img
+      <img id="clickFecharProduto"
         class="modal-close"
         src="../assets/close-gray.svg"
         alt="fechar"
@@ -18,7 +18,7 @@
          {{product.description}}
         </p>
         <div class="modal-content-amount">
-          <img
+          <img id="clickAumentarProduto"
             class="modal-content-amount-remove"
             @click="addRemoveAmount(false)"
             src="../assets/remove.svg"
@@ -30,7 +30,7 @@
             src="../assets/add.svg"
           />
         </div>
-        <button class="modal-content-button">
+        <button id="btnAdicionarProduto" class="modal-content-button">
           <p>Adicionar</p>
           <p>R$ {{ productPrice(product) }}</p>
         </button>

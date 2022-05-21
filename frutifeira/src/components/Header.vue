@@ -7,18 +7,18 @@
       <img src="../assets/logo-frutifeira.svg" />
     </router-link>
     <div class="main-header_items" v-if="UserClient">
-      <div class="location" @click="openLocation">
+      <div class="location" id="clickQualCondominio" @click="openLocation">
         <img class="location-icon" src="../assets/location.svg" />
         <label>Qual seu condomínio?</label>
       </div>
-      <div class="bag" @click="openCart">
+      <div class="bag" id="clickCart" @click="openCart">
         <img src="../assets/bag.svg" />
         <div class="bag_items">
           <label>R$ 0,00</label>
           <span>0 itens</span>
         </div>
       </div>
-      <div class="login" @click="openMenu">
+      <div class="login" id="clickLogin" @click="openMenu">
         <img src="../assets/person.svg" />
         <div :class="changeArrowIcon(isOpenMenuProps)"></div>
       </div>
@@ -37,16 +37,18 @@
       <div class="notification">
         <img src="../assets/bell-green.svg" />
       </div>
-      <div class="user">
+      <div class="user" @click="openMenu">
         <img src="../assets/person.svg" />
+        <div :class="changeArrowIcon(isOpenMenuProps)"></div>
       </div>
     </div>
     <div class="main-header_nav" v-if="UserCondominium">
       <div class="notification">
         <img src="../assets/bell-green.svg" />
       </div>
-      <div class="user">
+      <div class="user" @click="openMenu">
         <img src="../assets/person.svg" />
+        <div :class="changeArrowIcon(isOpenMenuProps)"></div>
       </div>
     </div>
   </div>
@@ -143,6 +145,27 @@ export default {
     .user {
       display: flex;
       align-items: center;
+      cursor: pointer;
+
+      img {
+        margin-right: 10px;
+      }
+
+      .arrow-start {
+        background-image: url("../assets/arrow-green-start.svg");
+        height: 24px;
+        width: 24px;
+        transition: all 0.25s;
+        transform: rotate(0);
+      }
+
+      .arrow {
+        background-image: url("../assets/arrow-green-start.svg");
+        height: 24px;
+        width: 24px;
+        transition: all 0.25s;
+        transform: rotate(180deg);
+      }
 
       &::before {
         content: "";

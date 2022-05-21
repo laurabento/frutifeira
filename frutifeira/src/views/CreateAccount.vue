@@ -1,15 +1,15 @@
 <template>
   <div>
-    <CreateCondominium />
+    <CreateMarketer />
   </div>
 </template>
 
 <script>
-import CreateCondominium from "@/components/CreateCondominium.vue";
+import CreateMarketer from "@/components/CreateMarketer.vue";
 export default {
   name: "CreateAccount",
   components: {
-    CreateCondominium,
+    CreateMarketer,
   },
 };
 </script>

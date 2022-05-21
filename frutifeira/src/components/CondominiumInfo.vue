@@ -50,13 +50,13 @@
         <p>Dia da semana</p>
         <select name="" id="" v-model="condominium.weekDay">
           <option value=""></option>
-          <option value="sun">Domingo</option>
-          <option value="mon">Segunda-feira</option>
-          <option value="tue">Terça-feira</option>
-          <option value="wed">Quarta-feira</option>
-          <option value="thu">Quinta-feira</option>
-          <option value="fri">Sexta-feira</option>
-          <option value="sat">Sábado</option>
+          <option value="Domingo">Domingo</option>
+          <option value="Segunda-feira">Segunda-feira</option>
+          <option value="Terça-feira">Terça-feira</option>
+          <option value="Quarta-feira">Quarta-feira</option>
+          <option value="Quinta-feira">Quinta-feira</option>
+          <option value="Sexta-feira">Sexta-feira</option>
+          <option value="Sábado">Sábado</option>
         </select>
       </div>
       <div class="form-button">
@@ -73,8 +73,6 @@ export default {
   async created() {
     this.condominium = await this.loadCondominium();
     this.cities = cities.cidades;
-    console.log(this.condominium._id);
-    console.log(localStorage.getItem("id"));
   },
   data() {
     return {
@@ -107,7 +105,7 @@ export default {
     },
     async saveInfo() {
       await axios
-        .post(
+        .patch(
           "http://localhost:5000/api/v1.0/condominium/" + this.id,
           this.condominium,
           {

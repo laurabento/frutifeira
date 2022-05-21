@@ -14,7 +14,7 @@
         <input
           name="standName"
           type="text"
-          v-model="formData.standName"
+          v-model="formData.stand_name"
           required
         />
       </div>
@@ -110,7 +110,7 @@ export default {
         return false;
       }
     },
-    saveProductTypes(item, index) {
+    saveProductTypes(item) {
       this.formData.product_type.push(item.name);
     },
     async saveMarketer() {

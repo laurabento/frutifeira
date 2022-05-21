@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Spiner :active="active"/>
+    <Spiner :active="active" />
     <Header
       @openMenu="openMenu"
       @openCart="openCart"
@@ -10,18 +10,25 @@
       :isOpenMenuProps="this.isOpenMenu"
       :UserClient="this.client"
     />
-    <ModalCondominiumStart v-if="isOpenCondominiunModal && hasCondominium" @closeOpenModal="closeOpenModal"/>
+    <ModalCondominiumStart
+      v-if="isOpenCondominiunModal && hasCondominium"
+      @closeOpenModal="closeOpenModal"
+    />
     <!-- <ProductDetails v-if="isOpenDetails" @openDetails="openDetails" /> -->
     <transition name="slide-up">
-      <Menu v-if="isOpenMenu" @openOrder="openOrder"/>
+      <Menu v-if="isOpenMenu" @openOrder="openOrder" :admArea="false" />
     </transition>
-    <Login v-if="isOpenLogin" @openLogin="openLogin" @openSignUp="openSignUp"/>
+    <Login v-if="isOpenLogin" @openLogin="openLogin" @openSignUp="openSignUp" />
     <SignUp v-if="isOpenSignUp" @openSignUp="openSignUp" />
     <transition name="slide">
       <Cart v-if="isOpenCart" />
     </transition>
-    <ChangeCondominium v-if="isOpenLocation" @openLocation="openLocation" @closeOpenModal="closeOpenModal"/>
-    <Order v-if="isOpenOrder" @openOrder="openOrder"/>
+    <ChangeCondominium
+      v-if="isOpenLocation"
+      @openLocation="openLocation"
+      @closeOpenModal="closeOpenModal"
+    />
+    <Order v-if="isOpenOrder" @openOrder="openOrder" />
     <SearchBarHome />
     <Banner />
     <Carousel :marketersCondominiumList="marketersCondominiumList"/>
@@ -67,7 +74,7 @@ export default {
     // ProductDetails,
     Carousel,
     ModalCondominiumStart,
-    Spiner
+    Spiner,
   },
   data() {
     return {
@@ -88,12 +95,14 @@ export default {
     };
   },
   created() {
-    localStorage.getItem("condominium") ? this.hasCondominium = false : this.hasCondominium = true;
+    localStorage.getItem("condominium")
+      ? (this.hasCondominium = false)
+      : (this.hasCondominium = true);
 
-    if(localStorage.getItem("condominium") != null) {
+    if (localStorage.getItem("condominium") != null) {
       this.loadCondominiumMarketers();
     }
-  },  
+  },
   methods: {
     openMenu() {
       return (this.isOpenMenu = !this.isOpenMenu);
@@ -117,31 +126,35 @@ export default {
       return (this.isOpenDetails = !this.isOpenDetails);
     },
     closeOpenModal() {
-      if(localStorage.getItem("condominium") != null) {
+      if (localStorage.getItem("condominium") != null) {
         this.loadCondominiumMarketers();
-      } 
+      }
       return (this.isOpenCondominiunModal = !this.isOpenCondominiunModal);
     },
     hasCondominiumOnLocalStorage() {
-      return localStorage.getItem("condominium") ? this.hasCondominium = false : this.hasCondominium = true;
+      return localStorage.getItem("condominium")
+        ? (this.hasCondominium = false)
+        : (this.hasCondominium = true);
     },
     async loadCondominiumMarketers() {
       try {
-        this.active = true
-        this.marketersCondominiumList = []
+        this.active = true;
+        this.marketersCondominiumList = [];
         const getCondominium = JSON.parse(localStorage.getItem("condominium"));
-        const condominiumMarketers = await axios.get(`http://localhost:5000/api/v1.0/marketcondominium/condominio/${getCondominium._id}`);
+        const condominiumMarketers = await axios.get(
+          `http://localhost:5000/api/v1.0/marketcondominium/condominio/${getCondominium._id}`,
+        );
         const response = condominiumMarketers.data;
-        response.forEach(item => {
-          this.marketersCondominiumList.push(item)
+        response.forEach((item) => {
+          this.marketersCondominiumList.push(item);
         });
-        this.active = false
+        this.active = false;
       } catch (error) {
-        console.error('Not found Marketers')
-        this.marketersCondominiumList = []
-        this.active = false
+        console.error("Not found Marketers");
+        this.marketersCondominiumList = [];
+        this.active = false;
       }
-    }
+    },
   },
 };
 </script>

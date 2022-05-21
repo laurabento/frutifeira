@@ -21,17 +21,22 @@
       <div class="tabs-content">
         <transition name="slide-fade" mode="out-in">
           <div class="tab" v-if="activeTab === 'clipboard'" key="clipboard">
-            <CardCondominium :address="true" :title="'Nome do condomínio'" />
+            <CardCondominium
+              :address="true"
+              :condominiumDetails="condominiumDetails"
+            />
             <CardCondominium
               :contact="true"
-              :title="'E-mail do Condomínio'"
-              :tel="'(99) 99999-9999'"
+              :condominiumDetails="condominiumDetails"
             />
-            <CardCondominium :time="true" :title="'Terça-feira, 19h-22h'" />
+            <CardCondominium
+              :time="true"
+              :condominiumDetails="condominiumDetails"
+            />
           </div>
-          <div class="tab" v-if="activeTab === 'cart'" key="cart">
+          <!-- <div class="tab" v-if="activeTab === 'cart'" key="cart">
             <Products @openProducts="openProducts" />
-          </div>
+          </div> -->
           <div class="tab" v-if="activeTab === 'dolar'" key="dolar">
             <MarketOrders />
           </div>
@@ -42,13 +47,14 @@
 </template>
 
 <script>
+import axios from "axios";
 import CardCondominium from "@/components/CardCondominium.vue";
-import Products from "@/components/Products.vue";
+// import Products from "@/components/Products.vue";
 import MarketOrders from "@/components/MarketOrders.vue";
 export default {
   components: {
     CardCondominium,
-    Products,
+    // Products,
     MarketOrders,
   },
   data() {
@@ -56,13 +62,15 @@ export default {
       activeTab: "",
       tabsList: [
         { id: "clipboard", label: "DADOS GERAIS" },
-        { id: "cart", label: "PRODUTOS" },
+        // { id: "cart", label: "PRODUTOS" },
         { id: "dolar", label: "PEDIDOS" },
       ],
+      condominiumDetails: [],
     };
   },
-  created() {
+  async created() {
     this.activeTab = this.tabsList[0].id;
+    this.condominiumDetails = await this.loadCondominium();
   },
   methods: {
     isActiveTab(id) {
@@ -76,6 +84,27 @@ export default {
     },
     openMarketDetails() {
       this.$emit("openMarketDetails");
+    },
+    async loadCondominium() {
+      return axios
+        .get(
+          "http://localhost:5000/api/v1.0/condominium/" +
+            localStorage.getItem("cId"),
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            },
+          },
+        )
+        .then((response) => {
+          return response;
+        })
+        .then((response_json) => {
+          return response_json.data;
+        })
+        .catch((error) => console.log(error));
     },
   },
 };
