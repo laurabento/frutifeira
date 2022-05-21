@@ -5,10 +5,15 @@
       :isOpenMenuProps="this.isOpenMenu"
       @openMenu="openMenu"
     />
+    <ModalConfirmation
+      :confirmationType="confirmationType"
+      @openModalConfirmation="openModalConfirmation"
+      v-if="isOpenModalConfirmation"
+    />
     <transition name="slide-up">
       <Menu v-if="isOpenMenu" :admArea="true" />
     </transition>
-    <CondominiumArea />
+    <CondominiumArea @openModalConfirmation="openModalConfirmation" />
   </div>
 </template>
 
@@ -16,6 +21,7 @@
 import CondominiumArea from "@/components/CondominiumArea.vue";
 import Header from "@/components/Header.vue";
 import Menu from "@/components/Menu.vue";
+import ModalConfirmation from "@/components/ModalConfirmation.vue";
 
 export default {
   name: "Condominium",
@@ -26,11 +32,14 @@ export default {
     CondominiumArea,
     Header,
     Menu,
+    ModalConfirmation,
   },
   data() {
     return {
       condominium: true,
       isOpenMenu: false,
+      isOpenModalConfirmation: false,
+      confirmationType: Number,
     };
   },
   methods: {
@@ -43,6 +52,10 @@ export default {
       if (id === null) {
         this.$router.push({ name: "LoginAdm" });
       }
+    },
+    openModalConfirmation(id) {
+      this.confirmationType = id;
+      return (this.isOpenModalConfirmation = !this.isOpenModalConfirmation);
     },
   },
 };

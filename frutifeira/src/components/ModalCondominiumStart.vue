@@ -2,20 +2,21 @@
   <div class="background">
     <div class="modal">
       <h1>Temos um conteúdo exclusivo dependendo de seu condomínio.</h1>
-      <input 
-        type="text" 
+      <input
+        type="text"
         placeholder="Procure seu condomínio"
         @change="findCondominium($event)"
         @keyup="findCondominium($event)"
-        v-model="selectedLabel"/>
+        v-model="selectedLabel"
+      />
       <ul>
-          <li 
-            v-for="item in listCondominiumSearch"
-            :key="item.id"
-            @click="selectCondominium(item)"
-          >
-            <label>{{ item.name }} - {{ item.city }}, {{item.state}}</label>
-          </li>
+        <li
+          v-for="item in listCondominiumSearch"
+          :key="item.id"
+          @click="selectCondominium(item)"
+        >
+          <label>{{ item.name }} - {{ item.city }}, {{ item.state }}</label>
+        </li>
       </ul>
     </div>
   </div>
@@ -25,50 +26,55 @@
 import axios from "axios";
 
 export default {
-    data() {
-        return {
-            searchTerm: '',
-            listCondominium: [],
-            listCondominiumSearch: [],
-            selectedLabel: '',
-            selectedId: '',
-        }
+  data() {
+    return {
+      searchTerm: "",
+      listCondominium: [],
+      listCondominiumSearch: [],
+      selectedLabel: "",
+      selectedId: "",
+    };
+  },
+  created() {
+    this.loadCondominium();
+    localStorage.clear();
+  },
+  methods: {
+    async loadCondominium() {
+      try {
+        const condominium = await axios.get(
+          "http://localhost:5000/api/v1.0/condominium",
+        );
+        this.listCondominium = condominium.data;
+      } catch (error) {
+        console.error("Not found Condominium");
+      }
     },
-    created(){
-        this.loadCondominium()
-        localStorage.clear()
+    findCondominium() {
+      this.searchTerm =
+        event.target && event.target.value ? event.target.value.trim() : null;
+
+      if (this.searchTerm) {
+        this.listCondominiumSearch = this.listCondominium.filter((d) =>
+          d.name.toLowerCase().includes(this.searchTerm.toLowerCase()),
+        );
+      }
+
+      if (this.searchTerm && this.searchTerm.lenght <= 3) {
+        this.listCondominiumSearch = [];
+      }
+
+      if (!this.searchTerm) {
+        this.listCondominiumSearch = [];
+      }
     },
-    methods: {
-        async loadCondominium() {
-            try {
-                const condominium = await axios.get('http://localhost:5000/api/v1.0/condominium');
-                this.listCondominium = condominium.data
-            } catch (error) {
-                console.error('Not found Condominium')
-            }
-        },
-        findCondominium() {
-            this.searchTerm = (event.target && event.target.value) ? event.target.value.trim() : null;
-
-            if (this.searchTerm) {
-                this.listCondominiumSearch = this.listCondominium.filter(d => d.name.toLowerCase().includes(this.searchTerm.toLowerCase()));
-            }
-
-            if (this.searchTerm && this.searchTerm.lenght <= 3) {
-                this.listCondominiumSearch = []
-            }
-
-            if (!this.searchTerm) {
-                this.listCondominiumSearch = []
-            }
-        },
-        selectCondominium(item) {
-            this.selectedLabel = item.name + ' - ' + item.city + ', '+ item.state;
-            localStorage.setItem("condominium", JSON.stringify(item));
-            this.$emit("closeOpenModal");
-        }
-    }
-}
+    selectCondominium(item) {
+      this.selectedLabel = item.name + " - " + item.city + ", " + item.state;
+      localStorage.setItem("condominium", JSON.stringify(item));
+      this.$emit("closeOpenModal");
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -105,40 +111,39 @@ export default {
     }
 
     input {
-        border-bottom: 1px solid @gray;
-        border-radius: unset;
+      border-bottom: 1px solid @gray;
+      border-radius: unset;
     }
 
     ul {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 100%;
-        margin-top: 10px;
-        border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 10px;
 
-        li {
-            padding: 16px;
-            cursor: pointer;
+      li {
+        padding: 16px;
+        cursor: pointer;
 
-            label {
-                font-size: 13px;
-                cursor: pointer;
-            }
+        label {
+          font-size: 13px;
+          cursor: pointer;
         }
+      }
     }
   }
 
   @media (max-width: 426px) {
-      .modal {
-        max-width: 376px;
-        padding: 37px;
+    .modal {
+      max-width: 376px;
+      padding: 37px;
 
-        h1 {
-          font-size: 20px;
-        }
+      h1 {
+        font-size: 20px;
       }
+    }
   }
 }
-
 </style>

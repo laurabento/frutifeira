@@ -1,5 +1,10 @@
 <template>
   <div class="market">
+    <ModalConfirmation
+      v-if="isOpenModalConfirmation"
+      @openModalConfirmation="openModalConfirmation"
+      :confirmationType="confirmationType"
+    />
     <Header
       :UserMarketer="this.marketer"
       :isOpenMarketerMenu="isOpenMarketerMenu"
@@ -19,7 +24,11 @@
       @openProducts="openProducts"
       @openMarketDetails="openMarketDetails"
     />
-    <MarketerArea :products="false" @openMarketDetails="openMarketDetails" />
+    <MarketerArea
+      :products="false"
+      @openMarketDetails="openMarketDetails"
+      @openModalConfirmation="openModalConfirmation"
+    />
     <MenuMobileMarketer v-if="isOpenMarketerMenu" />
   </div>
 </template>
@@ -31,6 +40,7 @@ import MenuMobileMarketer from "@/components/MenuMobileMarketer.vue";
 import MarketDetails from "@/components/MarketDetails.vue";
 import AddProducts from "@/components/AddProducts.vue";
 import Menu from "@/components/Menu.vue";
+import ModalConfirmation from "@/components/ModalConfirmation.vue";
 
 export default {
   name: "Marketer",
@@ -38,6 +48,7 @@ export default {
     MarketerArea,
     Header,
     MenuMobileMarketer,
+    ModalConfirmation,
     MarketDetails,
     AddProducts,
     Menu,
@@ -52,6 +63,8 @@ export default {
       isOpenMarketDetails: false,
       isOpenProducts: false,
       isOpenMenu: false,
+      isOpenModalConfirmation: false,
+      confirmationType: Number,
     };
   },
   methods: {
@@ -66,6 +79,10 @@ export default {
     },
     openMenu() {
       return (this.isOpenMenu = !this.isOpenMenu);
+    },
+    openModalConfirmation(value) {
+      this.confirmationType = value;
+      return (this.isOpenModalConfirmation = !this.isOpenModalConfirmation);
     },
     checkUser() {
       const id = localStorage.getItem("id");

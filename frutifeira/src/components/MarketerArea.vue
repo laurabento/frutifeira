@@ -19,13 +19,17 @@
           <Table
             @openMarketDetails="openMarketDetails"
             :table="products ? tableProducts : tableMarkets"
+            :type="products ? 'products' : 'markets'"
           />
         </div>
         <div
           v-if="activeTab === 'cart-add' || activeTab === 'help'"
           key="cart-add"
         >
-          <MarketSolicitations v-if="!products" />
+          <MarketSolicitations
+            v-if="!products"
+            @openModalConfirmation="openModalConfirmation"
+          />
           <CreateProduct v-if="products" />
         </div>
       </transition>
@@ -77,6 +81,9 @@ export default {
     },
     openMarketDetails() {
       this.$emit("openMarketDetails");
+    },
+    openModalConfirmation(value) {
+      this.$emit("openModalConfirmation", value);
     },
   },
 };

@@ -1,71 +1,74 @@
 <template>
-  <div class="form">
-    <div class="form-name">
-      <p>Nome</p>
-      <input type="text" />
-    </div>
-    <div class="form-type">
-      <p>Tipo</p>
-      <multiselect
-        v-model="value"
-        tag-placeholder=""
-        placeholder=""
-        label="name"
-        track-by="code"
-        :options="options"
-        :multiple="true"
-        :taggable="true"
-        @tag="addTag"
-      ></multiselect>
-    </div>
-    <div class="form-description">
-      <p>Descrição</p>
-      <input type="text" />
-    </div>
-    <div class="form-price">
-      <p>Preço</p>
-      <input type="text" />
-    </div>
-    <div class="form-qnt">
-      <p>Quantidade</p>
-      <div class="form-qnt-field">
-        <input type="text" />
-        <span>g</span>
+  <form @submit.prevent="saveProduct">
+    <div class="form">
+      <div class="form-name">
+        <p>Nome</p>
+        <input type="text" v-model="formData.name" />
       </div>
-    </div>
-    <div class="form-unity">
-      <input type="checkbox" />
-      <p>Por unidade</p>
-    </div>
-    <div class="form-weight">
-      <div class="form-weight-radio">
-        <input type="radio" name="weight" />
-        <p>Gramas</p>
+      <div class="form-type">
+        <p>Tipo</p>
+        <multiselect
+          v-model="value"
+          tag-placeholder=""
+          placeholder=""
+          label="name"
+          track-by="code"
+          :options="options"
+          :multiple="true"
+          :taggable="true"
+          @tag="addTag"
+        ></multiselect>
       </div>
-      <div class="form-weight-radio">
-        <input type="radio" name="weight" />
-        <p>Kilo</p>
+      <div class="form-description">
+        <p>Descrição</p>
+        <textarea rows="2" type="text" v-model="formData.description" />
       </div>
-    </div>
-    <div class="form-img">
-      <p>Imagem</p>
-      <div class="form-img-field" @click="chooseImage()">
-        <input type="file" id="selectImg" />
-        <img src="../assets/shift.svg" alt="" />
+      <div class="form-price">
+        <p>Preço</p>
+        <input type="text" v-model="formData.price" />
       </div>
-    </div>
-    <div class="form-discount">
-      <p>Desconto</p>
-      <div class="form-discount-field">
-        <input type="text" />
-        <span>%</span>
+      <div class="form-qnt">
+        <p>Quantidade</p>
+        <div class="form-qnt-field">
+          <input type="text" v-model="formData.quantity" />
+          <span>g</span>
+        </div>
       </div>
+      <div class="form-weight">
+        <div class="form-weight-radio">
+          <input type="radio" name="weight" value="U" v-model="formData.unit" />
+          <p>Por unidade</p>
+        </div>
+        <div class="form-weight-radio">
+          <input type="radio" name="weight" value="G" v-model="formData.unit" />
+          <p>Gramas</p>
+        </div>
+        <div class="form-weight-radio">
+          <input type="radio" name="weight" value="K" v-model="formData.unit" />
+          <p>Kilo</p>
+        </div>
+      </div>
+      <div class="form-img">
+        <p>Imagem</p>
+        <div class="form-img-field" @click="chooseImage()">
+          <input type="file" id="selectImg" />
+          <img src="../assets/shift.svg" alt="" />
+        </div>
+      </div>
+      <div class="form-discount">
+        <p>Desconto</p>
+        <div class="form-discount-field">
+          <input type="text" v-model="formData.discount" />
+          <span>%</span>
+        </div>
+      </div>
+      <button>SALVAR</button>
     </div>
-    <button>SALVAR</button>
-  </div>
+  </form>
 </template>
 
 <script>
+import axios from "axios";
 import Multiselect from "vue-multiselect";
 export default {
   name: "CreateProduct",
@@ -82,14 +85,14 @@ export default {
       ],
       formData: {
         name: "",
-        product_type: "",
+        product_type: [],
         description: "",
         price: "",
-        amount: "",
-        unity: "",
-        weight: "",
-        image: "",
+        unit: "",
+        quantity: "",
+        img: "",
         discount: "",
+        marketVendorId: "",
       },
     };
   },
@@ -104,6 +107,29 @@ export default {
       };
       this.options.push(tag);
       this.value.push(tag);
+    },
+    saveProductTypes(item) {
+      this.formData.product_type.push(item.name);
+    },
+    async saveProduct() {
+      this.value.forEach(this.saveProductTypes);
+      const id = localStorage.getItem("id");
+      this.formData.marketVendorId = id;
+      console.log(this.formData);
+
+      await axios
+        .post("http://localhost:5000/api/v1.0/products", this.formData, {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          },
+        })
+        .then(() => {
+          console.log("produto cadastrado!");
+          location.reload();
+        })
+        .catch((error) => console.log(error));
     },
   },
 };
@@ -121,7 +147,7 @@ export default {
     "name type"
     "description description"
     "price qnt"
-    "unity weight"
+    "weight weight"
     "img discount"
     "button button";
 
@@ -162,13 +188,19 @@ export default {
   }
 
   input,
-  select {
+  select,
+  textarea {
     background-color: @lightGray;
     height: 50px;
     border-radius: 6px;
     padding: 20px 15px;
     margin-top: 5px;
     width: 100%;
+    overflow-y: hidden;
+  }
+
+  textarea {
+    height: auto;
   }
 
   /*For IE*/

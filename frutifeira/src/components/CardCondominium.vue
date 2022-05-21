@@ -7,14 +7,24 @@
       <div class="card-content">
         <img :src="require(`../assets/${icon}`)" alt="" />
         <div class="card-content-title">
-          <h1>{{ this.title }}</h1>
-          <p v-if="address">Endereço do condomínio</p>
+          <h1>
+            {{
+              this.address
+                ? this.condominiumDetails.name
+                : this.contact
+                ? this.condominiumDetails.email
+                : this.condominiumDetails.weekDay +
+                  ", " +
+                  this.condominiumDetails.schedule
+            }}
+          </h1>
+          <p v-if="address">{{ condominiumDetails.address }}</p>
         </div>
       </div>
       <div class="card-contact" v-if="contact">
         <img src="../assets/phone.svg" alt="" />
         <div class="card-content-title">
-          <h1>{{ this.tel }}</h1>
+          <h1>{{ condominiumDetails.contact }}</h1>
         </div>
       </div>
       <div v-if="address" @click="isOpen = !isOpen">
@@ -25,19 +35,19 @@
       <div class="card-address" v-if="isOpen">
         <div class="card-address-details">
           <h1>CEP</h1>
-          <p>99999-999</p>
+          <p>{{ condominiumDetails.cep }}</p>
         </div>
         <div class="card-address-details">
           <h1>Estado</h1>
-          <p>São Paulo</p>
+          <p>{{ condominiumDetails.state }}</p>
         </div>
         <div class="card-address-details">
           <h1>Cidade</h1>
-          <p>Santo André</p>
+          <p>{{ condominiumDetails.city }}</p>
         </div>
         <div class="card-address-details">
           <h1>Bairro</h1>
-          <p>Centro</p>
+          <p>{{ condominiumDetails.neighborhood }}</p>
         </div>
       </div>
     </transition>
@@ -50,8 +60,7 @@ export default {
     address: Boolean,
     contact: Boolean,
     time: Boolean,
-    title: String,
-    tel: String,
+    condominiumDetails: [],
   },
   data() {
     return {

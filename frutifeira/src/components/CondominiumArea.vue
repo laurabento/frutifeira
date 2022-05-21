@@ -15,8 +15,16 @@
     </div>
     <div class="tabs-content">
       <transition name="slide-fade" mode="out-in">
-        <div v-if="activeTab === 'feirantes'" key="feirantes">a</div>
-        <div v-if="activeTab === 'solicitacoes'" key="solicitacoes">b</div>
+        <div v-if="activeTab === 'feirantes'" key="feirantes">
+          <Table :table="marketersTable" type="marketVendors" />
+        </div>
+        <div v-if="activeTab === 'solicitacoes'" key="solicitacoes">
+          <Table
+            :table="table"
+            type="cSolicitations"
+            @openModalConfirmation="openModalConfirmation"
+          />
+        </div>
         <div v-if="activeTab === 'info'" key="info"><CondominiumInfo /></div>
       </transition>
     </div>
@@ -25,10 +33,12 @@
 
 <script>
 import CondominiumInfo from "@/components/CondominiumInfo.vue";
+import Table from "@/components/Table.vue";
 export default {
   name: "CondominiumArea",
   components: {
     CondominiumInfo,
+    Table,
   },
   data() {
     return {
@@ -38,6 +48,8 @@ export default {
         { id: "solicitacoes", label: "SOLICITAÇÕES" },
         { id: "info", label: "INFORMAÇÕES GERAIS" },
       ],
+      table: ["Nome do feirante", "Produto", "Status", "Aprovação"],
+      marketersTable: ["Nome do feirante", "Nome da barraca", "Produtos"],
     };
   },
   created() {
@@ -49,6 +61,9 @@ export default {
     },
     setActiveTab(id) {
       this.activeTab = id;
+    },
+    openModalConfirmation(id) {
+      this.$emit("openModalConfirmation", id);
     },
   },
 };
@@ -63,7 +78,7 @@ export default {
   display: grid;
   grid-template-columns: 1fr 3fr;
   grid-gap: 20px;
-  margin-top: calc(@height-menu-desktop ~'+' 10px);
+  margin-top: calc(@height-menu-desktop ~"+" 10px);
 
   .tabs {
     ul {
@@ -105,7 +120,7 @@ export default {
   @media (max-width: 768px) {
     padding-right: @margin-body-mobile;
     padding-left: @margin-body-mobile;
-    margin-top: calc(@height-menu-mobile ~'+' 10px);
+    margin-top: calc(@height-menu-mobile ~"+" 10px);
     grid-template-columns: 1fr;
     margin-bottom: @margin-body-mobile;
 
@@ -115,7 +130,7 @@ export default {
         margin-top: 10px;
         justify-content: center;
 
-        li {  
+        li {
           width: 50%;
           flex-direction: column;
           text-align: center;
@@ -132,8 +147,7 @@ export default {
           }
         }
       }
-    }  
+    }
   }
-
 }
 </style>
