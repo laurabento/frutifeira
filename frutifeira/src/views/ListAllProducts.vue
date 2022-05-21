@@ -1,6 +1,5 @@
 <template>
-  <div class="list-products">
-    <Spiner :active="active"/>
+  <div class="list-all-products">
     <Header
       @openMenu="openMenu"
       @openCart="openCart"
@@ -22,14 +21,12 @@
     <ChangeCondominium v-if="isOpenLocation" @openLocation="openLocation" />
     <Order v-if="isOpenOrder" @openOrder="openOrder"/>
     <SearchBarHome />
-    <List @openDetails="openDetails" :productsMarketersList="productsMarketersList" :marketerName="marketerName"/>
+    <ListAll @openDetails="openDetails"/>
     <Footer />
   </div>
 </template>
 
 <script>
-import axios from "axios";
-
 import Header from "@/components/Header.vue";
 import SearchBarHome from "@/components/SearchBarHome.vue";
 import Footer from "@/components/Footer.vue";
@@ -40,9 +37,7 @@ import Login from "@/components/Login.vue";
 import SignUp from "@/components/SignUp.vue";
 import Order from "@/components/Order.vue";
 import ProductDetails from "@/components/ProductDetails.vue";
-import List from "@/components/List.vue";
-import Spiner from "@/components/Spiner.vue";
-
+import ListAll from "@/components/ListAll.vue";
 
 export default {
   name: "ListProduct",
@@ -57,8 +52,7 @@ export default {
     SignUp,
     Order,
     ProductDetails,
-    List,
-    Spiner
+    ListAll
   },
   data() {
     return {
@@ -71,13 +65,7 @@ export default {
       isOpenDetails: false,
       client: true,
       product: [],
-      active: false,
-      productsMarketersList: [],
-      marketerName: [],
     };
-  },
-  created() {
-    this.findMarketerProducts(this.$route.params.id);
   },
   methods: {
     openMenu() {
@@ -101,18 +89,6 @@ export default {
     openDetails(value) {
       this.product = value;
       return (this.isOpenDetails = !this.isOpenDetails);
-    },
-    async findMarketerProducts(id) {
-      try {
-        this.active = true
-        const marketer = await axios.get(`http://localhost:5000/api/v1.0/products/feirante/${id}`);
-        const marketerName = await axios.get(`http://localhost:5000/api/v1.0/products/feirante/${id}/nome`);
-        this.marketerName = marketerName.data
-        this.productsMarketersList = marketer.data
-        this.active = false
-      } catch (error) {
-        console.error('Not found Products')
-      }
     },
   },
 };

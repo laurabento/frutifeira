@@ -6,7 +6,7 @@
         paginationColor="#f2f2f2" 
         paginationActiveColor="#5f5f5f">
           <slide v-for="item in marketersCondominiumList" :key="item.id">
-              <router-link :to="{ path: '/ListProduct/' + item._id }">
+              <router-link :to="{ path: '/ListProduct/' + item._id }" >
                 <div class="circle">
                   <label>{{item.name}}</label>
                 </div>
@@ -27,16 +27,6 @@ export default {
     props: {
         marketersCondominiumList: Array
     },
-    data() {
-        return {
-            isMarketer: true
-        }
-    },
-    methods: {
-        openMarketerProducts() {
-            this.$router.push({ name: "Markets" });
-        }
-    }
 }
 </script>
 

@@ -3,7 +3,9 @@
     <div class="menu-mobile" v-if="UserMarketer" @click="openMarketerMenu">
       <div :class="changeMenuIcon(isOpenMarketerMenu)" />
     </div>
-    <img src="../assets/logo-frutifeira.svg" />
+    <router-link :to="{ path: '/' }">
+      <img src="../assets/logo-frutifeira.svg" />
+    </router-link>
     <div class="main-header_items" v-if="UserClient">
       <div class="location" @click="openLocation">
         <img class="location-icon" src="../assets/location.svg" />
