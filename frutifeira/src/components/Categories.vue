@@ -2,11 +2,11 @@
   <div class="categories-group">
       <div class="categories-group_list">
           <ul>
-              <li id="clickCategorias1">Frutas</li>
-              <li id="clickCategorias2">Verduras</li>
-              <li id="clickCategorias3">Legumes</li>
-              <li id="clickCategorias4">Pastel</li>
-              <li id="clickCategorias5">Peixes</li>
+              <li id="clickCategorias1" @click="clickFruits">Frutas</li>
+              <li id="clickCategorias2" @click="clickVegetables">Verduras</li>
+              <li id="clickCategorias3" @click="clickLegumes">Legumes</li>
+              <li id="clickCategorias4" @click="clickPastel">Pastel</li>
+              <li id="clickCategorias5" @click="clickFish">Peixes</li>
           </ul>
       </div>
   </div>
@@ -14,7 +14,40 @@
 
 <script>
 export default {
-
+    data() {
+        return {
+            condominium: ''
+        }
+    },
+    created(){
+        this.hasCondominium();
+    },
+    methods: {
+        hasCondominium() {
+            const getCondominium = JSON.parse(localStorage.getItem("condominium"));
+            this.condominium = getCondominium._id
+        },
+        clickFruits() {
+            this.$router.push({ path: '/ListAllProducts/' + this.condominium, query: { type: 'fruits' }});
+            window.location.reload();
+        },
+        clickVegetables() {
+            this.$router.push({ path: '/ListAllProducts/' + this.condominium, query: { type: 'vegetables' }});
+            window.location.reload();
+        },
+        clickLegumes() {
+            this.$router.push({ path: '/ListAllProducts/' + this.condominium, query: { type: 'legumes' }});
+            window.location.reload();
+        },
+        clickPastel() {
+            this.$router.push({ path: '/ListAllProducts/' + this.condominium, query: { type: 'pastel' }});
+            window.location.reload();
+        },
+        clickFish() {
+            this.$router.push({ path: '/ListAllProducts/' + this.condominium, query: { type: 'fish' }});
+            window.location.reload();
+        },
+    }
 }
 </script>
 

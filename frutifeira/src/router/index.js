@@ -8,6 +8,7 @@ import Products from "../views/Products.vue";
 import Payment from "../views/Payment.vue";
 import Markets from "../views/Markets.vue";
 import ListProduct from "../views/ListProduct.vue";
+import ListAllProducts from "../views/ListAllProducts.vue";
 
 Vue.use(VueRouter);
 
@@ -50,6 +51,12 @@ const routes = [{
         path: "/ListProduct/:id",
         name: "ListProduct",
         component: ListProduct
+    },
+    {
+        path: "/ListAllProducts/:id",
+        name: "ListAllProducts",
+        component: ListAllProducts,
+        props: true
     }
 ];
 

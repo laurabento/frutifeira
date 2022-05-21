@@ -1,33 +1,23 @@
 <template>
     <div class="list">
         <div class="list-group">
-            <Card v-for="item in productsMarketersList" :key="item.name" :item="item" @openDetails="openDetails(item)"/>
+            <Card v-for="item in productsCondominium" :key="item.name" :item="item" @openDetails="openDetails(item)"/>
+            <h1 v-if="productsCondominium.length == 0">Não existem produtos nessa categoria!</h1>
         </div>
     </div>
 </template>
 
 <script>
-import axios from "axios";
-
 import Card from "@/components/Card.vue";
 
 export default {
     components: {
         Card,
     },
-    data() {
-        return {
-            productsMarketersList: Array,
-        }
-    },
-    created() {
-        this.findMarketerProducts(this.$route.params.id);
+    props: {
+        productsCondominium: Array,
     },
     methods: {
-        async findMarketerProducts(id) {
-            const marketer = await axios.get(`http://localhost:5000/api/v1.0/products/feirante/${id}`);
-            this.productsMarketersList = marketer.data
-        },
         openDetails(item) {
             this.$emit("openDetails", item);
         },
@@ -41,8 +31,11 @@ export default {
 .list {
     h1 {
         color: @green;
-        margin-left: @margin-body-desktop;
-        margin-top: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        width: 100%;
     }
 
     &-group {

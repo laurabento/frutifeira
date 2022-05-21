@@ -1,5 +1,6 @@
 <template>
   <div class="list-all-products">
+    <Spiner :active="active" />
     <Header
       @openMenu="openMenu"
       @openCart="openCart"
@@ -21,12 +22,14 @@
     <ChangeCondominium v-if="isOpenLocation" @openLocation="openLocation" />
     <Order v-if="isOpenOrder" @openOrder="openOrder"/>
     <SearchBarHome />
-    <ListAll @openDetails="openDetails"/>
+    <ListAll @openDetails="openDetails" :productsCondominium="productsCondominium"/>
     <Footer />
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 import Header from "@/components/Header.vue";
 import SearchBarHome from "@/components/SearchBarHome.vue";
 import Footer from "@/components/Footer.vue";
@@ -38,6 +41,8 @@ import SignUp from "@/components/SignUp.vue";
 import Order from "@/components/Order.vue";
 import ProductDetails from "@/components/ProductDetails.vue";
 import ListAll from "@/components/ListAll.vue";
+import Spiner from "@/components/Spiner.vue";
+
 
 export default {
   name: "ListProduct",
@@ -52,7 +57,8 @@ export default {
     SignUp,
     Order,
     ProductDetails,
-    ListAll
+    ListAll,
+    Spiner
   },
   data() {
     return {
@@ -65,7 +71,12 @@ export default {
       isOpenDetails: false,
       client: true,
       product: [],
+      productsCondominium: [],
+      active: false,
     };
+  },
+  created(){
+    this.loadCondominiumProducts(this.$route.params.id);
   },
   methods: {
     openMenu() {
@@ -89,6 +100,55 @@ export default {
     openDetails(value) {
       this.product = value;
       return (this.isOpenDetails = !this.isOpenDetails);
+    },
+    async loadCondominiumProducts(id) {
+      try {
+        this.active = true;
+        this.productsCondominium = [];
+        const condominiumProducts = await axios.get(`http://localhost:5000/api/v1.0/marketcondominium/condominio/${id}/produtos`);
+        const response = condominiumProducts.data;
+
+        if(this.$route.query.type == 'fruits') {
+          this.productsCondominium = [];
+          const results = response.filter(item => {
+            return item.product_type[0] === "Fruta"
+          });
+          this.productsCondominium = results
+        }
+        if(this.$route.query.type == 'vegetables') {
+          this.productsCondominium = [];
+          const results = response.filter(item => {
+            return item.product_type[0] === "Verdura"
+          });
+          this.productsCondominium = results
+        }
+        if(this.$route.query.type == 'legumes') {
+          this.productsCondominium = [];
+          const results = response.filter(item => {
+            return item.product_type[0] === "Legumes"
+          });
+          this.productsCondominium = results
+        }
+        if(this.$route.query.type == 'pastel') {
+          this.productsCondominium = [];
+          const results = response.filter(item => {
+            return item.product_type[0] === "Pastel"
+          });
+          this.productsCondominium = results
+        }
+        if(this.$route.query.type == 'fish') {
+          this.productsCondominium = [];
+          const results = response.filter(item => {
+            return item.product_type[0] === "Peixe"
+          });
+          this.productsCondominium = results
+        }
+        this.active = false;
+      } catch (error) {
+        console.error("Not found Products");
+        this.productsCondominium = [];
+        this.active = false;
+      }
     },
   },
 };
