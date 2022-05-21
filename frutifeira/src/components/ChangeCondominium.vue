@@ -4,7 +4,7 @@
       <img src="../assets/close-gray.svg" @click="openLocation" />
       <label>Você está em</label>
     </div>
-    <h3>
+    <h3 id="textCondominuoSelected">
       {{
         condominiumSelectedInfo
           ? condominiumSelectedInfo.name +
