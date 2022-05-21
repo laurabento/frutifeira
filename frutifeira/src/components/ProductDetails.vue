@@ -7,22 +7,15 @@
         alt="fechar"
         @click="openDetails"
       />
-      <img class="modal-img" src="../assets/green-apple.jpg" alt="Maçã Verde" />
+      <img class="modal-img" :src="product.img" />
       <div class="modal-content">
         <div class="modal-content-header">
-          <p>BARRACA DA SILVIA</p>
-          <h1>Maçã Verde</h1>
-          <span>1 unidade</span>
+          <p>{{ product.marketVendorName }}</p>
+          <h1>{{ product.name }}</h1>
+          <span>{{ this.productUnit(product) }}</span>
         </div>
         <p>
-          Só essa minha cor verdinha, verdinha já dá uma ideia de coisa gostosa,
-          fresca e muito saudável, não é? E é a pura verdade, por várias razões,
-          a começar pelo meu sabor delicioso, com um toque um pouco mais ácido
-          do que minhas primas vermelhas, e também com menor teor de açúcar. Por
-          isso eu, a autêntica maçã verde, dou um gostinho especial em saladas,
-          sucos e em muito mais. Mesmo não sendo orgânica, fui selecionada com
-          carinho, o que garante minha alta qualidade. Pra completar, sou rica
-          em fibras, vitaminas e minerais.
+         {{product.description}}
         </p>
         <div class="modal-content-amount">
           <img id="clickAumentarProduto"
@@ -30,8 +23,8 @@
             @click="addRemoveAmount(false)"
             src="../assets/remove.svg"
           />
-          <p id="amount">1</p>
-          <img id="clickReduzirProduto"
+          <p>{{ this.amount }}</p>
+          <img
             class="modal-content-amount-add"
             @click="addRemoveAmount(true)"
             src="../assets/add.svg"
@@ -39,7 +32,7 @@
         </div>
         <button id="btnAdicionarProduto" class="modal-content-button">
           <p>Adicionar</p>
-          <p>R$ 4,99</p>
+          <p>R$ {{ productPrice(product) }}</p>
         </button>
       </div>
     </div>
@@ -48,21 +41,36 @@
 
 <script>
 export default {
+  props:{
+    product: Object,
+  },
+  data() {
+    return {
+      amount: 1,
+    }
+  },
   methods: {
     openDetails() {
       this.$emit("openDetails");
     },
-
     addRemoveAmount(add) {
-      let amount = parseInt(document.getElementById("amount").innerHTML);
-      let textField = document.getElementById("amount");
-
       if (add) {
-        textField.innerHTML = amount += 1;
-      } else if (amount > 0) {
-        textField.innerHTML = amount -= 1;
+        this.amount += 1;
+      } else if (this.amount > 1) {
+        this.amount -= 1;
       }
     },
+    productUnit(item) {
+      if(item.unit == "U")
+        return "unidade"
+      if(item.unit == "K")
+        return item.quantity + " kilo"
+      if(item.unit == "G")
+        return item.quantity + " gramas"
+    },
+    productPrice(item){
+      return (parseFloat(this.amount * item.finalPrice).toFixed(2)).toString().replace(".", ",")
+    }
   },
 };
 </script>
@@ -105,18 +113,25 @@ export default {
       object-fit: cover;
       border-radius: 16px;
       border: 3px solid @lightGray;
+      padding: 40px;
     }
 
     &-content {
       display: flex;
       flex-direction: column;
       margin-left: 30px;
+      width: 100%;
+      justify-content: space-between;
 
       &-header {
         margin-bottom: 25px;
         h1 {
           font-size: 32px;
           margin: 5px 0 5px 0;
+        }
+
+        p {
+          text-transform: uppercase;
         }
       }
 

@@ -1,20 +1,20 @@
 <template>
   <div class="card" id="clickProduto" @click="openDetails">
     <div class="card-img">
-      <div class="flag">
+      <div class="flag" v-if="item.discount">
         <label>%</label>
       </div>
-      <img src="../assets/green-apple.jpg" />
+      <img :src="item.img" />
     </div>
     <div class="card-info">
       <div class="card-info_title">
-        <span>Barraca da Meire</span>
-        <label>Maçã Verde</label>
+        <span>{{ item.marketVendorName }}</span>
+        <label>{{ item.name }}</label>
       </div>
       <div class="card-info_price">
-        <span class="original-price">R$ 1,40</span>
-        <label class="price red">R$ 1,20</label>
-        <span class="price-info">unidade</span>
+        <span v-if="item.discount" class="original-price">R$ {{ (parseFloat(item.price).toFixed(2)).toString().replace(".", ",") }}</span>
+        <label :class="hasDiscountColor(item)">R$ {{ (parseFloat(item.finalPrice).toFixed(2)).toString().replace(".", ",") }}</label>
+        <span class="price-info">{{ this.productUnit(item) }}</span>
       </div>
     </div>
   </div>
@@ -22,10 +22,24 @@
 
 <script>
 export default {
+  props: {
+    item: Object,
+  },
   methods: {
     openDetails() {
       this.$emit("openDetails");
     },
+    hasDiscountColor(item) {
+      return item.discount ? 'price red' : 'price green';
+    },
+    productUnit(item) {
+      if(item.unit == "U")
+        return "unidade"
+      if(item.unit == "K")
+        return item.quantity + " kilo"
+      if(item.unit == "G")
+        return item.quantity + " gramas"
+    }
   },
 };
 </script>
@@ -118,6 +132,7 @@ export default {
 
       .green {
         color: @green;
+        padding-top: 17.5px;
       }
 
       .price-info {
