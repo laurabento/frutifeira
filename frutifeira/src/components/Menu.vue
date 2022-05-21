@@ -6,6 +6,10 @@
         <p>Bem-vindo(a) ao Frutifeira!</p>
       </div>
       <div
+        @click="
+          openProfile();
+          openMenu();
+        "
         class="menu-items_item"
         v-if="!admArea || userType != '3' || (admArea && userType == '2')"
       >
@@ -44,10 +48,18 @@ export default {
     openOrder() {
       this.$emit("openOrder");
     },
+    openProfile() {
+      if (this.admArea && this.userType === "2") {
+        this.$emit("openMarketerProfile");
+      }
+    },
     checkUser() {
       const userType = localStorage.getItem("userType");
 
       return userType;
+    },
+    openMenu() {
+      this.$emit("openMenu");
     },
     logout() {
       localStorage.removeItem("id");
@@ -128,6 +140,6 @@ export default {
 }
 
 .no-marginTop {
-  margin-top: 0;
+  margin-top: -10px;
 }
 </style>

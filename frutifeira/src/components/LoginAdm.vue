@@ -8,19 +8,26 @@
       <div class="login-form">
         <div class="login-form-field">
           <p>E-mail</p>
-          <input type="email" v-model="formData.email" />
+          <input type="email" v-model="formData.email" required />
         </div>
         <div class="login-form-field">
           <p>Senha</p>
-          <input type="password" v-model="formData.password" />
+          <input type="password" v-model="formData.password" required />
         </div>
         <div class="login-form-error" v-if="errorLabel">
           <label>{{ this.errorMessage }}</label>
         </div>
         <button>ENTRAR</button>
         <div class="login-form-info">
-          <p>Entre em contato! Mande um e-mail para:</p>
-          <span>frutifeira@gmail.com</span>
+          <p>
+            Não possui uma conta?
+            <router-link
+              :to="{
+                path: '/CreateAccount/' + (market ? 'Feirante' : 'Condominio'),
+              }"
+              ><span> Crie aqui!</span></router-link
+            >
+          </p>
         </div>
       </div>
     </div>
@@ -72,6 +79,7 @@ export default {
           return response.json();
         })
         .then((response_json) => {
+          console.log(response_json);
           if (response_json.status === "200") {
             this.errorLabel = false;
             localStorage.setItem("accessToken", response_json.accessToken);
@@ -79,7 +87,7 @@ export default {
             localStorage.setItem("id", response_json.id);
             this.openPage(this.title);
           } else {
-            this.errorMessage = response_json.message;
+            this.errorMessage = response_json.error;
             this.errorLabel = true;
           }
         })
@@ -159,6 +167,7 @@ export default {
       span {
         color: @green;
         font-weight: bold;
+        cursor: pointer;
       }
     }
 

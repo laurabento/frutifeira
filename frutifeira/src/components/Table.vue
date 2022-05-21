@@ -103,7 +103,6 @@ export default {
   },
   async created() {
     this.items = await this.loadItems();
-    console.log(this.items);
   },
   data() {
     return {

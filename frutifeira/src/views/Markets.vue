@@ -13,8 +13,17 @@
       :isOpenMenuProps="this.isOpenMenu"
       @openMenu="openMenu"
     />
+    <MarketerProfile
+      v-if="isOpenMarketerProfile"
+      @openMarketerProfile="openMarketerProfile"
+    />
     <transition name="slide-up">
-      <Menu v-if="isOpenMenu" :admArea="true" />
+      <Menu
+        v-if="isOpenMenu"
+        :admArea="true"
+        @openMenu="openMenu"
+        @openMarketerProfile="openMarketerProfile"
+      />
     </transition>
     <transition name="slide">
       <AddProducts v-if="isOpenProducts" @openProducts="openProducts" />
@@ -41,6 +50,7 @@ import MarketDetails from "@/components/MarketDetails.vue";
 import AddProducts from "@/components/AddProducts.vue";
 import Menu from "@/components/Menu.vue";
 import ModalConfirmation from "@/components/ModalConfirmation.vue";
+import MarketerProfile from "@/components/MarketerProfile.vue";
 
 export default {
   name: "Marketer",
@@ -52,6 +62,7 @@ export default {
     MarketDetails,
     AddProducts,
     Menu,
+    MarketerProfile,
   },
   created() {
     this.checkUser();
@@ -64,6 +75,7 @@ export default {
       isOpenProducts: false,
       isOpenMenu: false,
       isOpenModalConfirmation: false,
+      isOpenMarketerProfile: false,
       confirmationType: Number,
     };
   },
@@ -79,6 +91,9 @@ export default {
     },
     openMenu() {
       return (this.isOpenMenu = !this.isOpenMenu);
+    },
+    openMarketerProfile() {
+      return (this.isOpenMarketerProfile = !this.isOpenMarketerProfile);
     },
     openModalConfirmation(value) {
       this.confirmationType = value;
