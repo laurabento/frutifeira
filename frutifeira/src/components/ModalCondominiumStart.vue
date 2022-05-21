@@ -10,7 +10,7 @@
         @keyup="findCondominium($event)"
         v-model="selectedLabel"
       />
-      <ul>
+      <ul id="listCondominios">
         <li
           v-for="item in listCondominiumSearch"
           :key="item.id"

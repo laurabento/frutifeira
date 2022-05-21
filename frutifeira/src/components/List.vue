@@ -19,7 +19,7 @@ export default {
     },
     props: {
         productsMarketersList: Array,
-        marketerName: Array,
+        marketerName: Object,
     },
     methods: {
         openDetails(item) {
