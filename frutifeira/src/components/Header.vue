@@ -5,18 +5,18 @@
     </div>
     <img src="../assets/logo-frutifeira.svg" />
     <div class="main-header_items" v-if="UserClient">
-      <div class="location" @click="openLocation">
+      <div class="location" id="clickQualCondominio" @click="openLocation">
         <img class="location-icon" src="../assets/location.svg" />
         <label>Qual seu condomínio?</label>
       </div>
-      <div class="bag" @click="openCart">
+      <div class="bag" id="clickCart" @click="openCart">
         <img src="../assets/bag.svg" />
         <div class="bag_items">
           <label>R$ 0,00</label>
           <span>0 itens</span>
         </div>
       </div>
-      <div class="login" @click="openMenu">
+      <div class="login" id="clickLogin" @click="openMenu">
         <img src="../assets/person.svg" />
         <div :class="changeArrowIcon(isOpenMenuProps)"></div>
       </div>

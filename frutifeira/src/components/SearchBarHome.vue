@@ -1,13 +1,13 @@
 <template>
   <div class="search-bar">
     <div class="search-bar_items">
-      <div class="categories" @click="isOpen = !isOpen">
+      <div class="categories" id="clickCategorias" @click="isOpen = !isOpen">
         <div :class="changeIcon(isOpen)"></div>
         <label>Categorias</label>
       </div>
       <div class="search-bar_group">
         <img src="../assets/search-white.svg" />
-        <input type="text" />
+        <input type="text" id="inputSearchBar" />
       </div>
     </div>
     <transition name="slide-fade">
