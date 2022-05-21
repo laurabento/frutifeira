@@ -8,16 +8,26 @@
       <div class="login-form">
         <div class="login-form-field">
           <p>E-mail</p>
-          <input type="email" v-model="formData.email" required />
+          <input
+            id="loginEmail"
+            type="email"
+            v-model="formData.email"
+            required
+          />
         </div>
         <div class="login-form-field">
           <p>Senha</p>
-          <input type="password" v-model="formData.password" required />
+          <input
+            id="loginSenha"
+            type="password"
+            v-model="formData.password"
+            required
+          />
         </div>
         <div class="login-form-error" v-if="errorLabel">
           <label>{{ this.errorMessage }}</label>
         </div>
-        <button>ENTRAR</button>
+        <button id="btnLoginEntrar">ENTRAR</button>
         <div class="login-form-info">
           <p>
             Não possui uma conta?
