@@ -1,5 +1,16 @@
 <template>
   <div class="table-group">
+    <div class="search-field">
+      <div class="search-field-input">
+        <img src="../assets/search-gray.svg" alt="" />
+        <input
+          type="text"
+          placeholder="O que você procura?"
+          @change="find($event)"
+          @keyup="find($event)"
+        />
+      </div>
+    </div>
     <table>
       <tr>
         <th v-for="item in table" :key="item">
@@ -7,7 +18,7 @@
         </th>
         <th></th>
       </tr>
-      <tr v-for="item in items" :key="item.id">
+      <tr v-for="item in itemsSearch" :key="item.id">
         <td>
           {{ item.name }}
         </td>
@@ -49,10 +60,10 @@
         <td v-if="type === 'solicitation'">
           {{ item.schedule }}
         </td>
-        <td v-if="type === 'solicitation'" class="text-center">
+        <td v-if="type === 'solicitation'">
           {{ item.status == "" ? "-" : item.status }}
         </td>
-        <td v-if="type === 'solicitation'" class="text-center">
+        <td v-if="type === 'solicitation'">
           {{ item.approvalDate == "" ? "-" : item.approvalDate }}
         </td>
         <td
@@ -102,12 +113,14 @@ export default {
     type: String,
   },
   async created() {
-    this.items = await this.loadItems();
+    this.items = this.itemsSearch = await this.loadItems();
   },
   data() {
     return {
       itemsProducts: ["Alface Mimosa Hidropônica", "300g", "Não", "R$ 4,39"],
       items: [],
+      itemsSearch: [],
+      searchTerm: "",
     };
   },
   methods: {
@@ -155,6 +168,24 @@ export default {
         })
         .catch((error) => console.log(error));
     },
+    find() {
+      this.searchTerm =
+        event.target && event.target.value ? event.target.value.trim() : null;
+
+      if (this.searchTerm) {
+        this.itemsSearch = this.items.filter((d) =>
+          d.name.toLowerCase().includes(this.searchTerm.toLowerCase()),
+        );
+      }
+
+      if (this.searchTerm && this.searchTerm.lenght <= 3) {
+        this.itemsSearch = this.items;
+      }
+
+      if (!this.searchTerm) {
+        this.itemsSearch = this.items;
+      }
+    },
   },
 };
 </script>
@@ -169,7 +200,44 @@ export default {
 // .table-group table tr th {
 //   text-align: center;
 // }
+.search-field {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  margin-top: @margin-body-desktop;
 
+  input,
+  select {
+    background-color: @lightGray;
+    height: 50px;
+    border-radius: 6px;
+    padding: 16px;
+    margin-top: 5px;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  &-input {
+    display: flex;
+    align-items: center;
+    background-color: @lightGray;
+    border-radius: 6px;
+    margin-top: 5px;
+    cursor: text;
+    width: 100%;
+
+    input {
+      margin: 0;
+      cursor: text;
+    }
+
+    img {
+      margin: 13px 0 13px 13px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
 .table-group {
   table {
     width: 100%;
