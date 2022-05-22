@@ -7,39 +7,40 @@
       </div>
       <div class="search-bar_inputgroup">
         <div class="search-bar_group">
-        <img src="../assets/search-white.svg" />
-        <input 
-          type="text" 
-          id="inputSearchBar"
-          ref="inputSearchBar"
-          @change="findProduct($event)"
-          @keyup="findProduct($event)"
-          v-model="selectedLabel"
-         />
-      </div>
-      <div class="search-bar_search">
-        <ul id="listProdutos">
+          <img src="../assets/search-white.svg" />
+          <input
+            type="text"
+            id="inputSearchBar"
+            ref="inputSearchBar"
+            @change="findProduct($event)"
+            @keyup="findProduct($event)"
+            v-model="selectedLabel"
+          />
+        </div>
+        <div class="search-bar_search">
+          <ul id="listProdutos">
             <li
               v-for="item in listProductsSearch"
+              v-bind:id="item.id"
               :key="item.id"
               @click="selectProduct(item)"
             >
               <label>{{ item }}</label>
             </li>
-        </ul>
-      </div>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="search-bar_mobile">
       <ul id="listProdutos">
-            <li
-              v-for="item in listProductsSearch"
-              :key="item.id"
-              @click="selectProduct(item)"
-            >
-              <label>{{ item }}</label>
-            </li>
-        </ul>
+        <li
+          v-for="item in listProductsSearch"
+          :key="item.id"
+          @click="selectProduct(item)"
+        >
+          <label>{{ item }}</label>
+        </li>
+      </ul>
     </div>
     <transition name="slide-fade">
       <Categories v-if="isOpen" />
@@ -59,7 +60,7 @@ export default {
   data() {
     return {
       isOpen: false,
-      condominium: '',
+      condominium: "",
       productsList: [],
       products: [],
       listProductsSearch: [],
@@ -77,10 +78,12 @@ export default {
     },
     hasCondominium() {
       const getCondominium = JSON.parse(localStorage.getItem("condominium"));
-      this.condominium = getCondominium._id
+      this.condominium = getCondominium._id;
     },
     async loadProduct() {
-      const condominiumProducts = await axios.get(`http://localhost:5000/api/v1.0/marketcondominium/condominio/${this.condominium}/produtos`);
+      const condominiumProducts = await axios.get(
+        `http://localhost:5000/api/v1.0/marketcondominium/condominio/${this.condominium}/produtos`,
+      );
       const response = condominiumProducts.data;
       response.forEach((item) => {
         this.productsList.push(item.name);
@@ -109,7 +112,10 @@ export default {
     },
     selectProduct(item) {
       this.selectedLabel = item;
-      this.$router.push({ path: '/ListAllProducts/' + this.condominium, query: { search: item }});
+      this.$router.push({
+        path: "/ListAllProducts/" + this.condominium,
+        query: { search: item },
+      });
       window.location.reload();
     },
   },
@@ -182,7 +188,7 @@ export default {
 
   &_search {
     position: absolute;
-    width: calc(100% ~'-' 245.61px);
+    width: calc(100% ~"-" 245.61px);
     background: @searchGreen;
     border-radius: 6px;
 

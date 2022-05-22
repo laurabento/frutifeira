@@ -17,7 +17,7 @@
       <slide v-for="item in marketersCondominiumList" :key="item.id">
         <router-link :to="{ path: '/ListProduct/' + item._id }">
           <div class="circle">
-            <label>{{ item.stand_name }}</label>
+            <label id="stand1">{{ item.stand_name }}</label>
           </div>
         </router-link>
       </slide>
