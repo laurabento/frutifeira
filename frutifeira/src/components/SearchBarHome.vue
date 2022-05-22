@@ -76,7 +76,6 @@ export default {
       });
       const productSet = new Set(this.productsList);
       const backToArray = [...productSet];
-      console.log(backToArray)
       this.products = backToArray;
     },
     findProduct() {
