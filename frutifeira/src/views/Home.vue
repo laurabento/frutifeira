@@ -32,7 +32,7 @@
     <SearchBarHome />
     <Banner />
     <Carousel :marketersCondominiumList="marketersCondominiumList"/>
-    <CardListHome :titleList="titleList" @openDetails="openDetails" />
+    <CardListHome :titleList="titleList" @openDetails="openDetails" :saleList="saleList"/>
     <Footer />
   </div>
 </template>
@@ -90,6 +90,7 @@ export default {
       client: true,
       active: false,
       marketersCondominiumList: [],
+      saleList: [],
     };
   },
   created() {
@@ -146,6 +147,10 @@ export default {
         response.forEach((item) => {
           this.marketersCondominiumList.push(item);
         });
+        const saleOffers = await axios.get(
+          `http://localhost:5000/api/v1.0/marketcondominium/condominio/${getCondominium._id}/desconto`,
+        );
+        this.saleList = saleOffers.data
         this.active = false;
       } catch (error) {
         console.error("Not found Marketers");

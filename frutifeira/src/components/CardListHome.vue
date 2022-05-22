@@ -6,29 +6,10 @@
         :loop="true"
         paginationColor="#f2f2f2" 
         paginationActiveColor="#5f5f5f">
-          <slide>
-              <Card @openDetails="openDetails" />
-          </slide>
-          <slide>
-              <Card @openDetails="openDetails" />
-          </slide>
-          <slide>
-              <Card @openDetails="openDetails" />
-          </slide>
-          <slide>
-              <Card @openDetails="openDetails" />
-          </slide>
-          <slide>
-              <Card @openDetails="openDetails" />
+          <slide v-for="item in saleList" :key="item">
+              <Card @openDetails="openDetails" :item="item"/>
           </slide>
       </carousel>
-    <!-- <div class="card-home-list_items">
-      <Card @openDetails="openDetails" />
-      <Card @openDetails="openDetails" />
-      <Card @openDetails="openDetails" />
-      <Card @openDetails="openDetails" />
-      <Card @openDetails="openDetails" />
-    </div> -->
   </div>
 </template>
 
@@ -45,6 +26,7 @@ export default {
   },
   props: {
     titleList: String,
+    saleList: Array,
   },
   methods: {
     openDetails() {
