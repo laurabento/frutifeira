@@ -86,8 +86,8 @@ export default {
           const index = cart.findIndex(
             (product) => product.id === this.product._id,
           );
-          cart[index].amount += this.amount;
           const amount = cart[index].amount + this.amount;
+          cart[index].amount = amount;
           const newPrice = amount * parseFloat(this.product.finalPrice);
           cart[index].price = newPrice.toFixed(2).replace(".", ",");
 
