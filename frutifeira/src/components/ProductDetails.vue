@@ -64,9 +64,6 @@ export default {
       },
     };
   },
-  created() {
-    console.log(this.product);
-  },
   methods: {
     addToCart() {
       this.cartProduct.stand_name = this.product.stand_name;

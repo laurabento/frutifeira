@@ -2,8 +2,17 @@
   <div class="menu" :class="userType != '1' && admArea ? 'no-marginTop' : ''">
     <div class="menu-items">
       <div class="menu-items_item dark">
-        <h1>Olá, Laura!</h1>
-        <p>Bem-vindo(a) ao Frutifeira!</p>
+        <div v-if="userType != null">
+          <h1>Olá, {{ user.name }}!</h1>
+          <p>Bem-vindo(a) ao Frutifeira!</p>
+        </div>
+        <div v-if="userType == null" :class="userType == null ? 'no-user' : ''">
+          <h1>Bem-vindo(a) ao Frutifeira!</h1>
+          <p>
+            <span @click="openLogin">Entre</span> ou
+            <span @click="openSignUp">cadastre-se</span>
+          </p>
+        </div>
       </div>
       <div
         @click="
@@ -11,20 +20,23 @@
           openMenu();
         "
         class="menu-items_item"
-        v-if="!admArea || userType != '3' || (admArea && userType == '2')"
+        v-if="
+          userType != null &&
+          (!admArea || userType != '3' || (admArea && userType == '2'))
+        "
       >
         <h1>Perfil</h1>
         <p>Aqui você pode acessar seu perfil, alterar dados e senhas.</p>
       </div>
       <div
         class="menu-items_item"
-        v-if="userType == '1' || !admArea"
+        v-if="userType != null && (userType == '1' || !admArea)"
         @click="openOrder"
       >
         <h1>Pedidos</h1>
         <p>Aqui você pode acompanhar e rever seus pedidos</p>
       </div>
-      <div class="menu-items_logout" @click="logout">
+      <div class="menu-items_logout" @click="logout" v-if="userType != null">
         <h1>Sair</h1>
       </div>
     </div>
@@ -32,30 +44,63 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   props: {
     admArea: Boolean,
   },
-  created() {
+  async created() {
     this.userType = this.checkUser();
+
+    if (this.userType == "1") this.user = await this.getUserInfo();
   },
   data() {
     return {
       userType: String,
+      user: Object,
     };
   },
   methods: {
+    getUserInfo() {
+      return axios
+        .get(
+          "http://localhost:5000/api/v1.0/users/" + localStorage.getItem("id"),
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            },
+          },
+        )
+        .then((response) => {
+          return response;
+        })
+        .then((response_json) => {
+          return response_json.data;
+        })
+        .catch((error) => console.log(error));
+    },
     openOrder() {
       this.$emit("openOrder");
+    },
+    openLogin() {
+      this.$emit("openLogin");
+      this.$emit("openMenu");
+    },
+    openSignUp() {
+      this.$emit("openSignUp");
+      this.$emit("openMenu");
     },
     openProfile() {
       if (this.admArea && this.userType === "2") {
         this.$emit("openMarketerProfile");
+      } else {
+        this.$emit("openClientProfile", this.user);
       }
     },
     checkUser() {
       const userType = localStorage.getItem("userType");
-      console.log(userType);
       return userType;
     },
     openMenu() {
@@ -65,11 +110,13 @@ export default {
       localStorage.removeItem("id");
       localStorage.removeItem("userType");
       localStorage.removeItem("accessToken");
-
       if (this.admArea) {
-        this.$router.push({ name: "LoginAdm" });
+        if (this.$route.name != "LoginAdm")
+          this.$router.push({ name: "LoginAdm" });
+        else location.reload();
       } else {
-        this.$router.push({ name: "Home" });
+        if (this.$route.name != "Home") this.$router.push({ name: "Home" });
+        else location.reload();
       }
     },
   },
@@ -92,7 +139,7 @@ export default {
 
   &-items {
     &_item {
-      border-bottom: 2px solid @lightGray;
+      // border-bottom: 2px solid @lightGray;
       padding: 20px;
       cursor: pointer;
 
@@ -108,6 +155,21 @@ export default {
 
       h1 {
         color: @darkGray;
+      }
+    }
+
+    .no-user {
+      h1 {
+        color: @green;
+      }
+
+      p {
+        margin-top: 5px;
+
+        span {
+          font-weight: 600;
+          cursor: pointer;
+        }
       }
     }
 

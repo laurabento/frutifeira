@@ -23,10 +23,27 @@
       @forceRender="forceRender"
     />
     <transition name="slide-up">
-      <Menu v-if="isOpenMenu" @openOrder="openOrder" :admArea="false" />
+      <Menu
+        v-if="isOpenMenu"
+        @openOrder="openOrder"
+        :admArea="false"
+        @openLogin="openLogin"
+        @openSignUp="openSignUp"
+        @openMenu="openMenu"
+        @openClientProfile="openClientProfile"
+      />
     </transition>
+    <ClientProfile
+      v-if="isOpenClientProfile"
+      @openClientProfile="openClientProfile"
+      :client="userClient"
+    />
     <Login v-if="isOpenLogin" @openLogin="openLogin" @openSignUp="openSignUp" />
-    <SignUp v-if="isOpenSignUp" @openSignUp="openSignUp" />
+    <SignUp
+      v-if="isOpenSignUp"
+      @openSignUp="openSignUp"
+      @openLogin="openLogin"
+    />
     <transition name="slide">
       <Cart v-if="isOpenCart" @forceRender="forceRender" />
     </transition>
@@ -66,6 +83,7 @@ import ProductDetails from "@/components/ProductDetails.vue";
 import Carousel from "@/components/Carousel.vue";
 import ModalCondominiumStart from "@/components/ModalCondominiumStart.vue";
 import Spiner from "@/components/Spiner.vue";
+import ClientProfile from "@/components/ClientProfile.vue";
 
 export default {
   name: "Home",
@@ -85,6 +103,7 @@ export default {
     Carousel,
     ModalCondominiumStart,
     Spiner,
+    ClientProfile,
   },
   data() {
     return {
@@ -98,6 +117,7 @@ export default {
       isOpenDetails: false,
       isOpenCondominiunModal: true,
       hasCondominium: true,
+      isOpenClientProfile: false,
       client: true,
       active: false,
       marketersCondominiumList: [],
@@ -105,6 +125,7 @@ export default {
       qnt: 0,
       cartTotal: 0,
       product: [],
+      userClient: [],
     };
   },
   created() {
@@ -139,6 +160,10 @@ export default {
       this.$nextTick(() => {
         this.isOpenCart = true;
       });
+    },
+    openClientProfile(value) {
+      this.userClient = value;
+      return (this.isOpenClientProfile = !this.isOpenClientProfile);
     },
     openMenu() {
       return (this.isOpenMenu = !this.isOpenMenu);
@@ -189,7 +214,6 @@ export default {
           `http://localhost:5000/api/v1.0/marketcondominium/condominio/${getCondominium._id}/desconto`,
         );
         this.saleList = saleOffers.data;
-        console.log(this.saleList);
         this.active = false;
       } catch (error) {
         console.error("Not found Marketers");

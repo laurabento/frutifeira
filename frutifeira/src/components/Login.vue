@@ -1,42 +1,96 @@
 <template>
-  <div class="background">
-    <div class="modal">
-      <div class="modal-header">
-        <h1>Bem-vindo ao</h1>
-        <img class="logo" src="../assets/logo-frutifeira.svg" />
-        <img
-          class="close"
-          src="../assets/close-gray.svg"
-          alt="Fechar"
-          @click="openLogin"
-        />
-      </div>
-      <div class="modal-input">
-        <p>E-mail</p>
-        <input type="email" placeholder="Digite seu e-mail" />
-      </div>
-      <div class="modal-input">
-        <p>Senha</p>
-        <input type="password" placeholder="Digite sua senha" />
-      </div>
-      <button class="modal-button">ENTRAR</button>
-      <div class="modal-info">
-        <p>Não possui conta? <span @click="openSignUp">Crie aqui!</span></p>
+  <form @submit.prevent="login">
+    <div class="background">
+      <div class="modal">
+        <div class="modal-header">
+          <h1>Bem-vindo ao</h1>
+          <img class="logo" src="../assets/logo-frutifeira.svg" />
+          <img
+            class="close"
+            src="../assets/close-gray.svg"
+            alt="Fechar"
+            @click="openLogin"
+          />
+        </div>
+        <div class="modal-input">
+          <p>E-mail</p>
+          <input
+            type="email"
+            placeholder="Digite seu e-mail"
+            v-model="formData.email"
+          />
+        </div>
+        <div class="modal-input">
+          <p>Senha</p>
+          <input
+            type="password"
+            placeholder="Digite sua senha"
+            v-model="formData.password"
+          />
+        </div>
+        <div class="form-error" v-if="errorLabel">
+          <label>{{ this.errorMessage }}</label>
+        </div>
+        <button class="modal-button">ENTRAR</button>
+        <div class="modal-info">
+          <p>Não possui conta? <span @click="openSignUp">Crie aqui!</span></p>
+        </div>
       </div>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
+import axios from "axios";
 export default {
+  data() {
+    return {
+      errorLabel: false,
+      errorMessage: "",
+      formData: {
+        email: "",
+        password: "",
+      },
+    };
+  },
   methods: {
     openLogin() {
       this.$emit("openLogin");
     },
     openSignUp() {
       this.$emit("openSignUp");
+      this.$emit("openLogin");
     },
-    
+    async login() {
+      await axios
+        .post(`http://localhost:5000/api/v1.0/users/login`, this.formData, {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          return response.data;
+        })
+        .then((response_json) => {
+          if (response_json.status === "200") {
+            console.log(response_json.data);
+            this.errorLabel = false;
+            localStorage.setItem("accessToken", response_json.accessToken);
+            localStorage.setItem("userType", response_json.userType);
+            localStorage.setItem("id", response_json.id);
+            this.openLogin();
+          } else {
+            this.errorMessage = response_json.error;
+            this.errorLabel = true;
+          }
+        })
+        .catch(() => {
+          this.errorMessage = "E-mail ou senha incorretos.";
+          this.errorLabel = true;
+        });
+    },
   },
 };
 </script>
@@ -54,6 +108,15 @@ export default {
   align-items: center;
   background-color: @black-50;
   overflow: none;
+
+  .form-error {
+    margin-top: -25px;
+    margin-bottom: 25px;
+    label {
+      font-size: 12px;
+      color: @red;
+    }
+  }
 
   .modal {
     width: 490px;
@@ -95,7 +158,6 @@ export default {
 
     &-input {
       margin-bottom: 25px;
-
       p {
         font-size: 14px;
         font-weight: 500;

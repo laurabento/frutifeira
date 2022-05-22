@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   props: {
     title: String,
@@ -53,6 +54,16 @@ export default {
   },
   created() {
     this.checkLogin();
+  },
+  data() {
+    return {
+      errorLabel: false,
+      errorMessage: "",
+      formData: {
+        email: "",
+        password: "",
+      },
+    };
   },
   methods: {
     openPage(name) {
@@ -71,22 +82,22 @@ export default {
         });
       }
     },
-    async loginAdm() {
-      await fetch(
-        `http://localhost:5000/api/v1.0/${
-          this.market ? "marketvendors" : "condominium"
-        }/login`,
-        {
-          method: "POST",
-          body: JSON.stringify(this.formData),
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
+    loginAdm() {
+      axios
+        .post(
+          `http://localhost:5000/api/v1.0/${
+            this.market ? "marketvendors" : "condominium"
+          }/login`,
+          this.formData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "*/*",
+            },
           },
-        },
-      )
+        )
         .then((response) => {
-          return response.json();
+          return response.data;
         })
         .then((response_json) => {
           if (response_json.status === "200") {
@@ -100,18 +111,11 @@ export default {
             this.errorLabel = true;
           }
         })
-        .catch((error) => console.log("error: ", error));
+        .catch(() => {
+          this.errorMessage = "E-mail ou senha incorretos.";
+          this.errorLabel = true;
+        });
     },
-  },
-  data() {
-    return {
-      errorLabel: false,
-      errorMessage: "",
-      formData: {
-        email: "",
-        password: "",
-      },
-    };
   },
 };
 </script>

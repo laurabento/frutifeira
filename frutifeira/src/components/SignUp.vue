@@ -67,7 +67,7 @@
           </div>
           <button id="saveUserButton" class="modal-form-button">CRIAR</button>
           <p class="modal-form-info">
-            Já possui uma conta? <span>Entre aqui!</span>
+            Já possui uma conta? <span @click="openLogin">Entre aqui!</span>
           </p>
         </div>
       </form>
@@ -84,6 +84,8 @@ export default {
       errorLabel: false,
       firstPassword: "",
       secondPassword: "",
+      firstName: "",
+      lastName: "",
       formData: {
         name: "",
         email: "",
@@ -95,6 +97,10 @@ export default {
   },
   methods: {
     openSignUp() {
+      this.$emit("openSignUp");
+    },
+    openLogin() {
+      this.$emit("openLogin");
       this.$emit("openSignUp");
     },
     concatName() {
@@ -118,11 +124,8 @@ export default {
               //Authorization: "Bearer " + access token
             },
           })
-          .then((response) => {
-            if (response.ok) {
-              // this.openModalSuccess();
-              console.log("usuário cadastrado!");
-            }
+          .then(() => {
+            this.openLogin();
           })
           .catch((error) => console.log(error));
       }
