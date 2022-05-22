@@ -9,6 +9,8 @@
       @openSignUp="openSignUp"
       :isOpenMenuProps="this.isOpenMenu"
       :UserClient="this.client"
+      :cartTotal="cartTotal"
+      :qnt="qnt"
     />
     <ModalCondominiumStart
       v-if="isOpenCondominiunModal && hasCondominium"
@@ -21,7 +23,7 @@
     <Login v-if="isOpenLogin" @openLogin="openLogin" @openSignUp="openSignUp" />
     <SignUp v-if="isOpenSignUp" @openSignUp="openSignUp" />
     <transition name="slide">
-      <Cart v-if="isOpenCart" />
+      <Cart v-if="isOpenCart" @forceRender="forceRender" />
     </transition>
     <ChangeCondominium
       v-if="isOpenLocation"
@@ -31,7 +33,7 @@
     <Order v-if="isOpenOrder" @openOrder="openOrder" />
     <SearchBarHome />
     <Banner />
-    <Carousel :marketersCondominiumList="marketersCondominiumList"/>
+    <Carousel :marketersCondominiumList="marketersCondominiumList" />
     <!-- <CardListHome :titleList="titleList" @openDetails="openDetails" />
     <CardListHome :titleList="titleSecondList" @openDetails="openDetails" /> -->
     <Footer />
@@ -92,6 +94,8 @@ export default {
       client: true,
       active: false,
       marketersCondominiumList: [],
+      qnt: 0,
+      cartTotal: 0,
     };
   },
   created() {
@@ -102,8 +106,31 @@ export default {
     if (localStorage.getItem("condominium") != null) {
       this.loadCondominiumMarketers();
     }
+    this.checkCart();
   },
   methods: {
+    checkCart() {
+      if (localStorage.getItem("cart")) {
+        const cart = JSON.parse(localStorage.getItem("cart"));
+        var amount = 0;
+        var total = 0;
+        cart.forEach(function (product) {
+          amount += product.amount;
+          total += parseFloat(product.price.replace(",", "."));
+        });
+
+        this.qnt = amount;
+        this.cartTotal = total;
+      }
+    },
+    forceRender() {
+      this.checkCart();
+      this.isOpenCart = false;
+
+      this.$nextTick(() => {
+        this.isOpenCart = true;
+      });
+    },
     openMenu() {
       return (this.isOpenMenu = !this.isOpenMenu);
     },

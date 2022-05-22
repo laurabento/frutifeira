@@ -79,9 +79,10 @@ export default {
     return {
       value: [],
       options: [
-        { name: "Frutas", code: "fr" },
-        { name: "Legumes", code: "le" },
-        { name: "Pastel", code: "pa" },
+        { name: "Fruta", code: "Fruta" },
+        { name: "Legume", code: "Legume" },
+        { name: "Pastel", code: "Pastel" },
+        { name: "Verdura", code: "Verdura" },
       ],
       formData: {
         name: "",

@@ -8,12 +8,22 @@
     </div>
     <div class="card-info">
       <div class="card-info_title">
-        <span>{{ item.marketVendorName }}</span>
+        <span>{{ item.stand_name }}</span>
         <label>{{ item.name }}</label>
       </div>
       <div class="card-info_price">
-        <span v-if="item.discount" class="original-price">R$ {{ (parseFloat(item.price).toFixed(2)).toString().replace(".", ",") }}</span>
-        <label :class="hasDiscountColor(item)">R$ {{ (parseFloat(item.finalPrice).toFixed(2)).toString().replace(".", ",") }}</label>
+        <span v-if="item.discount" class="original-price"
+          >R$
+          {{
+            parseFloat(item.price).toFixed(2).toString().replace(".", ",")
+          }}</span
+        >
+        <label :class="hasDiscountColor(item)"
+          >R$
+          {{
+            parseFloat(item.finalPrice).toFixed(2).toString().replace(".", ",")
+          }}</label
+        >
         <span class="price-info">{{ this.productUnit(item) }}</span>
       </div>
     </div>
@@ -30,16 +40,13 @@ export default {
       this.$emit("openDetails");
     },
     hasDiscountColor(item) {
-      return item.discount ? 'price red' : 'price green';
+      return item.discount ? "price red" : "price green";
     },
     productUnit(item) {
-      if(item.unit == "U")
-        return "unidade"
-      if(item.unit == "K")
-        return item.quantity + " kilo"
-      if(item.unit == "G")
-        return item.quantity + " gramas"
-    }
+      if (item.unit == "U") return "unidade";
+      if (item.unit == "K") return item.quantity + " kilo";
+      if (item.unit == "G") return item.quantity + " gramas";
+    },
   },
 };
 </script>

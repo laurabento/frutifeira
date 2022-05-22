@@ -8,145 +8,126 @@
       <h1>Sua sacola de feira</h1>
     </div>
     <div class="cart-items">
-      <div class="cart-items_item">
-        <h1>Barraca da Meire</h1>
-        <div class="item-group" v-for="product in products" :key="product.id">
-          <div class="item-group_product">
-            <div class="item-group_quant">
-              <label>{{ product.quantidade }}</label>
+      <div v-for="stand in cartProducts" :key="stand.stand_name">
+        <div class="cart-items_item">
+          <h1>{{ stand.stand_name }}</h1>
+          <div
+            class="item-group"
+            v-for="product in stand.products"
+            :key="product.id"
+          >
+            <div class="item-group_product">
+              <div class="item-group_quant">
+                <label>{{ product.amount }}</label>
+              </div>
+              <label>{{ product.name }}</label>
             </div>
-            <label>{{ product.nomeProduto }}</label>
-          </div>
-          <div class="item-group_product2">
-            <label>{{ product.preco }}</label>
-            <img src="../assets/close-gray.svg" />
-          </div>
-        </div>
-        <div class="item-total">
-          <label>Total</label>
-          <label>R$ 10,29</label>
-        </div>
-      </div>
-      <div class="separator">
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-      </div>
-      <div class="cart-items_item">
-        <h1>Barraca da Meire</h1>
-        <div class="item-group" v-for="product in products" :key="product.id">
-          <div class="item-group_product">
-            <div class="item-group_quant">
-              <label>{{ product.quantidade }}</label>
+            <div class="item-group_product2">
+              <label>R$ {{ product.price }}</label>
+              <img
+                src="../assets/close-gray.svg"
+                @click="deleteProduct(product.id, stand.stand_name)"
+              />
             </div>
-            <label>{{ product.nomeProduto }}</label>
           </div>
-          <div class="item-group_product2">
-            <label>R$ {{ product.preco }}</label>
-            <img src="../assets/close-gray.svg" />
-          </div>
-        </div>
-        <div class="item-total">
-          <label>Total</label>
-          <label>R$ 10,29</label>
-        </div>
-      </div>
-      <div class="separator">
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-      </div>
-      <div class="cart-items_item">
-        <h1>Barraca da Meire</h1>
-        <div class="item-group" v-for="product in products" :key="product.id">
-          <div class="item-group_product">
-            <div class="item-group_quant">
-              <label>{{ product.quantidade }}</label>
-            </div>
-            <label>{{ product.nomeProduto }}</label>
-          </div>
-          <div class="item-group_product2">
-            <label>R$ {{ product.preco }}</label>
-            <img src="../assets/close-gray.svg" />
+          <div class="item-total">
+            <label>Total</label>
+            <label>R$ {{ stand.total.toFixed(2).replace(".", ",") }}</label>
           </div>
         </div>
-        <div class="item-total">
-          <label>Total</label>
-          <label>R$ 10,29</label>
+        <div class="separator">
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
         </div>
       </div>
     </div>
     <div class="cart-total">
       <h1>Total</h1>
-      <h1>R$ 23,08</h1>
+      <h1>R$ {{ total.toFixed(2).replace(".", ",") }}</h1>
     </div>
     <button>Finalizar compra</button>
   </div>
 </template>
 
 <script>
-const products = [
-  {
-    id: 1,
-    quantidade: "3",
-    nomeProduto: "Maçã Verde",
-    preco: "4,99",
-  },
-  {
-    id: 2,
-    quantidade: "1",
-    nomeProduto: "Banana Prata",
-    preco: "5,90",
-  },
-];
-
 export default {
+  created() {
+    this.products = JSON.parse(localStorage.getItem("cart"));
+    this.createList();
+    this.total = this.cartTotal();
+  },
   data() {
     return {
-      products: products,
+      products: [],
+      cartProducts: [],
+      total: 0,
     };
+  },
+  methods: {
+    createList() {
+      var cart = [];
+      this.products.forEach(function (product) {
+        if (!cart.some((p) => p.stand_name === product.stand_name)) {
+          cart.push({
+            stand_name: product.stand_name,
+            products: [product],
+            total: parseFloat(product.price.replace(",", ".")),
+          });
+        } else {
+          const index = cart.findIndex(
+            (cartProduct) => cartProduct.stand_name == product.stand_name,
+          );
+          cart[index].products.push(product);
+          cart[index].total += parseFloat(product.price.replace(",", "."));
+        }
+      });
+
+      this.cartProducts = cart;
+    },
+    cartTotal() {
+      var total = 0;
+      this.cartProducts.forEach(function (product) {
+        total += product.total;
+      });
+
+      return total;
+    },
+    deleteProduct(id, stand) {
+      console.log(id, stand);
+
+      var cart = JSON.parse(localStorage.getItem("cart"));
+      cart = cart.filter(function (el) {
+        return el.id != id;
+      });
+      localStorage.setItem("cart", JSON.stringify(cart));
+
+      this.forceRender();
+    },
+    forceRender() {
+      this.$emit("forceRender");
+    },
   },
 };
 </script>

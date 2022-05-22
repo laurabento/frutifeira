@@ -14,8 +14,8 @@
       <div class="bag" id="clickCart" @click="openCart">
         <img src="../assets/bag.svg" />
         <div class="bag_items">
-          <label>R$ 0,00</label>
-          <span>0 itens</span>
+          <label>R$ {{ cartTotal.toFixed(2).replace(".", ",") }}</label>
+          <span>{{ qnt }} itens</span>
         </div>
       </div>
       <div class="login" id="clickLogin" @click="openMenu">
@@ -63,6 +63,12 @@ export default {
     UserCondominium: Boolean,
     isOpenMarketerMenu: Boolean,
     products: Boolean,
+    cartTotal: Number,
+    qnt: Number,
+  },
+  created() {
+    this.cartTotal = 0;
+    this.qnt = 0;
   },
   methods: {
     openMenu() {
