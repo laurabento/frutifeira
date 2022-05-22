@@ -14,7 +14,7 @@
       v-if="isOpenCondominiunModal && hasCondominium"
       @closeOpenModal="closeOpenModal"
     />
-    <!-- <ProductDetails v-if="isOpenDetails" @openDetails="openDetails" /> -->
+    <ProductDetails v-if="isOpenDetails" @openDetails="openDetails" />
     <transition name="slide-up">
       <Menu v-if="isOpenMenu" @openOrder="openOrder" :admArea="false" />
     </transition>
@@ -32,8 +32,7 @@
     <SearchBarHome />
     <Banner />
     <Carousel :marketersCondominiumList="marketersCondominiumList"/>
-    <!-- <CardListHome :titleList="titleList" @openDetails="openDetails" />
-    <CardListHome :titleList="titleSecondList" @openDetails="openDetails" /> -->
+    <CardListHome :titleList="titleList" @openDetails="openDetails" />
     <Footer />
   </div>
 </template>
@@ -44,7 +43,7 @@ import axios from "axios";
 import Header from "@/components/Header.vue";
 import SearchBarHome from "@/components/SearchBarHome.vue";
 import Banner from "@/components/Banner.vue";
-// import CardListHome from "@/components/CardListHome.vue";
+import CardListHome from "@/components/CardListHome.vue";
 import Footer from "@/components/Footer.vue";
 import Menu from "@/components/Menu.vue";
 import Cart from "@/components/Cart.vue";
@@ -52,7 +51,7 @@ import ChangeCondominium from "@/components/ChangeCondominium.vue";
 import Login from "@/components/Login.vue";
 import SignUp from "@/components/SignUp.vue";
 import Order from "@/components/Order.vue";
-// import ProductDetails from "@/components/ProductDetails.vue";
+import ProductDetails from "@/components/ProductDetails.vue";
 import Carousel from "@/components/Carousel.vue";
 import ModalCondominiumStart from "@/components/ModalCondominiumStart.vue";
 import Spiner from "@/components/Spiner.vue";
@@ -63,7 +62,7 @@ export default {
     Header,
     SearchBarHome,
     Banner,
-    // CardListHome,
+    CardListHome,
     Footer,
     Menu,
     Cart,
@@ -71,15 +70,14 @@ export default {
     Login,
     SignUp,
     Order,
-    // ProductDetails,
+    ProductDetails,
     Carousel,
     ModalCondominiumStart,
     Spiner,
   },
   data() {
     return {
-      titleList: "Ofertas da Semana",
-      titleSecondList: "Destaque da Semana",
+      titleList: "Principais Ofertas",
       isOpenMenu: false,
       isOpenCart: false,
       isOpenLocation: false,

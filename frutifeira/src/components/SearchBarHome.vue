@@ -30,6 +30,17 @@
       </div>
       </div>
     </div>
+    <div class="search-bar_mobile">
+      <ul id="listProdutos">
+            <li
+              v-for="item in listProductsSearch"
+              :key="item.id"
+              @click="selectProduct(item)"
+            >
+              <label>{{ item }}</label>
+            </li>
+        </ul>
+    </div>
     <transition name="slide-fade">
       <Categories v-if="isOpen" />
     </transition>
@@ -165,6 +176,10 @@ export default {
     width: 100%;
   }
 
+  &_mobile {
+    display: none;
+  }
+
   &_search {
     position: absolute;
     width: calc(100% ~'-' 245.61px);
@@ -210,6 +225,24 @@ export default {
   }
 
   @media (max-width: 768px) {
+    &_mobile {
+      display: flex;
+      background-color: @green;
+      width: 100%;
+      padding-bottom: 10px;
+
+      ul {
+        li {
+          padding: 15px 25px;
+          color: white;
+        }
+      }
+    }
+
+    &_search {
+      display: none;
+    }
+
     &_items {
       padding-left: @margin-menu-mobile;
       padding-right: @margin-menu-mobile;
