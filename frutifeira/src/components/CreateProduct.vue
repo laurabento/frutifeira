@@ -5,7 +5,7 @@
         <p>Nome</p>
         <input id="nomeProduto" type="text" v-model="formData.name" />
       </div>
-      <div id="listaTipoProduto" class="form-type">
+      <div class="form-type">
         <p>Tipo</p>
         <multiselect
           v-model="value"
