@@ -55,7 +55,7 @@ export default {
     },
     checkUser() {
       const userType = localStorage.getItem("userType");
-
+      console.log(userType);
       return userType;
     },
     openMenu() {

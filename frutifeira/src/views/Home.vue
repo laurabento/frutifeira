@@ -16,7 +16,12 @@
       v-if="isOpenCondominiunModal && hasCondominium"
       @closeOpenModal="closeOpenModal"
     />
-    <ProductDetails v-if="isOpenDetails" @openDetails="openDetails" />
+    <ProductDetails
+      v-if="isOpenDetails"
+      @openDetails="openDetails"
+      :product="product"
+      @forceRender="forceRender"
+    />
     <transition name="slide-up">
       <Menu v-if="isOpenMenu" @openOrder="openOrder" :admArea="false" />
     </transition>
@@ -33,8 +38,12 @@
     <Order v-if="isOpenOrder" @openOrder="openOrder" />
     <SearchBarHome />
     <Banner />
-    <Carousel :marketersCondominiumList="marketersCondominiumList"/>
-    <CardListHome :titleList="titleList" @openDetails="openDetails" :saleList="saleList"/>
+    <Carousel :marketersCondominiumList="marketersCondominiumList" />
+    <CardListHome
+      :titleList="titleList"
+      @openDetails="openDetails"
+      :saleList="saleList"
+    />
     <Footer />
   </div>
 </template>
@@ -95,6 +104,7 @@ export default {
       saleList: [],
       qnt: 0,
       cartTotal: 0,
+      product: [],
     };
   },
   created() {
@@ -148,7 +158,8 @@ export default {
     openOrder() {
       return (this.isOpenOrder = !this.isOpenOrder);
     },
-    openDetails() {
+    openDetails(value) {
+      this.product = value;
       return (this.isOpenDetails = !this.isOpenDetails);
     },
     closeOpenModal() {
@@ -177,7 +188,8 @@ export default {
         const saleOffers = await axios.get(
           `http://localhost:5000/api/v1.0/marketcondominium/condominio/${getCondominium._id}/desconto`,
         );
-        this.saleList = saleOffers.data
+        this.saleList = saleOffers.data;
+        console.log(this.saleList);
         this.active = false;
       } catch (error) {
         console.error("Not found Marketers");

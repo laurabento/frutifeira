@@ -1,22 +1,30 @@
 <template>
   <div class="card-home-list">
     <h1>{{ this.titleList }}</h1>
-    <carousel 
-        :perPageCustom="[[320, 1], [375, 1], [425, 1], [580, 2], [890, 3], [1024, 3], [1440, 5]]" 
-        :loop="true"
-        paginationColor="#f2f2f2" 
-        paginationActiveColor="#5f5f5f">
-          <slide v-for="item in saleList" :key="item">
-              <Card @openDetails="openDetails" :item="item"/>
-          </slide>
-      </carousel>
+    <carousel
+      :perPageCustom="[
+        [320, 1],
+        [375, 1],
+        [425, 1],
+        [580, 2],
+        [890, 3],
+        [1024, 3],
+        [1440, 5],
+      ]"
+      :loop="true"
+      paginationColor="#f2f2f2"
+      paginationActiveColor="#5f5f5f"
+    >
+      <slide v-for="item in saleList" :key="item._id">
+        <Card @openDetails="openDetails(item)" :item="item" :key="item.name" />
+      </slide>
+    </carousel>
   </div>
 </template>
 
 <script>
 import Card from "@/components/Card.vue";
-import { Carousel, Slide } from 'vue-carousel';
-
+import { Carousel, Slide } from "vue-carousel";
 
 export default {
   components: {
@@ -29,8 +37,8 @@ export default {
     saleList: Array,
   },
   methods: {
-    openDetails() {
-      this.$emit("openDetails");
+    openDetails(item) {
+      this.$emit("openDetails", item);
     },
   },
 };
@@ -87,8 +95,8 @@ export default {
 }
 
 .VueCarousel-slide {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
