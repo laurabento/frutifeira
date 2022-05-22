@@ -36,7 +36,7 @@
         <p>Quantidade</p>
         <div class="form-qnt-field">
           <input id="qtdProduto" type="text" v-model="formData.quantity" />
-          <span>g</span>
+          <span id="weight"></span>
         </div>
       </div>
       <div class="form-weight">
@@ -46,6 +46,7 @@
             type="radio"
             name="weight"
             value="U"
+            @change="changeWeight('u')"
             v-model="formData.unit"
           />
           <p>Por unidade</p>
@@ -56,6 +57,7 @@
             type="radio"
             name="weight"
             value="G"
+            @change="changeWeight('g')"
             v-model="formData.unit"
           />
           <p>Gramas</p>
@@ -66,6 +68,7 @@
             type="radio"
             name="weight"
             value="K"
+            @change="changeWeight('kg')"
             v-model="formData.unit"
           />
           <p>Kilo</p>
@@ -125,13 +128,22 @@ export default {
     };
   },
   async created() {
-    this.formData = await this.loadProduct();
-    console.log(this.formData);
-    this.formData.product_type.forEach((item) => {
-      this.value.push({ name: item, code: item });
-    });
+    if (this.edit) {
+      this.formData = await this.loadProduct();
+      this.formData.product_type.forEach((item) => {
+        this.value.push({ name: item, code: item });
+      });
+    }
   },
   methods: {
+    changeWeight(type) {
+      document.getElementById("qtdProduto").disabled = type === "u";
+
+      if (type !== "u") {
+        document.getElementById("qtdProduto").classList.remove("disabled");
+        document.getElementById("weight").innerHTML = type;
+      } else document.getElementById("qtdProduto").classList.add("disabled");
+    },
     chooseImage() {
       document.getElementById("selectImg").click();
     },
@@ -221,6 +233,10 @@ export default {
     "weight weight"
     "img discount"
     "button button";
+
+  .disabled {
+    cursor: not-allowed;
+  }
 
   &-name {
     grid-area: name;
