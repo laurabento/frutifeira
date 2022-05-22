@@ -1,72 +1,75 @@
 <template>
-  <div class="form">
-    <div class="form-type">
-      <div class="form-type-field">
-        <input 
-          type="radio" 
-          name="cardPayment"
-          v-model="formData.typeCredit"
-          value="D"
-          id="radioCardPayment"
-        />
-        <p>Cartão de débito</p>
+  <div >
+    <form class="form" id="formPayment" @submit.prevent="sendOrder">
+      <div class="form-type">
+        <div class="form-type-field">
+          <input
+            type="radio"
+            name="cardPayment"
+            v-model="formData.typeCredit"
+            value="D"
+            id="radioCardPayment"
+          />
+          <p>Cartão de débito</p>
+        </div>
+        <div class="form-type-field">
+          <input
+            type="radio"
+            name="cardPayment"
+            v-model="formData.typeCredit"
+            value="C"
+            id="radioCardPayment"
+          />
+          <p>Cartão de crédito</p>
+        </div>
       </div>
-      <div class="form-type-field">
-        <input 
-          type="radio" 
-          name="cardPayment"
-          v-model="formData.typeCredit" 
-          value="C"
-          id="radioCardPayment"
-        />
-        <p>Cartão de crédito</p>
-      </div>
-    </div>
-    <input 
-      class="form-card" 
-      type="text" 
-      placeholder="Número do cartão"
-      v-model="formData.cardNumber" />
-    <input
-      class="form-name"
-      type="text"
-      placeholder="Nome impresso do cartão"
-      v-model="formData.cardName"
-    />
-    <input 
-      class="form-expire" 
-      type="text" 
-      placeholder="Validade"
-      v-model="formData.cardDate"
-    />
-    <input 
-      class="form-cvv" 
-      type="text" 
-      placeholder="CVV"
-      v-model="formData.cardSecretyNumber" 
-    />
-    <input 
-      class="form-cpf" 
-      type="text" 
-      placeholder="CPF do titular"
-      v-model="formData.cardCPF"
-    />
-    <!-- <div class="form-checkbox">
+      <input
+        class="form-card"
+        type="text"
+        placeholder="Número do cartão"
+        v-model="formData.cardNumber"
+      />
+      <input
+        class="form-name"
+        type="text"
+        placeholder="Nome impresso do cartão"
+        v-model="formData.cardName"
+      />
+      <input
+        class="form-expire"
+        type="text"
+        placeholder="Validade"
+        v-model="formData.cardDate"
+      />
+      <input
+        class="form-cvv"
+        type="text"
+        placeholder="CVV"
+        v-model="formData.cardSecretyNumber"
+      />
+      <input
+        class="form-cpf"
+        type="text"
+        placeholder="CPF do titular"
+        v-model="formData.cardCPF"
+      />
+      <!-- <div class="form-checkbox">
       <input type="checkbox" />
       <p>Desejo inserir CPF na nota</p>
     </div> -->
-    <button class="form-btn">Fazer pedido</button>
+      <button class="form-btn">Fazer pedido</button>
+    </form>
   </div>
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
 
 export default {
   props: {
-    condominium: Array,
+    condominium: Object,
     cartProducts: Array,
-    total: Number
+    total: Number,
   },
   data() {
     return {
@@ -78,11 +81,16 @@ export default {
         cardSecretyNumber: "",
         cardCPF: "",
       },
-      userId: '',
-    }
+      userId: "",
+      scheduling: {
+        schedule: this.condominium.schedule,
+        weekDay: this.condominium.weekDay,
+      },
+    };
   },
   created() {
     this.getUserId();
+    console.log(this.OrderData())
   },
   methods: {
     getUserId() {
@@ -93,27 +101,27 @@ export default {
         userId: this.userId,
         totalPrice: this.total,
         payment: this.formData,
-        scheduling: "any",
-        items: this.cartProducts
-      }
+        scheduling: this.scheduling,
+        items: this.cartProducts,
+      };
     },
-    // async sendOrder() {
-    //   await axios
-    //     .post("http://localhost:5000/api/v1.0/orders", this.OrderData(), {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Accept: "application/json",
-    //         Authorization: "Bearer " + localStorage.getItem("accessToken"),
-    //       },
-    //     })
-    //     .then(() => {
-    //       console.log("pedido recebido");
-    //       location.reload();
-    //       this.$router.push({ name: "Home" });
-    //     })
-    //     .catch((error) => console.log(error));
-    // },
-  }
+    async sendOrder() {
+      await axios
+        .post("http://localhost:5000/api/v1.0/orders", this.OrderData(), {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          },
+        })
+        .then(() => {
+          console.log("pedido recebido");
+          location.reload();
+          this.$router.push({ name: "Home" });
+        })
+        .catch((error) => console.log(error));
+    },
+  },
 };
 </script>
 

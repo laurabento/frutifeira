@@ -6,7 +6,6 @@
 </template>
 
 <script>
-
 import Header from "@/components/Header.vue";
 import PaymentArea from "@/components/PaymentArea.vue";
 export default {
@@ -28,6 +27,7 @@ export default {
     this.createList();
     this.total = this.cartTotal();
     this.loadCondominium();
+    this.getStandsHour();
   },
   methods: {
     createList() {

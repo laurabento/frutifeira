@@ -3,7 +3,7 @@
     <div class="card-content">
       <img :src="require(`@/assets/${icon}.svg`)" alt="" />
       <div class="card-content-title">
-        <h1>{{ location ? condominium.name : "Terça-feira, 19h-22h" }}</h1>
+        <h1>{{ location ? condominium.name : condominium.weekDay + ", " + condominium.schedule }}</h1>
         <p v-if="location">{{ condominium.address }} - {{ condominium.city }}, {{ condominium.state }}</p>
       </div>
     </div>
