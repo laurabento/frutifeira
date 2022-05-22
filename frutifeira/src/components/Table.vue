@@ -122,6 +122,8 @@ export default {
         localStorage.setItem("fId", id);
         localStorage.setItem("mcId", mcId);
         this.$emit("openModalConfirmation", option === "aprovar" ? 2 : 3);
+      } else if (this.type === "products") {
+        this.$emit("openEditProduct", id);
       }
     },
     async loadItems() {

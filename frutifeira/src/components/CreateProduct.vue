@@ -73,10 +73,10 @@
       </div>
       <div class="form-img">
         <p>Imagem</p>
-        <div class="form-img-field" @click="chooseImage()">
-          <input type="file" id="selectImg" />
-          <img src="../assets/shift.svg" alt="" />
-        </div>
+        <!-- <div class="form-img-field" @click="chooseImage()"> -->
+        <input type="text" id="selectImg" v-model="formData.img" />
+        <!-- <img src="../assets/shift.svg" alt="" /> -->
+        <!-- </div> -->
       </div>
       <div class="form-discount">
         <p>Desconto</p>
@@ -95,6 +95,10 @@ import axios from "axios";
 import Multiselect from "vue-multiselect";
 export default {
   name: "CreateProduct",
+  props: {
+    edit: Boolean,
+    editProduct: String,
+  },
   components: {
     Multiselect,
   },
@@ -120,6 +124,13 @@ export default {
       },
     };
   },
+  async created() {
+    this.formData = await this.loadProduct();
+    console.log(this.formData);
+    this.formData.product_type.forEach((item) => {
+      this.value.push({ name: item, code: item });
+    });
+  },
   methods: {
     chooseImage() {
       document.getElementById("selectImg").click();
@@ -139,18 +150,55 @@ export default {
       this.value.forEach(this.saveProductTypes);
       const id = localStorage.getItem("id");
       this.formData.marketVendorId = id;
-
-      await axios
-        .post("http://localhost:5000/api/v1.0/products", this.formData, {
+      console.log(this.formData);
+      if (!this.edit) {
+        await axios
+          .post("http://localhost:5000/api/v1.0/products", this.formData, {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            },
+          })
+          .then(() => {
+            console.log("produto cadastrado!");
+            location.reload();
+          })
+          .catch((error) => console.log(error));
+      } else {
+        await axios
+          .patch(
+            "http://localhost:5000/api/v1.0/products/" + this.editProduct,
+            this.formData,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                Authorization: "Bearer " + localStorage.getItem("accessToken"),
+              },
+            },
+          )
+          .then(() => {
+            console.log("produto atualizado!");
+            location.reload();
+          })
+          .catch((error) => console.log(error));
+      }
+    },
+    async loadProduct() {
+      return axios
+        .get("http://localhost:5000/api/v1.0/products/" + this.editProduct, {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
             Authorization: "Bearer " + localStorage.getItem("accessToken"),
           },
         })
-        .then(() => {
-          console.log("produto cadastrado!");
-          location.reload();
+        .then((response) => {
+          return response;
+        })
+        .then((response_json) => {
+          return response_json.data;
         })
         .catch((error) => console.log(error));
     },
@@ -163,7 +211,7 @@ export default {
 
 .form {
   display: grid;
-  margin-top: @margin-body-desktop;
+  margin: @margin-body-desktop;
   gap: 30px;
   grid-template-columns: 1fr 1fr;
   grid-template-areas:

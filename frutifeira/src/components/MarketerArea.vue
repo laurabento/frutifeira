@@ -21,7 +21,16 @@
             @openMarketDetails="openMarketDetails"
             :table="products ? tableProducts : tableMarkets"
             :type="products ? 'products' : 'markets'"
+            @openEditProduct="openEditProduct"
+            v-if="!isOpenEditProduct"
           />
+          <div v-if="isOpenEditProduct">
+            <div class="return" @click="openEditProduct">
+              <img src="../assets/go-back-icon.svg" />
+              <label>voltar</label>
+            </div>
+            <CreateProduct :edit="true" :editProduct="editProduct" />
+          </div>
         </div>
         <div
           v-if="activeTab === 'cart-add' || activeTab === 'help'"
@@ -66,6 +75,8 @@ export default {
       ],
       tableProducts: ["Nome do produto", "Quantidade", "Unidade", "Preço", ""],
       tableMarkets: ["Condomínio", "Dia da semana", "Hora", "Próximo dia", ""],
+      isOpenEditProduct: false,
+      editProduct: "",
     };
   },
   created() {
@@ -86,6 +97,10 @@ export default {
     openModalConfirmation(value) {
       this.$emit("openModalConfirmation", value);
     },
+    openEditProduct(value) {
+      this.editProduct = value;
+      return (this.isOpenEditProduct = !this.isOpenEditProduct);
+    },
   },
 };
 </script>
@@ -101,6 +116,22 @@ export default {
   grid-gap: 20px;
   margin-top: calc(@height-menu-desktop ~"+" 10px);
 
+  .return {
+    display: flex;
+    width: 100%;
+    margin-top: @margin-body-desktop;
+    margin-left: @margin-body-desktop;
+    align-items: center;
+    cursor: pointer;
+
+    label {
+      margin-left: 10px;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: @darkGray;
+      cursor: pointer;
+    }
+  }
   .tabs {
     ul {
       margin-top: 35px;

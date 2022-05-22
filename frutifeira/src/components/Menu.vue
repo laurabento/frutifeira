@@ -51,8 +51,13 @@ export default {
   },
   async created() {
     this.userType = this.checkUser();
-
-    if (this.userType == "1") this.user = await this.getUserInfo();
+    const type =
+      this.userType === "1"
+        ? "users"
+        : this.userType === "2"
+        ? "marketvendors"
+        : "condominium";
+    this.user = await this.getUserInfo(type);
   },
   data() {
     return {
@@ -61,10 +66,11 @@ export default {
     };
   },
   methods: {
-    getUserInfo() {
+    getUserInfo(type) {
       return axios
         .get(
-          "http://localhost:5000/api/v1.0/users/" + localStorage.getItem("id"),
+          `http://localhost:5000/api/v1.0/${type}/` +
+            localStorage.getItem("id"),
           {
             headers: {
               "Content-Type": "application/json",
@@ -139,7 +145,7 @@ export default {
 
   &-items {
     &_item {
-      // border-bottom: 2px solid @lightGray;
+      border-top: 2px solid @lightGray;
       padding: 20px;
       cursor: pointer;
 
@@ -148,6 +154,10 @@ export default {
         color: @green;
         text-transform: uppercase;
       }
+    }
+
+    &_item:first-of-type {
+      border-top: none;
     }
 
     .dark {
@@ -176,6 +186,7 @@ export default {
     &_logout {
       padding: 20px;
       cursor: pointer;
+      border-top: 2px solid @lightGray;
 
       h1 {
         font-size: 14px;
