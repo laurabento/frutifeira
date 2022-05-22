@@ -142,7 +142,12 @@ export default {
       if (type !== "u") {
         document.getElementById("qtdProduto").classList.remove("disabled");
         document.getElementById("weight").innerHTML = type;
-      } else document.getElementById("qtdProduto").classList.add("disabled");
+      } else {
+        this.formData.quantity = "";
+        document.getElementById("qtdProduto").value = "";
+        document.getElementById("weight").innerHTML = "";
+        document.getElementById("qtdProduto").classList.add("disabled");
+      }
     },
     chooseImage() {
       document.getElementById("selectImg").click();

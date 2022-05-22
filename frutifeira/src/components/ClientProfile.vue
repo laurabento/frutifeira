@@ -126,7 +126,6 @@ export default {
 .background {
   position: fixed;
   background-color: @lightGray;
-  overflow-y: hidden;
   width: 100%;
   height: 100%;
   z-index: 2;
