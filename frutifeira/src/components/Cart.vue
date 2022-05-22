@@ -114,9 +114,7 @@ export default {
 
       return total;
     },
-    deleteProduct(id, stand) {
-      console.log(id, stand);
-
+    deleteProduct(id) {
       var cart = JSON.parse(localStorage.getItem("cart"));
       cart = cart.filter(function (el) {
         return el.id != id;
