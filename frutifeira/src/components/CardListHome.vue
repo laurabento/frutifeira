@@ -15,7 +15,11 @@
       paginationColor="#f2f2f2"
       paginationActiveColor="#5f5f5f"
     >
-      <slide v-for="item in saleList" :key="item._id">
+      <slide
+        v-for="item in saleList"
+        :key="item._id"
+        v-bind:id="'cardPromo_' + item._id"
+      >
         <Card @openDetails="openDetails(item)" :item="item" :key="item.name" />
       </slide>
     </carousel>

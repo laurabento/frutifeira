@@ -9,7 +9,7 @@
         <div v-if="userType == null" :class="userType == null ? 'no-user' : ''">
           <h1>Bem-vindo(a) ao Frutifeira!</h1>
           <p>
-            <span @click="openLogin">Entre</span> ou
+            <span id="clickLabelLogin" @click="openLogin">Entre</span> ou
             <span @click="openSignUp">cadastre-se</span>
           </p>
         </div>
@@ -37,7 +37,7 @@
         <p>Aqui você pode acompanhar e rever seus pedidos</p>
       </div>
       <div class="menu-items_logout" @click="logout" v-if="userType != null">
-        <h1>Sair</h1>
+        <h1 id="labelSair">Sair</h1>
       </div>
     </div>
   </div>

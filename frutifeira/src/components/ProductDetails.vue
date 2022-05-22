@@ -20,13 +20,14 @@
         </p>
         <div class="modal-content-amount">
           <img
-            id="clickAumentarProduto"
+            id="clickReduzirProduto"
             class="modal-content-amount-remove"
             @click="addRemoveAmount(false)"
             src="../assets/remove.svg"
           />
           <p>{{ this.amount }}</p>
           <img
+            id="clickAumentarProduto"
             class="modal-content-amount-add"
             @click="addRemoveAmount(true)"
             src="../assets/add.svg"

@@ -15,6 +15,7 @@
         <div class="modal-input">
           <p>E-mail</p>
           <input
+            id="modalLoginEmail"
             type="email"
             placeholder="Digite seu e-mail"
             v-model="formData.email"
@@ -23,6 +24,7 @@
         <div class="modal-input">
           <p>Senha</p>
           <input
+            id="modalLoginSenha"
             type="password"
             placeholder="Digite sua senha"
             v-model="formData.password"
@@ -31,7 +33,7 @@
         <div class="form-error" v-if="errorLabel">
           <label>{{ this.errorMessage }}</label>
         </div>
-        <button class="modal-button">ENTRAR</button>
+        <button id="btnModalEntrar" class="modal-button">ENTRAR</button>
         <div class="modal-info">
           <p>Não possui conta? <span @click="openSignUp">Crie aqui!</span></p>
         </div>

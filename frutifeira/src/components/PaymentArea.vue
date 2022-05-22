@@ -11,7 +11,7 @@
         <div class="payment-content-takeout">
           <h1>Retirada</h1>
           <TakeoutDetails :icon="'location'" :location="true" :condominium="condominium"/>
-          <TakeoutDetails :icon="'time'" :location="false" />
+          <TakeoutDetails :icon="'time'" :location="false" :condominium="condominium"/>
         </div>
         <div class="payment-content-data">
           <h1>Pagamento</h1>

@@ -65,7 +65,7 @@
     </div>
     <div class="cart-total">
       <h1>Total</h1>
-      <h1>R$ {{ total.toFixed(2).replace(".", ",") }}</h1>
+      <h1 id="totalCarrinho">R$ {{ total.toFixed(2).replace(".", ",") }}</h1>
     </div>
     <button @click="goToPayment">Finalizar compra</button>
   </div>
@@ -127,9 +127,9 @@ export default {
       this.$emit("forceRender");
     },
     goToPayment() {
-      if(localStorage.getItem("cart").length > 2)
+      if (localStorage.getItem("cart").length > 2)
         this.$router.push({ name: "Pagamento" });
-    }
+    },
   },
 };
 </script>
