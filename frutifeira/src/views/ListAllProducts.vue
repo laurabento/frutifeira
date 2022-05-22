@@ -73,6 +73,7 @@ export default {
       product: [],
       productsCondominium: [],
       active: false,
+      labelSearch: '',
     };
   },
   created(){
@@ -111,21 +112,21 @@ export default {
         if(this.$route.query.type == 'fruits') {
           this.productsCondominium = [];
           const results = response.filter(item => {
-            return item.product_type[0] === "Fruta"
+            return item.product_type[0] === "Fruta" || item.product_type[0] === "Frutas"
           });
           this.productsCondominium = results
         }
         if(this.$route.query.type == 'vegetables') {
           this.productsCondominium = [];
           const results = response.filter(item => {
-            return item.product_type[0] === "Verdura"
+            return item.product_type[0] === "Verdura" || item.product_type[0] === "Verduras"
           });
           this.productsCondominium = results
         }
         if(this.$route.query.type == 'legumes') {
           this.productsCondominium = [];
           const results = response.filter(item => {
-            return item.product_type[0] === "Legumes"
+            return item.product_type[0] === "Legumes" || item.product_type[0] === "Legume"
           });
           this.productsCondominium = results
         }
@@ -139,7 +140,18 @@ export default {
         if(this.$route.query.type == 'fish') {
           this.productsCondominium = [];
           const results = response.filter(item => {
-            return item.product_type[0] === "Peixe"
+            return item.product_type[0] === "Peixe"  || item.product_type[0] === "Peixes"
+          });
+          this.productsCondominium = results
+        }
+        if(this.$route.query.type == 'all') {
+          this.productsCondominium = [];
+          this.productsCondominium = response;
+        }
+        if(this.$route.query.search) {
+          this.productsCondominium = [];
+          const results = response.filter(item => {
+            return item.name === this.$route.query.search
           });
           this.productsCondominium = results
         }
