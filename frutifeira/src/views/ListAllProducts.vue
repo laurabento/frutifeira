@@ -9,20 +9,30 @@
       @openSignUp="openSignUp"
       :isOpenMenuProps="this.isOpenMenu"
       :UserClient="this.client"
+      :cartTotal="cartTotal"
+      :qnt="qnt"
     />
-    <ProductDetails v-if="isOpenDetails" @openDetails="openDetails" :product="product"/>
+    <ProductDetails
+      v-if="isOpenDetails"
+      @openDetails="openDetails"
+      :product="product"
+      @forceRender="forceRender"
+    />
     <transition name="slide-up">
-      <Menu v-if="isOpenMenu" @openOrder="openOrder"/>
+      <Menu v-if="isOpenMenu" @openOrder="openOrder" />
     </transition>
-    <Login v-if="isOpenLogin" @openLogin="openLogin" @openSignUp="openSignUp"/>
+    <Login v-if="isOpenLogin" @openLogin="openLogin" @openSignUp="openSignUp" />
     <SignUp v-if="isOpenSignUp" @openSignUp="openSignUp" />
     <transition name="slide">
-      <Cart v-if="isOpenCart" />
+      <Cart v-if="isOpenCart" @forceRender="forceRender" />
     </transition>
     <ChangeCondominium v-if="isOpenLocation" @openLocation="openLocation" />
-    <Order v-if="isOpenOrder" @openOrder="openOrder"/>
+    <Order v-if="isOpenOrder" @openOrder="openOrder" />
     <SearchBarHome />
-    <ListAll @openDetails="openDetails" :productsCondominium="productsCondominium"/>
+    <ListAll
+      @openDetails="openDetails"
+      :productsCondominium="productsCondominium"
+    />
     <Footer />
   </div>
 </template>
@@ -43,7 +53,6 @@ import ProductDetails from "@/components/ProductDetails.vue";
 import ListAll from "@/components/ListAll.vue";
 import Spiner from "@/components/Spiner.vue";
 
-
 export default {
   name: "ListProduct",
   components: {
@@ -58,7 +67,7 @@ export default {
     Order,
     ProductDetails,
     ListAll,
-    Spiner
+    Spiner,
   },
   data() {
     return {
@@ -73,13 +82,38 @@ export default {
       product: [],
       productsCondominium: [],
       active: false,
-      labelSearch: '',
+      qnt: 0,
+      cartTotal: 0,
+      labelSearch: "",
     };
   },
-  created(){
+  created() {
     this.loadCondominiumProducts(this.$route.params.id);
+    this.checkCart();
   },
   methods: {
+    checkCart() {
+      if (localStorage.getItem("cart")) {
+        const cart = JSON.parse(localStorage.getItem("cart"));
+        var amount = 0;
+        var total = 0;
+        cart.forEach(function (product) {
+          amount += product.amount;
+          total += parseFloat(product.price.replace(",", "."));
+        });
+
+        this.qnt = amount;
+        this.cartTotal = total;
+      }
+    },
+    forceRender() {
+      this.checkCart();
+      this.isOpenCart = false;
+
+      this.$nextTick(() => {
+        this.isOpenCart = true;
+      });
+    },
     openMenu() {
       return (this.isOpenMenu = !this.isOpenMenu);
     },
@@ -106,54 +140,57 @@ export default {
       try {
         this.active = true;
         this.productsCondominium = [];
-        const condominiumProducts = await axios.get(`http://localhost:5000/api/v1.0/marketcondominium/condominio/${id}/produtos`);
+        const condominiumProducts = await axios.get(
+          `http://localhost:5000/api/v1.0/marketcondominium/condominio/${id}/produtos`,
+        );
         const response = condominiumProducts.data;
+        console.log(response);
 
-        if(this.$route.query.type == 'fruits') {
+        if (this.$route.query.type == "fruits") {
           this.productsCondominium = [];
-          const results = response.filter(item => {
-            return item.product_type[0] === "Fruta" || item.product_type[0] === "Frutas"
+          const results = response.filter((item) => {
+            return item.product_type.find((type) => type === "Fruta");
           });
-          this.productsCondominium = results
+          this.productsCondominium = results;
         }
-        if(this.$route.query.type == 'vegetables') {
+        if (this.$route.query.type == "vegetables") {
           this.productsCondominium = [];
-          const results = response.filter(item => {
-            return item.product_type[0] === "Verdura" || item.product_type[0] === "Verduras"
+          const results = response.filter((item) => {
+            return item.product_type.find((type) => type === "Verdura");
           });
-          this.productsCondominium = results
+          this.productsCondominium = results;
         }
-        if(this.$route.query.type == 'legumes') {
+        if (this.$route.query.type == "legumes") {
           this.productsCondominium = [];
-          const results = response.filter(item => {
-            return item.product_type[0] === "Legumes" || item.product_type[0] === "Legume"
+          const results = response.filter((item) => {
+            return item.product_type.find((type) => type === "Legume");
           });
-          this.productsCondominium = results
+          this.productsCondominium = results;
         }
-        if(this.$route.query.type == 'pastel') {
+        if (this.$route.query.type == "pastel") {
           this.productsCondominium = [];
-          const results = response.filter(item => {
-            return item.product_type[0] === "Pastel"
+          const results = response.filter((item) => {
+            return item.product_type.find((type) => type === "Pastel");
           });
-          this.productsCondominium = results
+          this.productsCondominium = results;
         }
-        if(this.$route.query.type == 'fish') {
+        if (this.$route.query.type == "fish") {
           this.productsCondominium = [];
-          const results = response.filter(item => {
-            return item.product_type[0] === "Peixe"  || item.product_type[0] === "Peixes"
+          const results = response.filter((item) => {
+            return item.product_type.find((type) => type === "Peixe");
           });
-          this.productsCondominium = results
+          this.productsCondominium = results;
         }
-        if(this.$route.query.type == 'all') {
+        if (this.$route.query.type == "all") {
           this.productsCondominium = [];
           this.productsCondominium = response;
         }
-        if(this.$route.query.search) {
+        if (this.$route.query.search) {
           this.productsCondominium = [];
-          const results = response.filter(item => {
-            return item.name === this.$route.query.search
+          const results = response.filter((item) => {
+            return item.name === this.$route.query.search;
           });
-          this.productsCondominium = results
+          this.productsCondominium = results;
         }
         this.active = false;
       } catch (error) {

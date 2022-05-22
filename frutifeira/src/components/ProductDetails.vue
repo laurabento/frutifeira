@@ -1,7 +1,8 @@
 <template>
   <div class="background">
     <div class="modal">
-      <img id="clickFecharProduto"
+      <img
+        id="clickFecharProduto"
         class="modal-close"
         src="../assets/close-gray.svg"
         alt="fechar"
@@ -10,15 +11,16 @@
       <img class="modal-img" :src="product.img" />
       <div class="modal-content">
         <div class="modal-content-header">
-          <p>{{ product.marketVendorName }}</p>
+          <p>{{ product.stand_name }}</p>
           <h1>{{ product.name }}</h1>
           <span>{{ this.productUnit(product) }}</span>
         </div>
         <p>
-         {{product.description}}
+          {{ product.description }}
         </p>
         <div class="modal-content-amount">
-          <img id="clickAumentarProduto"
+          <img
+            id="clickAumentarProduto"
             class="modal-content-amount-remove"
             @click="addRemoveAmount(false)"
             src="../assets/remove.svg"
@@ -30,7 +32,11 @@
             src="../assets/add.svg"
           />
         </div>
-        <button id="btnAdicionarProduto" class="modal-content-button">
+        <button
+          id="btnAdicionarProduto"
+          class="modal-content-button"
+          @click="addToCart"
+        >
           <p>Adicionar</p>
           <p>R$ {{ productPrice(product) }}</p>
         </button>
@@ -40,16 +46,63 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
-  props:{
+  props: {
     product: Object,
   },
   data() {
     return {
+      marketName: "",
       amount: 1,
-    }
+      cartProduct: {
+        id: "",
+        stand_name: "",
+        name: "",
+        price: 0,
+        amount: 0,
+      },
+    };
+  },
+  created() {
+    console.log(this.product);
   },
   methods: {
+    addToCart() {
+      this.cartProduct.stand_name = this.product.stand_name;
+      this.cartProduct.name = this.product.name;
+      this.cartProduct.price = this.productPrice(this.product);
+      this.cartProduct.amount = this.amount;
+      this.cartProduct.id = this.product._id;
+      var cart = localStorage.getItem("cart");
+      if (cart === null) {
+        var newCart = [];
+        newCart.push(this.cartProduct);
+        localStorage.setItem("cart", JSON.stringify(newCart));
+      } else {
+        cart = JSON.parse(localStorage.getItem("cart"));
+
+        if (cart.find((product) => product.id === this.product._id)) {
+          const index = cart.findIndex(
+            (product) => product.id === this.product._id,
+          );
+          cart[index].amount += this.amount;
+          const amount = cart[index].amount + this.amount;
+          const newPrice = amount * parseFloat(this.product.finalPrice);
+          cart[index].price = newPrice.toFixed(2).replace(".", ",");
+
+          localStorage.setItem("cart", JSON.stringify(cart));
+        } else {
+          cart.push(JSON.parse(JSON.stringify(this.cartProduct)));
+          localStorage.setItem("cart", JSON.stringify(cart));
+        }
+      }
+
+      this.forceRender();
+    },
+    forceRender() {
+      this.$emit("forceRender");
+    },
     openDetails() {
       this.$emit("openDetails");
     },
@@ -61,16 +114,33 @@ export default {
       }
     },
     productUnit(item) {
-      if(item.unit == "U")
-        return "unidade"
-      if(item.unit == "K")
-        return item.quantity + " kilo"
-      if(item.unit == "G")
-        return item.quantity + " gramas"
+      if (item.unit == "U") return "unidade";
+      if (item.unit == "K") return item.quantity + " kilo";
+      if (item.unit == "G") return item.quantity + " gramas";
     },
-    productPrice(item){
-      return (parseFloat(this.amount * item.finalPrice).toFixed(2)).toString().replace(".", ",")
-    }
+    productPrice(item) {
+      return parseFloat(this.amount * item.finalPrice)
+        .toFixed(2)
+        .toString()
+        .replace(".", ",");
+    },
+    async loadMarketerDetails() {
+      const id = this.$router.params.id;
+      return axios
+        .get("http://localhost:5000/api/v1.0/marketvendors/" + id, {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        })
+        .then((response) => {
+          return response;
+        })
+        .then((response_json) => {
+          return response_json.data;
+        })
+        .catch((error) => console.log(error));
+    },
   },
 };
 </script>

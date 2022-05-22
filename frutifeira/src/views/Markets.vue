@@ -101,8 +101,9 @@ export default {
     },
     checkUser() {
       const id = localStorage.getItem("id");
+      const userType = localStorage.getItem("userType");
 
-      if (id === null) {
+      if (id === null || userType === null || userType != 2) {
         this.$router.push({ name: "LoginAdm" });
       }
     },

@@ -71,6 +71,7 @@ export default {
       options: [
         { name: "Frutas", code: "Frutas" },
         { name: "Legumes", code: "Legumes" },
+        { name: "Verduras", code: "Verduras" },
         { name: "Pastel", code: "Pastel" },
       ],
       formData: {
@@ -140,7 +141,6 @@ export default {
     async updateMarketer() {
       this.formData.product_type = [];
       this.value.forEach(this.saveProductTypes);
-      console.log(this.value);
       if (this.hasPasswordEqual()) {
         await axios
           .patch(

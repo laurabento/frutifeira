@@ -79,9 +79,10 @@ export default {
       firstPassword: "",
       secondPassword: "",
       options: [
-        { name: "Frutas", code: "frutas" },
-        { name: "Legumes", code: "legumes" },
-        { name: "Pastel", code: "pastel" },
+        { name: "Frutas", code: "Frutas" },
+        { name: "Legumes", code: "Legumes" },
+        { name: "Pastel", code: "Pastel" },
+        { name: "Verduras", code: "Verduras" },
       ],
       formData: {
         name: "",

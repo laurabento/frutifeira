@@ -41,6 +41,9 @@ export default {
     Menu,
     MarketerProfile,
   },
+  created() {
+    this.checkUser();
+  },
   data() {
     return {
       marketer: true,
@@ -58,6 +61,14 @@ export default {
     },
     openMenu() {
       return (this.isOpenMenu = !this.isOpenMenu);
+    },
+    checkUser() {
+      const id = localStorage.getItem("id");
+      const userType = localStorage.getItem("userType");
+
+      if (id === null || userType === null || userType != 2) {
+        this.$router.push({ name: "LoginAdm" });
+      }
     },
   },
 };

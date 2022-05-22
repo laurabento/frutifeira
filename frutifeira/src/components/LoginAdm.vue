@@ -89,7 +89,6 @@ export default {
           return response.json();
         })
         .then((response_json) => {
-          console.log(response_json);
           if (response_json.status === "200") {
             this.errorLabel = false;
             localStorage.setItem("accessToken", response_json.accessToken);
