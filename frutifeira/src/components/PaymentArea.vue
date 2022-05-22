@@ -1,6 +1,6 @@
 <template>
   <div class="payment">
-    <div class="payment-return">
+    <div class="payment-return" @click="goBack">
       <img src="../assets/go-back-icon.svg" />
       <label>voltar</label>
     </div>
@@ -10,16 +10,16 @@
         <!-- <h1 class="payment-content-title">Finalize seu pedido</h1> -->
         <div class="payment-content-takeout">
           <h1>Retirada</h1>
-          <TakeoutDetails :icon="'location'" :location="true" />
+          <TakeoutDetails :icon="'location'" :location="true" :condominium="condominium"/>
           <TakeoutDetails :icon="'time'" :location="false" />
         </div>
         <div class="payment-content-data">
           <h1>Pagamento</h1>
-          <Payment />
+          <Payment :cartProducts="cartProducts" :condominium="condominium" :total="total"/>
         </div>
       </div>
       <div class="payment-cart">
-        <CartPayment />
+        <CartPayment :products="products" :cartProducts="cartProducts" :total="total"/>
       </div>
     </div>
   </div>
@@ -36,6 +36,17 @@ export default {
     Payment,
     CartPayment,
   },
+  props: {
+    products: Array,
+    cartProducts: Array,
+    total: Number,
+    condominium: Object,
+  },
+  methods: {
+    goBack() {
+        this.$router.push({ name: "Home" });
+    }
+  }
 };
 </script>
 
