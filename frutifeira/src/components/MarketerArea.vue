@@ -4,6 +4,7 @@
       <ul>
         <li
           v-for="item in this.products ? tabsListProducts : tabsListMarkets"
+          v-bind:id="'marketVendor_' + item.id"
           :key="item.id"
           :class="isActiveTab(item.id) ? 'active' : ''"
           @click="setActiveTab(item.id)"

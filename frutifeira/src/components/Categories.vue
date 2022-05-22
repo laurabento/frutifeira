@@ -7,6 +7,7 @@
               <li id="clickCategorias3" @click="clickLegumes">Legumes</li>
               <li id="clickCategorias4" @click="clickPastel">Pastel</li>
               <li id="clickCategorias5" @click="clickFish">Peixes</li>
+              <li id="clickCategorias5" @click="clickAll">Todos os Produtos</li>
           </ul>
       </div>
   </div>
@@ -47,6 +48,10 @@ export default {
             this.$router.push({ path: '/ListAllProducts/' + this.condominium, query: { type: 'fish' }});
             window.location.reload();
         },
+        clickAll() {
+            this.$router.push({ path: '/ListAllProducts/' + this.condominium, query: { type: 'all' }});
+            window.location.reload();
+        },
     }
 }
 </script>
@@ -67,10 +72,12 @@ export default {
     &_list {
         width: 100%;
         color: white;
-        padding-bottom: 20px;
+        padding-bottom: 30px;
 
         ul {
-            columns: 5;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            grid-gap: 30px;
 
             li {
                 padding-bottom: 20px;
@@ -89,7 +96,7 @@ export default {
 
         &_list {
             ul {
-                columns: 3;
+                grid-template-columns: 1fr 1fr 1fr;
             }
         }
     }
@@ -97,7 +104,7 @@ export default {
     @media (max-width: 375px) {
         &_list {
             ul {
-                columns: 2;
+                grid-template-columns: 1fr 1fr;
             }
         }
     }

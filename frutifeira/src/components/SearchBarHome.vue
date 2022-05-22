@@ -5,10 +5,41 @@
         <div :class="changeIcon(isOpen)"></div>
         <label>Categorias</label>
       </div>
-      <div class="search-bar_group">
+      <div class="search-bar_inputgroup">
+        <div class="search-bar_group">
         <img src="../assets/search-white.svg" />
-        <input type="text" id="inputSearchBar" />
+        <input 
+          type="text" 
+          id="inputSearchBar"
+          ref="inputSearchBar"
+          @change="findProduct($event)"
+          @keyup="findProduct($event)"
+          v-model="selectedLabel"
+         />
       </div>
+      <div class="search-bar_search">
+        <ul id="listProdutos">
+            <li
+              v-for="item in listProductsSearch"
+              :key="item.id"
+              @click="selectProduct(item)"
+            >
+              <label>{{ item }}</label>
+            </li>
+        </ul>
+      </div>
+      </div>
+    </div>
+    <div class="search-bar_mobile">
+      <ul id="listProdutos">
+            <li
+              v-for="item in listProductsSearch"
+              :key="item.id"
+              @click="selectProduct(item)"
+            >
+              <label>{{ item }}</label>
+            </li>
+        </ul>
     </div>
     <transition name="slide-fade">
       <Categories v-if="isOpen" />
@@ -17,6 +48,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 import Categories from "@/components/Categories.vue";
 
 export default {
@@ -26,11 +59,58 @@ export default {
   data() {
     return {
       isOpen: false,
+      condominium: '',
+      productsList: [],
+      products: [],
+      listProductsSearch: [],
+      inputWidth: 0,
+      selectedLabel: "",
     };
+  },
+  created() {
+    this.hasCondominium();
+    this.loadProduct();
   },
   methods: {
     changeIcon(isOpen) {
       return !isOpen ? "menu-icon" : "close-icon";
+    },
+    hasCondominium() {
+      const getCondominium = JSON.parse(localStorage.getItem("condominium"));
+      this.condominium = getCondominium._id
+    },
+    async loadProduct() {
+      const condominiumProducts = await axios.get(`http://localhost:5000/api/v1.0/marketcondominium/condominio/${this.condominium}/produtos`);
+      const response = condominiumProducts.data;
+      response.forEach((item) => {
+        this.productsList.push(item.name);
+      });
+      const productSet = new Set(this.productsList);
+      const backToArray = [...productSet];
+      this.products = backToArray;
+    },
+    findProduct() {
+      this.searchTerm =
+        event.target && event.target.value ? event.target.value.trim() : null;
+
+      if (this.searchTerm) {
+        this.listProductsSearch = this.products.filter((d) =>
+          d.toLowerCase().includes(this.searchTerm.toLowerCase()),
+        );
+      }
+
+      if (this.searchTerm && this.searchTerm.lenght <= 3) {
+        this.listProductsSearch = [];
+      }
+
+      if (!this.searchTerm) {
+        this.listProductsSearch = [];
+      }
+    },
+    selectProduct(item) {
+      this.selectedLabel = item;
+      this.$router.push({ path: '/ListAllProducts/' + this.condominium, query: { search: item }});
+      window.location.reload();
     },
   },
 };
@@ -92,6 +172,38 @@ export default {
     }
   }
 
+  &_inputgroup {
+    width: 100%;
+  }
+
+  &_mobile {
+    display: none;
+  }
+
+  &_search {
+    position: absolute;
+    width: calc(100% ~'-' 245.61px);
+    background: @searchGreen;
+    border-radius: 6px;
+
+    ul {
+      li {
+        padding: 20px;
+        color: white;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+
+        label {
+          cursor: pointer;
+        }
+
+        &:last-child {
+          border-bottom: unset;
+        }
+      }
+    }
+  }
+
   &_group {
     display: flex;
     width: 100%;
@@ -113,6 +225,24 @@ export default {
   }
 
   @media (max-width: 768px) {
+    &_mobile {
+      display: flex;
+      background-color: @green;
+      width: 100%;
+      padding-bottom: 10px;
+
+      ul {
+        li {
+          padding: 15px 25px;
+          color: white;
+        }
+      }
+    }
+
+    &_search {
+      display: none;
+    }
+
     &_items {
       padding-left: @margin-menu-mobile;
       padding-right: @margin-menu-mobile;

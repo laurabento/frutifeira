@@ -3,6 +3,7 @@
     <ul>
       <li
         v-for="item in tabsList"
+        v-bind:id="'login_' + item.id"
         :key="item.id"
         :class="isActiveTab(item.id) ? 'active' : ''"
         @click="setActiveTab(item.id)"

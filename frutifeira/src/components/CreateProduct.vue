@@ -3,9 +3,9 @@
     <div class="form">
       <div class="form-name">
         <p>Nome</p>
-        <input type="text" v-model="formData.name" />
+        <input id="nomeProduto" type="text" v-model="formData.name" />
       </div>
-      <div class="form-type">
+      <div id="listaTipoProduto" class="form-type">
         <p>Tipo</p>
         <multiselect
           v-model="value"
@@ -21,30 +21,53 @@
       </div>
       <div class="form-description">
         <p>Descrição</p>
-        <textarea rows="2" type="text" v-model="formData.description" />
+        <textarea
+          id="descricaoProduto"
+          rows="2"
+          type="text"
+          v-model="formData.description"
+        />
       </div>
       <div class="form-price">
         <p>Preço</p>
-        <input type="text" v-model="formData.price" />
+        <input id="precoProduto" type="text" v-model="formData.price" />
       </div>
       <div class="form-qnt">
         <p>Quantidade</p>
         <div class="form-qnt-field">
-          <input type="text" v-model="formData.quantity" />
+          <input id="qtdProduto" type="text" v-model="formData.quantity" />
           <span>g</span>
         </div>
       </div>
       <div class="form-weight">
         <div class="form-weight-radio">
-          <input type="radio" name="weight" value="U" v-model="formData.unit" />
+          <input
+            id="radioUnidadeProduto"
+            type="radio"
+            name="weight"
+            value="U"
+            v-model="formData.unit"
+          />
           <p>Por unidade</p>
         </div>
         <div class="form-weight-radio">
-          <input type="radio" name="weight" value="G" v-model="formData.unit" />
+          <input
+            id="radioGramasProduto"
+            type="radio"
+            name="weight"
+            value="G"
+            v-model="formData.unit"
+          />
           <p>Gramas</p>
         </div>
         <div class="form-weight-radio">
-          <input type="radio" name="weight" value="K" v-model="formData.unit" />
+          <input
+            id="radioKiloProduto"
+            type="radio"
+            name="weight"
+            value="K"
+            v-model="formData.unit"
+          />
           <p>Kilo</p>
         </div>
       </div>
@@ -58,11 +81,11 @@
       <div class="form-discount">
         <p>Desconto</p>
         <div class="form-discount-field">
-          <input type="text" v-model="formData.discount" />
+          <input id="descontoProduto" type="text" v-model="formData.discount" />
           <span>%</span>
         </div>
       </div>
-      <button>SALVAR</button>
+      <button id="btnSalvarProduto">SALVAR</button>
     </div>
   </form>
 </template>

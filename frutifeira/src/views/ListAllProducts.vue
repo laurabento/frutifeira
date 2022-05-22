@@ -84,6 +84,7 @@ export default {
       active: false,
       qnt: 0,
       cartTotal: 0,
+      labelSearch: "",
     };
   },
   created() {
@@ -177,6 +178,17 @@ export default {
           this.productsCondominium = [];
           const results = response.filter((item) => {
             return item.product_type.find((type) => type === "Peixe");
+          });
+          this.productsCondominium = results;
+        }
+        if (this.$route.query.type == "all") {
+          this.productsCondominium = [];
+          this.productsCondominium = response;
+        }
+        if (this.$route.query.search) {
+          this.productsCondominium = [];
+          const results = response.filter((item) => {
+            return item.name === this.$route.query.search;
           });
           this.productsCondominium = results;
         }
