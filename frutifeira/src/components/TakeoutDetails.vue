@@ -3,11 +3,11 @@
     <div class="card-content">
       <img :src="require(`@/assets/${icon}.svg`)" alt="" />
       <div class="card-content-title">
-        <h1>{{ location ? "Nome do condomínio" : "Terça-feira, 19h-22h" }}</h1>
-        <p v-if="location">Endereço do Condomínio</p>
+        <h1>{{ location ? condominium.name : "Terça-feira, 19h-22h" }}</h1>
+        <p v-if="location">{{ condominium.address }} - {{ condominium.city }}, {{ condominium.state }}</p>
       </div>
     </div>
-    <p class="card-btn">{{ location ? "Trocar" : "Agendar" }}</p>
+    <!-- <p class="card-btn">{{ location ? "Trocar" : "Agendar" }}</p> -->
   </div>
 </template>
 
@@ -17,6 +17,7 @@ export default {
   props: {
     icon: String,
     location: Boolean,
+    condominium: Object
   },
 };
 </script>

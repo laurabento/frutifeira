@@ -5,13 +5,11 @@
       <h1>Sua sacola de feira</h1>
     </div>
     <div class="cart-tickets">
-      <CartTicket />
-      <CartTicket />
-      <CartTicket />
+      <CartTicket :products="products" :cartProducts="cartProducts"/>
     </div>
     <div class="cart-total">
       <h1>Total</h1>
-      <h1>R$ 23,08</h1>
+      <h1>R$ {{ total.toFixed(2).replace(".", ",") }}</h1>
     </div>
   </div>
 </template>
@@ -22,6 +20,11 @@ export default {
   name: "CartPayment",
   components: {
     CartTicket,
+  },
+  props: {
+    products: Array,
+    cartProducts: Array,
+    total: Number
   },
 };
 </script>

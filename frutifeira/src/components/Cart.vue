@@ -67,7 +67,7 @@
       <h1>Total</h1>
       <h1>R$ {{ total.toFixed(2).replace(".", ",") }}</h1>
     </div>
-    <button>Finalizar compra</button>
+    <button @click="goToPayment">Finalizar compra</button>
   </div>
 </template>
 
@@ -114,9 +114,7 @@ export default {
 
       return total;
     },
-    deleteProduct(id, stand) {
-      console.log(id, stand);
-
+    deleteProduct(id) {
       var cart = JSON.parse(localStorage.getItem("cart"));
       cart = cart.filter(function (el) {
         return el.id != id;
@@ -128,6 +126,10 @@ export default {
     forceRender() {
       this.$emit("forceRender");
     },
+    goToPayment() {
+      if(localStorage.getItem("cart").length > 2)
+        this.$router.push({ name: "Pagamento" });
+    }
   },
 };
 </script>

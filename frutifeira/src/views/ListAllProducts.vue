@@ -144,7 +144,6 @@ export default {
           `http://localhost:5000/api/v1.0/marketcondominium/condominio/${id}/produtos`,
         );
         const response = condominiumProducts.data;
-        console.log(response);
 
         if (this.$route.query.type == "fruits") {
           this.productsCondominium = [];

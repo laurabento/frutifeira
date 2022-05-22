@@ -24,9 +24,6 @@ export default {
   props: {
     productsCondominium: Array,
   },
-  created() {
-    console.log(this.productsCondominium);
-  },
   methods: {
     openDetails(item) {
       this.$emit("openDetails", item);
