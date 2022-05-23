@@ -26,7 +26,8 @@
       <div class="form-city">
         <p>Cidade</p>
         <select name="" id="" v-model="formData.city" required>
-          <option value="São Bernardo do Campo">São Bernardo do Campo</option>
+          <option value=""></option>
+          <option v-for="city in cities" :key="city">{{ city }}</option>
         </select>
       </div>
       <div class="form-neighborhood">
@@ -63,7 +64,7 @@
 
 <script>
 import axios from "axios";
-
+import cities from "../assets/cities.json";
 export default {
   data() {
     return {
@@ -85,6 +86,9 @@ export default {
         schedule: "",
       },
     };
+  },
+  async created() {
+    this.cities = cities.cidades;
   },
   methods: {
     hasPasswordEqual() {
