@@ -118,7 +118,7 @@ export default {
   position: fixed;
   top: @height-menu-desktop;
   background-color: @lightGray;
-  z-index: 2;
+  z-index: 3;
   overflow: scroll;
   padding-right: @margin-body-desktop;
   padding-left: @margin-body-desktop;
