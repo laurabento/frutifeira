@@ -162,7 +162,6 @@ export default {
       this.value.forEach(this.saveProductTypes);
       const id = localStorage.getItem("id");
       this.formData.marketVendorId = id;
-      console.log(this.formData);
       if (!this.edit) {
         await axios
           .post("http://localhost:5000/api/v1.0/products", this.formData, {

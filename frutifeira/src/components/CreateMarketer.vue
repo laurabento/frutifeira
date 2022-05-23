@@ -125,12 +125,10 @@ export default {
               Accept: "application/json",
             },
           })
-          .then((response) => {
-            if (response.ok) {
-              // this.openModalSuccess();
-              console.log("usuário cadastrado!");
-              this.$router.push({ name: "LoginAdm" });
-            }
+          .then(() => {
+            // this.openModalSuccess();
+            console.log("usuário cadastrado!");
+            this.$router.push({ name: "LoginAdm" });
           })
           .catch((error) => console.log(error));
       }
