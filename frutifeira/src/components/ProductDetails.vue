@@ -62,8 +62,12 @@ export default {
         name: "",
         price: 0,
         amount: 0,
+        marketVendorId: "",
       },
     };
+  },
+  created() {
+    console.log(this.product);
   },
   methods: {
     addToCart() {
@@ -72,6 +76,7 @@ export default {
       this.cartProduct.price = this.productPrice(this.product);
       this.cartProduct.amount = this.amount;
       this.cartProduct.id = this.product._id;
+      this.cartProduct.marketVendorId = this.product.marketVendorId;
       var cart = localStorage.getItem("cart");
       if (cart === null) {
         var newCart = [];

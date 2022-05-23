@@ -1,26 +1,36 @@
 <template>
   <div>
     <Header />
-    <PaymentArea :products="products" :cartProducts="cartProducts" :total="total" :condominium="condominium"/>
+    <ModalSuccess v-if="isOpenModalSuccess" />
+    <PaymentArea
+      :products="products"
+      :cartProducts="cartProducts"
+      :total="total"
+      :condominium="condominium"
+      @openModalSuccess="openModalSuccess"
+    />
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header.vue";
 import PaymentArea from "@/components/PaymentArea.vue";
+import ModalSuccess from "@/components/ModalSuccess.vue";
 export default {
   name: "Payment",
   components: {
     Header,
     PaymentArea,
+    ModalSuccess,
   },
-  data(){
+  data() {
     return {
       products: [],
       cartProducts: [],
       total: 0,
-      condominium: []
-    }
+      condominium: [],
+      isOpenModalSuccess: false,
+    };
   },
   created() {
     this.products = JSON.parse(localStorage.getItem("cart"));
@@ -30,6 +40,9 @@ export default {
     this.getStandsHour();
   },
   methods: {
+    openModalSuccess() {
+      return (this.isOpenModalSuccess = !this.isOpenModalSuccess);
+    },
     createList() {
       var cart = [];
       this.products.forEach(function (product) {
@@ -61,12 +74,12 @@ export default {
     async loadCondominium() {
       try {
         const getCondominium = JSON.parse(localStorage.getItem("condominium"));
-        this.condominium = getCondominium
+        this.condominium = getCondominium;
       } catch (error) {
         console.error("Not found Condominium");
       }
     },
-  }
+  },
 };
 </script>
 

@@ -10,16 +10,33 @@
         <!-- <h1 class="payment-content-title">Finalize seu pedido</h1> -->
         <div class="payment-content-takeout">
           <h1>Retirada</h1>
-          <TakeoutDetails :icon="'location'" :location="true" :condominium="condominium"/>
-          <TakeoutDetails :icon="'time'" :location="false" :condominium="condominium"/>
+          <TakeoutDetails
+            :icon="'location'"
+            :location="true"
+            :condominium="condominium"
+          />
+          <TakeoutDetails
+            :icon="'time'"
+            :location="false"
+            :condominium="condominium"
+          />
         </div>
         <div class="payment-content-data">
           <h1>Pagamento</h1>
-          <Payment :cartProducts="cartProducts" :condominium="condominium" :total="total"/>
+          <Payment
+            :cartProducts="cartProducts"
+            :condominium="condominium"
+            :total="total"
+            @openModalSuccess="openModalSuccess"
+          />
         </div>
       </div>
       <div class="payment-cart">
-        <CartPayment :products="products" :cartProducts="cartProducts" :total="total"/>
+        <CartPayment
+          :products="products"
+          :cartProducts="cartProducts"
+          :total="total"
+        />
       </div>
     </div>
   </div>
@@ -44,9 +61,12 @@ export default {
   },
   methods: {
     goBack() {
-        this.$router.push({ name: "Home" });
-    }
-  }
+      this.$router.push({ name: "Home" });
+    },
+    openModalSuccess() {
+      this.$emit("openModalSuccess");
+    },
+  },
 };
 </script>
 

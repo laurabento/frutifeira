@@ -138,7 +138,7 @@ export default {
   }
   .return {
     display: flex;
-    width: 100%;
+    width: fit-content;
     margin-top: @margin-body-desktop;
     margin-left: @margin-body-desktop;
     align-items: center;

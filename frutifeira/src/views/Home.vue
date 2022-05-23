@@ -45,7 +45,11 @@
       @openLogin="openLogin"
     />
     <transition name="slide">
-      <Cart v-if="isOpenCart" @forceRender="forceRender" />
+      <Cart
+        v-if="isOpenCart"
+        @forceRender="forceRender"
+        @openLogin="openLogin"
+      />
     </transition>
     <ChangeCondominium
       v-if="isOpenLocation"

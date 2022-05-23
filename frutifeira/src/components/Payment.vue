@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
     <form class="form" id="formPayment" @submit.prevent="sendOrder">
       <div class="form-type">
         <div class="form-type-field">
@@ -9,6 +9,7 @@
             v-model="formData.typeCredit"
             value="D"
             id="radioCardPayment"
+            required
           />
           <p>Cartão de débito</p>
         </div>
@@ -19,6 +20,7 @@
             v-model="formData.typeCredit"
             value="C"
             id="radioCardPayment"
+            required
           />
           <p>Cartão de crédito</p>
         </div>
@@ -28,30 +30,35 @@
         type="text"
         placeholder="Número do cartão"
         v-model="formData.cardNumber"
+        required
       />
       <input
         class="form-name"
         type="text"
         placeholder="Nome impresso do cartão"
         v-model="formData.cardName"
+        required
       />
       <input
         class="form-expire"
         type="text"
         placeholder="Validade"
         v-model="formData.cardDate"
+        required
       />
       <input
         class="form-cvv"
         type="text"
         placeholder="CVV"
         v-model="formData.cardSecretyNumber"
+        required
       />
       <input
         class="form-cpf"
         type="text"
         placeholder="CPF do titular"
         v-model="formData.cardCPF"
+        required
       />
       <!-- <div class="form-checkbox">
       <input type="checkbox" />
@@ -90,7 +97,6 @@ export default {
   },
   created() {
     this.getUserId();
-    console.log(this.OrderData())
   },
   methods: {
     getUserId() {
@@ -103,6 +109,7 @@ export default {
         payment: this.formData,
         scheduling: this.scheduling,
         items: this.cartProducts,
+        condominiumId: JSON.parse(localStorage.getItem("condominium"))._id,
       };
     },
     async sendOrder() {
@@ -116,8 +123,9 @@ export default {
         })
         .then(() => {
           console.log("pedido recebido");
-          location.reload();
-          this.$router.push({ name: "Home" });
+          this.$emit("openModalSuccess");
+          // location.reload();
+          //this.$router.push({ name: "Home" });
         })
         .catch((error) => console.log(error));
     },

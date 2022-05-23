@@ -127,8 +127,12 @@ export default {
       this.$emit("forceRender");
     },
     goToPayment() {
-      if (localStorage.getItem("cart").length > 2)
-        this.$router.push({ name: "Pagamento" });
+      if (localStorage.getItem("accessToken") !== null) {
+        if (localStorage.getItem("cart").length > 2)
+          this.$router.push({ name: "Pagamento" });
+      } else {
+        this.$emit("openLogin");
+      }
     },
   },
 };
