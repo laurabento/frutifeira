@@ -114,7 +114,6 @@ export default {
   display: grid;
   grid-template-columns: 1fr 3fr;
   grid-gap: 20px;
-  margin-top: calc(@height-menu-desktop ~"+" 10px);
 
   .return {
     display: flex;
@@ -133,6 +132,12 @@ export default {
     }
   }
   .tabs {
+    margin-top: calc(@height-menu-desktop ~"+" 10px);
+
+    &-content {
+      margin-top: calc(@height-menu-desktop ~"+" 10px);
+    }
+
     ul {
       margin-top: 35px;
 

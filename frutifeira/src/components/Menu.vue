@@ -1,5 +1,5 @@
 <template>
-  <div class="menu" :class="userType != '1' && admArea ? 'no-marginTop' : ''">
+  <div class="menu">
     <div class="menu-items">
       <div class="menu-items_item dark">
         <div v-if="userType != null">
@@ -210,9 +210,5 @@ export default {
       }
     }
   }
-}
-
-.no-marginTop {
-  margin-top: -10px;
 }
 </style>

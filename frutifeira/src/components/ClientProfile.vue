@@ -108,7 +108,7 @@ export default {
                 Accept: "application/json",
                 Authorization: "Bearer " + localStorage.getItem("accessToken"),
               },
-            },
+            }
           )
           .then(() => {
             location.reload();
@@ -126,10 +126,13 @@ export default {
 .background {
   position: fixed;
   background-color: @lightGray;
+  overflow-y: hidden;
+  overflow: scroll;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   z-index: 2;
   margin-top: @height-menu-desktop;
+  padding-bottom: 100px;
 
   h1 {
     color: @green;
@@ -229,6 +232,26 @@ export default {
       margin-top: 40px;
       justify-self: flex-end;
       cursor: pointer;
+    }
+  }
+
+  @media (max-width: 768px) {
+    margin-top: @height-menu-mobile;
+
+    .card {
+      grid-template-columns: 1fr ;
+      grid-template-areas:
+        "subtitle"
+        "name"
+        "lastname"
+        "email"
+        "tel"
+        "cpf"
+        "subtitle2"
+        "password"
+        "confirm"
+        "button";
+      margin: @margin-body-mobile;
     }
   }
 }
