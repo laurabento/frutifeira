@@ -182,8 +182,6 @@ export default {
   @media (max-width: 768px) {
     width: 100%;
     height: calc(100% ~"-" @height-menu-mobile);
-    margin-top: @height-menu-mobile;
-    padding: @margin-body-mobile;
 
     &-title {
       h1 {

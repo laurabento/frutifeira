@@ -4,16 +4,6 @@
           <div class="footer-title">
               <img src="../assets/logo-frutifeira.svg"/>
           </div>
-          <div class="footer-content">
-              <ul>
-                  <li>Link 1</li>
-                  <li>Link 2</li>
-                  <li>Link 3</li>
-                  <li>Link 4</li>
-                  <li>Link 5</li>
-                  <li>Link 6</li>
-              </ul>
-          </div>  
           <div class="footer-bottom">
               <p>FRUTIFEIRA. Projeto desenvolvido para as disciplinas de Linguagem de Programação IV e Qualidade de Software do curso de Engenharia da Computação da Faculdade Engenheiro Salvador Arena. 2022.</p>
           </div>
@@ -33,7 +23,7 @@ export default {
     position: relative;
     bottom: 0;
     width: 100%;
-    height: 235px;
+    height: 150px;
     background: linear-gradient(0deg, @lightGray 0%, rgba(246, 246, 246, 0) 100%);
     margin-top: 60px;
 
@@ -79,7 +69,7 @@ export default {
     }
 
     @media (max-width: 768px) {
-        height: 285px;
+        height: 115px;
 
         .container {
             margin-left: @margin-body-mobile;
@@ -102,7 +92,7 @@ export default {
     }
 
     @media (max-width: 425px) {
-        height: 300px;
+        height: 285px;
     }
 }
 </style>

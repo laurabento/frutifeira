@@ -122,6 +122,7 @@ export default {
   overflow: scroll;
   padding-right: @margin-body-desktop;
   padding-left: @margin-body-desktop;
+  padding-bottom: 50px;
 
   &-return {
     display: flex;
