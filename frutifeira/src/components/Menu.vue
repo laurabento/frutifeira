@@ -10,7 +10,7 @@
           <h1>Bem-vindo(a) ao Frutifeira!</h1>
           <p>
             <span id="clickLabelLogin" @click="openLogin">Entre</span> ou
-            <span @click="openSignUp">cadastre-se</span>
+            <span id="clickLabelSignUp" @click="openSignUp">cadastre-se</span>
           </p>
         </div>
       </div>
