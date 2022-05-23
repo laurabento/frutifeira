@@ -17,10 +17,7 @@
     </h3>
     <button
       class="btn"
-      @click="
-        closeOpenModal();
-        openLocation();
-      "
+      @click="closeOpenModal();"
     >
       Trocar
     </button>
@@ -47,7 +44,7 @@ export default {
     },
     setCondominiumLabel() {
       if (localStorage.getItem("condominium") != null) {
-        this.condominiumSelectedInfo = JSON.parse(
+          this.condominiumSelectedInfo = JSON.parse(
           localStorage.getItem("condominium"),
         );
       }
