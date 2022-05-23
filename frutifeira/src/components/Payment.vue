@@ -198,6 +198,7 @@ export default {
     width: 100%;
     max-width: 380px;
     cursor: pointer;
+    margin-bottom: 50px;
   }
 
   @media (max-width: 540px) {

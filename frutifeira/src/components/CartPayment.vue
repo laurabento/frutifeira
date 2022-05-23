@@ -51,7 +51,7 @@ export default {
   &-tickets {
     overflow-y: scroll;
     height: 450px;
-    padding: 10px 5px 10px 0;
+    // padding: 10px 5px 10px 0;
   }
 
   &-total {
