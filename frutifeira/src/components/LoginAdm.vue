@@ -85,7 +85,7 @@ export default {
     loginAdm() {
       axios
         .post(
-          `http://localhost:5000/api/v1.0/${
+          `http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/${
             this.market ? "marketvendors" : "condominium"
           }/login`,
           this.formData,

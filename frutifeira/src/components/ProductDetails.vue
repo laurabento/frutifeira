@@ -130,12 +130,16 @@ export default {
     async loadMarketerDetails() {
       const id = this.$router.params.id;
       return axios
-        .get("http://localhost:5000/api/v1.0/marketvendors/" + id, {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
+        .get(
+          "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/marketvendors/" +
+            id,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
           },
-        })
+        )
         .then((response) => {
           return response;
         })

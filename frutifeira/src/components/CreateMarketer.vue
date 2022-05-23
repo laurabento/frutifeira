@@ -119,12 +119,16 @@ export default {
 
       if (this.hasPasswordEqual()) {
         await axios
-          .post("http://localhost:5000/api/v1.0/marketvendors", this.formData, {
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
+          .post(
+            "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/marketvendors",
+            this.formData,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
             },
-          })
+          )
           .then((response) => {
             if (response.ok) {
               // this.openModalSuccess();

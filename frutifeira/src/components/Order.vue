@@ -26,18 +26,30 @@
           <div class="card-info__item">
             <img src="../assets/location.svg" />
             <div class="info">
-              <span>{{order.condominiumName}}</span>
-              <label>{{ order.condominiumAddress + " - "+ order.condominiumNeighborhood + " - " + order.condominiumCity + ", " + order.condominiumState}}</label>
+              <span>{{ order.condominiumName }}</span>
+              <label>{{
+                order.condominiumAddress +
+                " - " +
+                order.condominiumNeighborhood +
+                " - " +
+                order.condominiumCity +
+                ", " +
+                order.condominiumState
+              }}</label>
             </div>
           </div>
         </div>
         <div class="card-buttons">
-          <button class="card-buttons_details" @click="openDetailsOrder">
+          <button
+            class="card-buttons_details"
+            @click="openDetailsOrder(order.orderNumber)"
+          >
             Ver Detalhes <img src="../assets/arrow-green-inicial.svg" />
           </button>
         </div>
         <DetailsOrder
-          v-if="isOpenDetailsOrder"
+          v-if="isOpenDetailsOrder && orderNumber === order.orderNumber"
+          :key="order.orderNumber"
           :clientProducts="order.items"
           :total="order.totalPrice"
         />
@@ -59,6 +71,7 @@ export default {
     return {
       isOpenDetailsOrder: false,
       userId: "",
+      orderNumber: 0,
       clientOrders: [],
     };
   },
@@ -67,7 +80,8 @@ export default {
     this.getOrders();
   },
   methods: {
-    openDetailsOrder() {
+    openDetailsOrder(orderNumber) {
+      this.orderNumber = orderNumber;
       return (this.isOpenDetailsOrder = !this.isOpenDetailsOrder);
     },
     openOrder() {
@@ -79,14 +93,15 @@ export default {
     async getOrders() {
       console.log("entrou");
       const orders = await axios.get(
-        "http://localhost:5000/api/v1.0/orders/usuario/" + this.userId,
+        "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/orders/usuario/" +
+          this.userId,
         {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
             Authorization: "Bearer " + localStorage.getItem("accessToken"),
           },
-        }
+        },
       );
       this.clientOrders = orders.data;
     },

@@ -134,13 +134,17 @@ export default {
     async saveUser() {
       if (this.hasPasswordEqual()) {
         await axios
-          .post("http://localhost:5000/api/v1.0/users", this.formData, {
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-              //Authorization: "Bearer " + access token
+          .post(
+            "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/users",
+            this.formData,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                //Authorization: "Bearer " + access token
+              },
             },
-          })
+          )
           .then(() => {
             this.openLogin();
           })
