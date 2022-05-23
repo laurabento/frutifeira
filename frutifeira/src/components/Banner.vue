@@ -1,7 +1,7 @@
 <template>
   <div class="banner-home">
-      <img class="banner-home_desktop" src="../assets/banner-desktop.jpg"/>
-      <img class="banner-home_mobile" src="../assets/banner-mobile.jpg"/>
+      <img class="banner-home_desktop" src="../assets/new-banner-desktop.jpg"/>
+      <img class="banner-home_mobile" src="../assets/new-banner-mobile.jpg"/>
   </div>
 </template>
 
