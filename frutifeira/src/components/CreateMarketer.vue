@@ -87,7 +87,7 @@ export default {
       formData: {
         name: "",
         email: "",
-        standName: "",
+        stand_name: "",
         password: "",
         product_type: [],
       },
