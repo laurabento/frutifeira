@@ -1,6 +1,6 @@
 <template>
   <div class="table-group">
-    <div class="search-field">
+    <div class="search-field" v-if="type !== 'marketOrders'">
       <div class="search-field-input">
         <img src="../assets/search-gray.svg" alt="" />
         <input
@@ -11,6 +11,49 @@
         />
       </div>
     </div>
+    <div class="search-orders" v-if="type === 'marketOrders'">
+      <div class="search-orders-field">
+        <p>Número do pedido</p>
+        <div class="search-field-input">
+          <img src="../assets/search-gray.svg" alt="" />
+          <input
+            type="text"
+            @change="findOrder($event, 'order')"
+            @keyup="findOrder($event, 'order')"
+          />
+        </div>
+      </div>
+      <div class="search-orders-field">
+        <p>Forma de pagamento</p>
+        <select
+          name=""
+          id=""
+          @change="findOrder($event, 'payment')"
+          @keyup="findOrder($event, 'payment')"
+        >
+          <option value=""></option>
+          <option value="C">Cartão de crédito</option>
+          <option value="D">Cartão de débito</option>
+        </select>
+      </div>
+      <div class="search-orders-field">
+        <p>Status do pedido</p>
+        <select
+          name=""
+          id=""
+          @change="findOrder($event, 'status')"
+          @keyup="findOrder($event, 'payment')"
+        >
+          <option value=""></option>
+          <option value="Pendente">Pendente</option>
+          <option value="Aprovado">Aprovado</option>
+          <option value="Em separação">Em separação</option>
+          <option value="Pronto">Pronto</option>
+          <option value="Aguardando retirada">Aguardando retirada</option>
+          <option value="Entregue">Entregue</option>
+        </select>
+      </div>
+    </div>
     <table>
       <tr>
         <th v-for="item in table" :key="item">
@@ -19,8 +62,44 @@
         <th></th>
       </tr>
       <tr v-for="item in itemsSearch" :key="item.id">
-        <td>
+        <td v-if="type !== 'marketOrders'">
           {{ item.name }}
+        </td>
+        <td v-if="type === 'marketOrders'">
+          {{ item.orderNumber }}
+        </td>
+        <td v-if="type === 'marketOrders'">
+          {{ new Date(item.orderDate).toLocaleDateString("pt-br") }}
+        </td>
+        <td v-if="type === 'marketOrders'">
+          {{ item.scheduling.weekDay + " " + item.scheduling.schedule }}
+        </td>
+        <td v-if="type === 'marketOrders'">
+          {{
+            item.payment.typeCredit === "D"
+              ? "Cartão de crédito"
+              : "Cartão de débito"
+          }}
+        </td>
+        <td v-if="type === 'marketOrders'">
+          <select
+            name=""
+            id=""
+            v-model="item.status"
+            @change="changeStatus($event, item._id)"
+          >
+            <option value=""></option>
+            <option value="Pendente">Pendente</option>
+            <option value="Aprovado">Aprovado</option>
+            <option value="Em separação">Em separação</option>
+            <option value="Pronto">Pronto</option>
+            <option value="Aguardando retirada">Aguardando retirada</option>
+            <option value="Entregue">Entregue</option>
+          </select>
+          <!-- {{ item.status }} -->
+        </td>
+        <td v-if="type === 'marketOrders'">
+          {{ "R$ " + item.totalPrice.toFixed(2).replace(".", ",") }}
         </td>
         <td v-if="type === 'marketVendors'">
           {{ item.stand_name }}
@@ -68,7 +147,11 @@
         </td>
         <td
           class="dots"
-          v-if="type !== 'cSolicitations' && type !== 'marketVendors'"
+          v-if="
+            type !== 'cSolicitations' &&
+            type !== 'marketVendors' &&
+            type !== 'marketOrders'
+          "
         >
           <img src="../assets/new.svg" @click="openModal(item._id)" />
         </td>
@@ -111,6 +194,7 @@ export default {
   props: {
     table: Array,
     type: String,
+    condominiumId: String,
   },
   async created() {
     this.items = this.itemsSearch = await this.loadItems();
@@ -121,9 +205,33 @@ export default {
       items: [],
       itemsSearch: [],
       searchTerm: "",
+      status: "",
     };
   },
   methods: {
+    async changeStatus(event, id) {
+      this.status =
+        event.target && event.target.value ? event.target.value.trim() : null;
+
+      const order = {
+        status: this.status,
+      };
+      await axios
+        .patch("http://localhost:5000/api/v1.0/orders/" + id, order, {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          },
+        })
+        .then((response) => {
+          return response;
+        })
+        .then((response_json) => {
+          return response_json.data;
+        })
+        .catch((error) => console.log(error));
+    },
     openModal(id, option, mcId) {
       if (this.type === "solicitation") {
         localStorage.setItem("cId", id);
@@ -150,8 +258,9 @@ export default {
           ? "products/feirante/" + id
           : this.type === "cSolicitations" || this.type === "marketVendors"
           ? "marketcondominium/condominio/" + id
+          : this.type === "marketOrders"
+          ? "orders/feirante/" + id + "/condominio/" + this.condominiumId
           : "";
-
       return axios
         .get("http://localhost:5000/api/v1.0/" + url, {
           headers: {
@@ -167,6 +276,43 @@ export default {
           return response_json.data;
         })
         .catch((error) => console.log(error));
+    },
+    findOrder(event, type) {
+      this.searchTerm =
+        event.target && event.target.value ? event.target.value.trim() : null;
+
+      if (this.searchTerm) {
+        if (type === "order") {
+          this.itemsSearch = this.items.filter((d) =>
+            d.orderNumber
+              .toString()
+              .toLowerCase()
+              .includes(this.searchTerm.toString().toLowerCase()),
+          );
+        } else if (type === "payment") {
+          this.itemsSearch = this.items.filter((d) =>
+            d.payment
+              .toString()
+              .toLowerCase()
+              .includes(this.searchTerm.toString().toLowerCase()),
+          );
+        } else {
+          this.itemsSearch = this.items.filter((d) =>
+            d.status
+              .toString()
+              .toLowerCase()
+              .includes(this.searchTerm.toString().toLowerCase()),
+          );
+        }
+      }
+
+      if (this.searchTerm && this.searchTerm.lenght <= 3) {
+        this.itemsSearch = this.items;
+      }
+
+      if (!this.searchTerm) {
+        this.itemsSearch = this.items;
+      }
     },
     find() {
       this.searchTerm =
@@ -200,6 +346,61 @@ export default {
 // .table-group table tr th {
 //   text-align: center;
 // }
+
+.search-orders {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+
+  input,
+  select {
+    background-color: @lightGray;
+    height: 50px;
+    border-radius: 6px;
+    padding: 16px;
+    margin-top: 5px;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  &-field {
+    width: 100%;
+    &-input {
+      display: flex;
+      align-items: center;
+      background-color: @lightGray;
+      border-radius: 6px;
+      margin-top: 5px;
+      cursor: text;
+
+      input {
+        margin: 0;
+        cursor: text;
+      }
+
+      img {
+        margin: 13px 0 13px 13px;
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+
+  /*For IE*/
+  select::-ms-expand {
+    display: none;
+  }
+
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* Some browsers will not display the caret when using calc, so we put the fallback first */
+    background: url("../assets/chevron-down.svg") @lightGray no-repeat 98.5% !important; /* !important used for overriding all other customisations */
+    background: url("../assets/chevron-down.svg") @lightGray no-repeat
+      calc(100% - 15px) !important; /* Better placement regardless of input width */
+  }
+}
 .search-field {
   display: flex;
   gap: 20px;
@@ -255,6 +456,29 @@ export default {
         border-bottom: 1px solid @gray;
         padding: 10px 0;
         color: @darkGray;
+      }
+
+      select {
+        background-color: @lightGray;
+        height: 40px;
+        border-radius: 6px;
+        padding: 11px;
+        margin-top: 5px;
+        cursor: pointer;
+      }
+
+      select::-ms-expand {
+        display: none;
+      }
+
+      select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        /* Some browsers will not display the caret when using calc, so we put the fallback first */
+        background: url("../assets/chevron-down.svg") @lightGray no-repeat 98.5% !important; /* !important used for overriding all other customisations */
+        background: url("../assets/chevron-down.svg") @lightGray no-repeat
+          calc(100% - 15px) !important; /* Better placement regardless of input width */
       }
 
       .dots {
