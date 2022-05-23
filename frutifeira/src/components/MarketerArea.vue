@@ -74,7 +74,7 @@ export default {
         { id: "help", label: "SOLICITAÇÕES" },
       ],
       tableProducts: ["Nome do produto", "Quantidade", "Unidade", "Preço", ""],
-      tableMarkets: ["Condomínio", "Dia da semana", "Hora", "Próximo dia", ""],
+      tableMarkets: ["Condomínio", "Dia da semana", "Hora", ""],
       isOpenEditProduct: false,
       editProduct: "",
     };
