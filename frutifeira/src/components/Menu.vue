@@ -116,6 +116,9 @@ export default {
       localStorage.removeItem("id");
       localStorage.removeItem("userType");
       localStorage.removeItem("accessToken");
+      localStorage.removeItem("fId");
+      localStorage.removeItem("mcId");
+      localStorage.removeItem("cId");
       if (this.admArea) {
         if (this.$route.name != "LoginAdm")
           this.$router.push({ name: "LoginAdm" });
