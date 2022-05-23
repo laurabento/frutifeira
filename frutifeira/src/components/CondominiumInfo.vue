@@ -88,13 +88,17 @@ export default {
   methods: {
     async loadCondominium() {
       return axios
-        .get("http://localhost:5000/api/v1.0/condominium/" + this.id, {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        .get(
+          "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/condominium/" +
+            this.id,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            },
           },
-        })
+        )
         .then((response) => {
           return response;
         })
@@ -106,7 +110,8 @@ export default {
     async saveInfo() {
       await axios
         .patch(
-          "http://localhost:5000/api/v1.0/condominium/" + this.id,
+          "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/condominium/" +
+            this.id,
           this.condominium,
           {
             headers: {

@@ -10,6 +10,7 @@
           <div class="modal-form-nome">
             <p>Nome</p>
             <input
+              id="inputNomeCadastro"
               name="name"
               type="text"
               v-model="firstName"
@@ -20,6 +21,7 @@
           <div class="modal-form-sobrenome">
             <p>Sobrenome</p>
             <input
+              id="inputSobrenomeCadastro"
               name="surname"
               type="text"
               v-model="lastName"
@@ -30,6 +32,7 @@
           <div class="modal-form-email">
             <p>E-mail</p>
             <input
+              id="inputEmailCadastro"
               name="email"
               type="email"
               v-model="formData.email"
@@ -38,15 +41,28 @@
           </div>
           <div class="modal-form-tel">
             <p>Telefone</p>
-            <input name="phone" type="tel" v-model="formData.phone" required />
+            <input
+              id="inputFoneCadastro"
+              name="phone"
+              type="tel"
+              v-model="formData.phone"
+              required
+            />
           </div>
           <div class="modal-form-cpf">
             <p>CPF</p>
-            <input name="cpf" type="text" v-model="formData.cpf" required />
+            <input
+              id="inputCPFCadastro"
+              name="cpf"
+              type="text"
+              v-model="formData.cpf"
+              required
+            />
           </div>
           <div class="modal-form-senha">
             <p>Senha</p>
             <input
+              id="inputSenhaCadastro"
               name="firstPassword"
               type="password"
               v-model="firstPassword"
@@ -56,6 +72,7 @@
           <div class="modal-form-conf">
             <p>Confirmar senha</p>
             <input
+              id="inputConfirmSenhaCadastro"
               name="secondPassword"
               type="password"
               v-model="secondPassword"
@@ -117,13 +134,17 @@ export default {
     async saveUser() {
       if (this.hasPasswordEqual()) {
         await axios
-          .post("http://localhost:5000/api/v1.0/users", this.formData, {
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-              //Authorization: "Bearer " + access token
+          .post(
+            "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/users",
+            this.formData,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                //Authorization: "Bearer " + access token
+              },
             },
-          })
+          )
           .then(() => {
             this.openLogin();
           })

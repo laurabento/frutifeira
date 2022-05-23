@@ -20,13 +20,14 @@
         </p>
         <div class="modal-content-amount">
           <img
-            id="clickAumentarProduto"
+            id="clickReduzirProduto"
             class="modal-content-amount-remove"
             @click="addRemoveAmount(false)"
             src="../assets/remove.svg"
           />
           <p>{{ this.amount }}</p>
           <img
+            id="clickAumentarProduto"
             class="modal-content-amount-add"
             @click="addRemoveAmount(true)"
             src="../assets/add.svg"
@@ -61,8 +62,12 @@ export default {
         name: "",
         price: 0,
         amount: 0,
+        marketVendorId: "",
       },
     };
+  },
+  created() {
+    console.log(this.product);
   },
   methods: {
     addToCart() {
@@ -71,6 +76,7 @@ export default {
       this.cartProduct.price = this.productPrice(this.product);
       this.cartProduct.amount = this.amount;
       this.cartProduct.id = this.product._id;
+      this.cartProduct.marketVendorId = this.product.marketVendorId;
       var cart = localStorage.getItem("cart");
       if (cart === null) {
         var newCart = [];
@@ -124,12 +130,16 @@ export default {
     async loadMarketerDetails() {
       const id = this.$router.params.id;
       return axios
-        .get("http://localhost:5000/api/v1.0/marketvendors/" + id, {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
+        .get(
+          "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/marketvendors/" +
+            id,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
           },
-        })
+        )
         .then((response) => {
           return response;
         })

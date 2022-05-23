@@ -82,7 +82,7 @@ export default {
     },
     async loadProduct() {
       const condominiumProducts = await axios.get(
-        `http://localhost:5000/api/v1.0/marketcondominium/condominio/${this.condominium}/produtos`,
+        `http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/marketcondominium/condominio/${this.condominium}/produtos`,
       );
       const response = condominiumProducts.data;
       response.forEach((item) => {

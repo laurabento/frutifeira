@@ -64,8 +64,8 @@
       </div>
     </div>
     <div class="cart-total">
-      <h1>Total</h1>
-      <h1>R$ {{ total.toFixed(2).replace(".", ",") }}</h1>
+      <h1 class="title-total">Total</h1>
+      <h1 class="price-total" id="totalCarrinho">R$ {{ total.toFixed(2).replace(".", ",") }}</h1>
     </div>
     <button @click="goToPayment">Finalizar compra</button>
   </div>
@@ -127,9 +127,13 @@ export default {
       this.$emit("forceRender");
     },
     goToPayment() {
-      if(localStorage.getItem("cart").length > 2)
-        this.$router.push({ name: "Pagamento" });
-    }
+      if (localStorage.getItem("accessToken") !== null) {
+        if (localStorage.getItem("cart").length > 2)
+          this.$router.push({ name: "Pagamento" });
+      } else {
+        this.$emit("openLogin");
+      }
+    },
   },
 };
 </script>
@@ -160,7 +164,7 @@ export default {
 
   &-items {
     overflow-y: scroll;
-    height: 75%;
+    height: 70%;
     padding: 10px 5px 10px 0;
     &_item {
       background-color: white;
@@ -256,11 +260,17 @@ export default {
     display: flex;
     position: absolute;
     justify-content: space-between;
-    width: 425px;
+    // width: 425px;
     margin-top: 10px;
+    align-items: baseline;
 
-    h1 {
+    .title-total {
+      font-size: 14px;
+      margin-right: 15px;
+    }
+    .price-total {
       font-size: 24px;
+      color: @green;
     }
   }
 

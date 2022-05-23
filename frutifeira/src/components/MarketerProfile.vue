@@ -120,7 +120,7 @@ export default {
     async loadMarketer() {
       return axios
         .get(
-          "http://localhost:5000/api/v1.0/marketvendors/" +
+          "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/marketvendors/" +
             localStorage.getItem("id"),
           {
             headers: {
@@ -144,7 +144,7 @@ export default {
       if (this.hasPasswordEqual()) {
         await axios
           .patch(
-            "http://localhost:5000/api/v1.0/marketvendors/" +
+            "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/marketvendors/" +
               localStorage.getItem("id"),
             this.formData,
             {
@@ -175,7 +175,9 @@ export default {
   width: 100%;
   height: 100%;
   z-index: 2;
-  margin-top: -10px;
+  margin-top: @height-menu-desktop;
+  padding-bottom: @height-menu-desktop;
+  overflow: scroll;
 
   h1 {
     color: @green;

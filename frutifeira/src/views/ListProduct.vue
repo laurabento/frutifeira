@@ -19,12 +19,33 @@
       @forceRender="forceRender"
     />
     <transition name="slide-up">
-      <Menu v-if="isOpenMenu" @openOrder="openOrder" />
+      <Menu
+        v-if="isOpenMenu"
+        @openOrder="openOrder"
+        :admArea="false"
+        @openLogin="openLogin"
+        @openSignUp="openSignUp"
+        @openMenu="openMenu"
+        @openClientProfile="openClientProfile"
+      />
     </transition>
+    <ClientProfile
+      v-if="isOpenClientProfile"
+      @openClientProfile="openClientProfile"
+      :client="userClient"
+    />
     <Login v-if="isOpenLogin" @openLogin="openLogin" @openSignUp="openSignUp" />
-    <SignUp v-if="isOpenSignUp" @openSignUp="openSignUp" />
+    <SignUp
+      v-if="isOpenSignUp"
+      @openSignUp="openSignUp"
+      @openLogin="openLogin"
+    />
     <transition name="slide">
-      <Cart v-if="isOpenCart" @forceRender="forceRender" />
+      <Cart
+        v-if="isOpenCart"
+        @forceRender="forceRender"
+        @openLogin="openLogin"
+      />
     </transition>
     <ChangeCondominium v-if="isOpenLocation" @openLocation="openLocation" />
     <Order v-if="isOpenOrder" @openOrder="openOrder" />
@@ -53,6 +74,7 @@ import Order from "@/components/Order.vue";
 import ProductDetails from "@/components/ProductDetails.vue";
 import List from "@/components/List.vue";
 import Spiner from "@/components/Spiner.vue";
+import ClientProfile from "@/components/ClientProfile.vue";
 
 export default {
   name: "ListProduct",
@@ -69,6 +91,7 @@ export default {
     ProductDetails,
     List,
     Spiner,
+    ClientProfile,
   },
   data() {
     return {
@@ -86,6 +109,7 @@ export default {
       marketerName: [],
       qnt: 0,
       cartTotal: 0,
+      userClient: [],
     };
   },
   created() {
@@ -137,14 +161,18 @@ export default {
         this.isOpenCart = true;
       });
     },
+    openClientProfile(value) {
+      this.userClient = value;
+      return (this.isOpenClientProfile = !this.isOpenClientProfile);
+    },
     async findMarketerProducts(id) {
       try {
         this.active = true;
         const marketer = await axios.get(
-          `http://localhost:5000/api/v1.0/products/feirante/${id}`,
+          `http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/products/feirante/${id}`,
         );
         const marketerName = await axios.get(
-          `http://localhost:5000/api/v1.0/products/feirante/${id}/nome`,
+          `http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/products/feirante/${id}/nome`,
         );
         this.marketerName = marketerName.data;
         this.productsMarketersList = marketer.data;

@@ -1,23 +1,30 @@
 <template>
   <div class="background">
     <div class="modal">
-      <img class="modal-close" src="../assets/close-gray.svg" />
       <img class="modal-img" src="../assets/success.svg" />
       <h1>Pedido realizado</h1>
       <p>
         Assim que o pagamento for confirmado, começaremos a preparar o seu
         pedido!
       </p>
-      <div class="modal-buttons">
-        <button>Veja seu QR Code</button>
-        <button>Acompanhe seu pedido</button>
+      <div class="modal-button">
+        <!-- <button>Seus pedidos</button> -->
+        <button @click="goHome">OK</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  name: "ModalSuccess",
+  methods: {
+    goHome() {
+      localStorage.removeItem("cart");
+      this.$router.push({ name: "Home" });
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -43,6 +50,11 @@ export default {};
     position: relative;
     align-items: center;
 
+    p {
+      text-align: center;
+      width: 85%;
+    }
+
     &-close {
       position: absolute;
       top: 25px;
@@ -57,6 +69,25 @@ export default {};
     h1 {
       font-weight: 400;
       margin: 10px;
+    }
+
+    &-button {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 50px;
+      button {
+        background-color: @green;
+        color: white;
+        font-weight: bold;
+        letter-spacing: 0.1em;
+        height: 50px;
+        border-radius: 6px;
+        width: 100%;
+        max-width: 200px;
+        cursor: pointer;
+      }
     }
   }
 }

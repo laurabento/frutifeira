@@ -45,7 +45,11 @@
       @openLogin="openLogin"
     />
     <transition name="slide">
-      <Cart v-if="isOpenCart" @forceRender="forceRender" />
+      <Cart
+        v-if="isOpenCart"
+        @forceRender="forceRender"
+        @openLogin="openLogin"
+      />
     </transition>
     <ChangeCondominium
       v-if="isOpenLocation"
@@ -204,14 +208,14 @@ export default {
         this.marketersCondominiumList = [];
         const getCondominium = JSON.parse(localStorage.getItem("condominium"));
         const condominiumMarketers = await axios.get(
-          `http://localhost:5000/api/v1.0/marketcondominium/condominio/${getCondominium._id}`,
+          `http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/marketcondominium/condominio/${getCondominium._id}`,
         );
         const response = condominiumMarketers.data;
         response.forEach((item) => {
           this.marketersCondominiumList.push(item);
         });
         const saleOffers = await axios.get(
-          `http://localhost:5000/api/v1.0/marketcondominium/condominio/${getCondominium._id}/desconto`,
+          `http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/marketcondominium/condominio/${getCondominium._id}/desconto`,
         );
         this.saleList = saleOffers.data;
         this.active = false;

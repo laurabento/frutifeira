@@ -38,7 +38,7 @@
             <Products @openProducts="openProducts" />
           </div> -->
           <div class="tab" v-if="activeTab === 'dolar'" key="dolar">
-            <MarketOrders />
+            <MarketOrders :condominiumId="condominiumDetails._id" />
           </div>
         </transition>
       </div>
@@ -88,7 +88,7 @@ export default {
     async loadCondominium() {
       return axios
         .get(
-          "http://localhost:5000/api/v1.0/condominium/" +
+          "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/condominium/" +
             localStorage.getItem("cId"),
           {
             headers: {
@@ -117,6 +117,7 @@ export default {
   padding-right: @margin-body-desktop;
   padding-left: @margin-body-desktop;
   background-color: white;
+  margin-top: @height-menu-desktop;
   width: 100%;
   position: fixed;
   z-index: 1;

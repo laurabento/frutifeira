@@ -74,7 +74,7 @@ export default {
         { id: "help", label: "SOLICITAÇÕES" },
       ],
       tableProducts: ["Nome do produto", "Quantidade", "Unidade", "Preço", ""],
-      tableMarkets: ["Condomínio", "Dia da semana", "Hora", "Próximo dia", ""],
+      tableMarkets: ["Condomínio", "Dia da semana", "Hora", ""],
       isOpenEditProduct: false,
       editProduct: "",
     };
@@ -114,7 +114,6 @@ export default {
   display: grid;
   grid-template-columns: 1fr 3fr;
   grid-gap: 20px;
-  margin-top: calc(@height-menu-desktop ~"+" 10px);
 
   .return {
     display: flex;
@@ -133,6 +132,12 @@ export default {
     }
   }
   .tabs {
+    margin-top: calc(@height-menu-desktop ~"+" 10px);
+
+    &-content {
+      margin-top: calc(@height-menu-desktop ~"+" 10px);
+    }
+
     ul {
       margin-top: 35px;
 

@@ -19,12 +19,33 @@
       @forceRender="forceRender"
     />
     <transition name="slide-up">
-      <Menu v-if="isOpenMenu" @openOrder="openOrder" />
+      <Menu
+        v-if="isOpenMenu"
+        @openOrder="openOrder"
+        :admArea="false"
+        @openLogin="openLogin"
+        @openSignUp="openSignUp"
+        @openMenu="openMenu"
+        @openClientProfile="openClientProfile"
+      />
     </transition>
+    <ClientProfile
+      v-if="isOpenClientProfile"
+      @openClientProfile="openClientProfile"
+      :client="userClient"
+    />
     <Login v-if="isOpenLogin" @openLogin="openLogin" @openSignUp="openSignUp" />
-    <SignUp v-if="isOpenSignUp" @openSignUp="openSignUp" />
+    <SignUp
+      v-if="isOpenSignUp"
+      @openSignUp="openSignUp"
+      @openLogin="openLogin"
+    />
     <transition name="slide">
-      <Cart v-if="isOpenCart" @forceRender="forceRender" />
+      <Cart
+        v-if="isOpenCart"
+        @forceRender="forceRender"
+        @openLogin="openLogin"
+      />
     </transition>
     <ChangeCondominium v-if="isOpenLocation" @openLocation="openLocation" />
     <Order v-if="isOpenOrder" @openOrder="openOrder" />
@@ -52,6 +73,7 @@ import Order from "@/components/Order.vue";
 import ProductDetails from "@/components/ProductDetails.vue";
 import ListAll from "@/components/ListAll.vue";
 import Spiner from "@/components/Spiner.vue";
+import ClientProfile from "@/components/ClientProfile.vue";
 
 export default {
   name: "ListProduct",
@@ -68,6 +90,7 @@ export default {
     ProductDetails,
     ListAll,
     Spiner,
+    ClientProfile,
   },
   data() {
     return {
@@ -85,6 +108,7 @@ export default {
       qnt: 0,
       cartTotal: 0,
       labelSearch: "",
+      userClient: [],
     };
   },
   created() {
@@ -114,6 +138,10 @@ export default {
         this.isOpenCart = true;
       });
     },
+    openClientProfile(value) {
+      this.userClient = value;
+      return (this.isOpenClientProfile = !this.isOpenClientProfile);
+    },
     openMenu() {
       return (this.isOpenMenu = !this.isOpenMenu);
     },
@@ -141,7 +169,7 @@ export default {
         this.active = true;
         this.productsCondominium = [];
         const condominiumProducts = await axios.get(
-          `http://localhost:5000/api/v1.0/marketcondominium/condominio/${id}/produtos`,
+          `http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/marketcondominium/condominio/${id}/produtos`,
         );
         const response = condominiumProducts.data;
 

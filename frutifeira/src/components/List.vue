@@ -78,11 +78,11 @@ export default {
     flex-wrap: wrap;
     margin-left: @margin-body-desktop;
     margin-right: @margin-body-desktop;
-    // justify-content: center;
 
     @media (max-width: 768px) {
       margin-left: @margin-body-mobile;
       margin-right: @margin-body-mobile;
+      justify-content: center;
     }
   }
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="menu" :class="userType != '1' && admArea ? 'no-marginTop' : ''">
+  <div class="menu">
     <div class="menu-items">
       <div class="menu-items_item dark">
         <div v-if="userType != null">
@@ -9,8 +9,8 @@
         <div v-if="userType == null" :class="userType == null ? 'no-user' : ''">
           <h1>Bem-vindo(a) ao Frutifeira!</h1>
           <p>
-            <span @click="openLogin">Entre</span> ou
-            <span @click="openSignUp">cadastre-se</span>
+            <span id="clickLabelLogin" @click="openLogin">Entre</span> ou
+            <span id="clickLabelSignUp" @click="openSignUp">cadastre-se</span>
           </p>
         </div>
       </div>
@@ -37,7 +37,7 @@
         <p>Aqui você pode acompanhar e rever seus pedidos</p>
       </div>
       <div class="menu-items_logout" @click="logout" v-if="userType != null">
-        <h1>Sair</h1>
+        <h1 id="labelSair">Sair</h1>
       </div>
     </div>
   </div>
@@ -69,7 +69,7 @@ export default {
     getUserInfo(type) {
       return axios
         .get(
-          `http://localhost:5000/api/v1.0/${type}/` +
+          `http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/${type}/` +
             localStorage.getItem("id"),
           {
             headers: {
@@ -136,7 +136,7 @@ export default {
   width: 495px;
   height: auto;
   position: fixed;
-  z-index: 2;
+  z-index: 3;
   background-color: white;
   border-radius: 0 0 16px 16px;
   box-shadow: 0px 30px 30px 7px #0000001a;
@@ -210,9 +210,5 @@ export default {
       }
     }
   }
-}
-
-.no-marginTop {
-  margin-top: -10px;
 }
 </style>

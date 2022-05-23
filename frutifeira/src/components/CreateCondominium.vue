@@ -26,7 +26,8 @@
       <div class="form-city">
         <p>Cidade</p>
         <select name="" id="" v-model="formData.city" required>
-          <option value="São Bernardo do Campo">São Bernardo do Campo</option>
+          <option value=""></option>
+          <option v-for="city in cities" :key="city">{{ city }}</option>
         </select>
       </div>
       <div class="form-neighborhood">
@@ -63,7 +64,7 @@
 
 <script>
 import axios from "axios";
-
+import cities from "../assets/cities.json";
 export default {
   data() {
     return {
@@ -86,6 +87,9 @@ export default {
       },
     };
   },
+  async created() {
+    this.cities = cities.cidades;
+  },
   methods: {
     hasPasswordEqual() {
       if (this.firstPassword == this.secondPassword) {
@@ -99,12 +103,16 @@ export default {
     async saveCondominium() {
       if (this.hasPasswordEqual()) {
         await axios
-          .post("http://localhost:5000/api/v1.0/condominium", this.formData, {
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
+          .post(
+            "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/condominium",
+            this.formData,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
             },
-          })
+          )
           .then((response) => {
             this.$router.push({ name: "LoginAdm" });
             return response;

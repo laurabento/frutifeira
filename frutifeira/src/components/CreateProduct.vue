@@ -142,7 +142,12 @@ export default {
       if (type !== "u") {
         document.getElementById("qtdProduto").classList.remove("disabled");
         document.getElementById("weight").innerHTML = type;
-      } else document.getElementById("qtdProduto").classList.add("disabled");
+      } else {
+        this.formData.quantity = "";
+        document.getElementById("qtdProduto").value = "";
+        document.getElementById("weight").innerHTML = "";
+        document.getElementById("qtdProduto").classList.add("disabled");
+      }
     },
     chooseImage() {
       document.getElementById("selectImg").click();
@@ -164,13 +169,17 @@ export default {
       this.formData.marketVendorId = id;
       if (!this.edit) {
         await axios
-          .post("http://localhost:5000/api/v1.0/products", this.formData, {
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-              Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          .post(
+            "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/products",
+            this.formData,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                Authorization: "Bearer " + localStorage.getItem("accessToken"),
+              },
             },
-          })
+          )
           .then(() => {
             console.log("produto cadastrado!");
             location.reload();
@@ -179,7 +188,8 @@ export default {
       } else {
         await axios
           .patch(
-            "http://localhost:5000/api/v1.0/products/" + this.editProduct,
+            "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/products/" +
+              this.editProduct,
             this.formData,
             {
               headers: {
@@ -198,13 +208,17 @@ export default {
     },
     async loadProduct() {
       return axios
-        .get("http://localhost:5000/api/v1.0/products/" + this.editProduct, {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        .get(
+          "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/products/" +
+            this.editProduct,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            },
           },
-        })
+        )
         .then((response) => {
           return response;
         })

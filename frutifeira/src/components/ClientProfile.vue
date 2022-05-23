@@ -99,7 +99,7 @@ export default {
       if (this.hasPasswordEqual()) {
         await axios
           .patch(
-            "http://localhost:5000/api/v1.0/users/" +
+            "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/users/" +
               localStorage.getItem("id"),
             this.formData,
             {
@@ -127,10 +127,12 @@ export default {
   position: fixed;
   background-color: @lightGray;
   overflow-y: hidden;
+  overflow: scroll;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   z-index: 2;
   margin-top: @height-menu-desktop;
+  padding-bottom: 100px;
 
   h1 {
     color: @green;
@@ -139,7 +141,7 @@ export default {
   }
   .return {
     display: flex;
-    width: 100%;
+    width: fit-content;
     margin-top: @margin-body-desktop;
     margin-left: @margin-body-desktop;
     align-items: center;
@@ -230,6 +232,26 @@ export default {
       margin-top: 40px;
       justify-self: flex-end;
       cursor: pointer;
+    }
+  }
+
+  @media (max-width: 768px) {
+    margin-top: @height-menu-mobile;
+
+    .card {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "subtitle"
+        "name"
+        "lastname"
+        "email"
+        "tel"
+        "cpf"
+        "subtitle2"
+        "password"
+        "confirm"
+        "button";
+      margin: @margin-body-mobile;
     }
   }
 }
