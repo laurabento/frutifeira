@@ -17,7 +17,10 @@
     </h3>
     <button
       class="btn"
-      @click="closeOpenModal();"
+      @click="
+        closeOpenModal();
+        openLocation();
+      "
     >
       Trocar
     </button>
