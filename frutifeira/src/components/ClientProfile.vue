@@ -99,7 +99,7 @@ export default {
       if (this.hasPasswordEqual()) {
         await axios
           .patch(
-            "http://localhost:5000/api/v1.0/users/" +
+            "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/users/" +
               localStorage.getItem("id"),
             this.formData,
             {
@@ -108,7 +108,7 @@ export default {
                 Accept: "application/json",
                 Authorization: "Bearer " + localStorage.getItem("accessToken"),
               },
-            }
+            },
           )
           .then(() => {
             location.reload();
@@ -239,7 +239,7 @@ export default {
     margin-top: @height-menu-mobile;
 
     .card {
-      grid-template-columns: 1fr ;
+      grid-template-columns: 1fr;
       grid-template-areas:
         "subtitle"
         "name"

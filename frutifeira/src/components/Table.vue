@@ -217,13 +217,18 @@ export default {
         status: this.status,
       };
       await axios
-        .patch("http://localhost:5000/api/v1.0/orders/" + id, order, {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        .patch(
+          "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/orders/" +
+            id,
+          order,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            },
           },
-        })
+        )
         .then((response) => {
           return response;
         })
@@ -262,13 +267,16 @@ export default {
           ? "orders/feirante/" + id + "/condominio/" + this.condominiumId
           : "";
       return axios
-        .get("http://localhost:5000/api/v1.0/" + url, {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        .get(
+          "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/" + url,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            },
           },
-        })
+        )
         .then((response) => {
           return response;
         })

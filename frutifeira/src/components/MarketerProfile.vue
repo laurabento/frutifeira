@@ -120,7 +120,7 @@ export default {
     async loadMarketer() {
       return axios
         .get(
-          "http://localhost:5000/api/v1.0/marketvendors/" +
+          "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/marketvendors/" +
             localStorage.getItem("id"),
           {
             headers: {
@@ -144,7 +144,7 @@ export default {
       if (this.hasPasswordEqual()) {
         await axios
           .patch(
-            "http://localhost:5000/api/v1.0/marketvendors/" +
+            "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/marketvendors/" +
               localStorage.getItem("id"),
             this.formData,
             {

@@ -114,13 +114,17 @@ export default {
     },
     async sendOrder() {
       await axios
-        .post("http://localhost:5000/api/v1.0/orders", this.OrderData(), {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        .post(
+          "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/orders",
+          this.OrderData(),
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            },
           },
-        })
+        )
         .then(() => {
           console.log("pedido recebido");
           this.$emit("openModalSuccess");

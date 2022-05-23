@@ -44,7 +44,7 @@ export default {
     async loadCondominium() {
       try {
         const condominium = await axios.get(
-          "http://localhost:5000/api/v1.0/condominium",
+          "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/condominium",
         );
         this.listCondominium = condominium.data;
       } catch (error) {

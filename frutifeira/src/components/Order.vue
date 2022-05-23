@@ -93,7 +93,8 @@ export default {
     async getOrders() {
       console.log("entrou");
       const orders = await axios.get(
-        "http://localhost:5000/api/v1.0/orders/usuario/" + this.userId,
+        "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/orders/usuario/" +
+          this.userId,
         {
           headers: {
             "Content-Type": "application/json",

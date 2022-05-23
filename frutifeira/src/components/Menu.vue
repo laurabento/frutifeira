@@ -69,7 +69,7 @@ export default {
     getUserInfo(type) {
       return axios
         .get(
-          `http://localhost:5000/api/v1.0/${type}/` +
+          `http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/${type}/` +
             localStorage.getItem("id"),
           {
             headers: {

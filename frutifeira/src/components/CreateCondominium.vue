@@ -99,12 +99,16 @@ export default {
     async saveCondominium() {
       if (this.hasPasswordEqual()) {
         await axios
-          .post("http://localhost:5000/api/v1.0/condominium", this.formData, {
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
+          .post(
+            "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/condominium",
+            this.formData,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
             },
-          })
+          )
           .then((response) => {
             this.$router.push({ name: "LoginAdm" });
             return response;

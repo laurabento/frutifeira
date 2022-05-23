@@ -169,10 +169,10 @@ export default {
       try {
         this.active = true;
         const marketer = await axios.get(
-          `http://localhost:5000/api/v1.0/products/feirante/${id}`,
+          `http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/products/feirante/${id}`,
         );
         const marketerName = await axios.get(
-          `http://localhost:5000/api/v1.0/products/feirante/${id}/nome`,
+          `http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/products/feirante/${id}/nome`,
         );
         this.marketerName = marketerName.data;
         this.productsMarketersList = marketer.data;

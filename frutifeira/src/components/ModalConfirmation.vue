@@ -88,7 +88,7 @@ export default {
     async saveSolicitation() {
       await axios
         .post(
-          "http://localhost:5000/api/v1.0/marketcondominium/",
+          "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/marketcondominium/",
           this.solicitation,
           {
             headers: {
@@ -106,7 +106,7 @@ export default {
     async updateSolicitation() {
       await axios
         .patch(
-          "http://localhost:5000/api/v1.0/marketcondominium/" +
+          "http://frutifeira.us-east-1.elasticbeanstalk.com/api/v1.0/marketcondominium/" +
             localStorage.getItem("mcId"),
           this.solicitation,
           {
