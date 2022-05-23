@@ -1,54 +1,32 @@
 <template>
   <div class="details-order">
       <h1>Detalhes do Pedido</h1>
-      <div class="details-order_group">
-          <h2>Barraca da Meire</h2>
+      <div class="details-order_group" v-for="item in clientProducts" :key="item._id">
+          <h2>{{ item.stand_name }}</h2>
           <ul>
-              <li>
+              <li v-for="product in item.products" :key="product._id">
                 <div class="details-product">
                     <div class="details-quant">
-                        <label>1</label>
+                        <label>{{ product.amount }}</label>
                     </div>
-                    <label>Maçã Verde</label>
+                    <label>{{ product.name }}</label>
                 </div>
                 <div class="details-price">
-                    <label>R$ 4,99</label>
-                </div>
-              </li>
-              <li>
-                <div class="details-product">
-                    <div class="details-quant">
-                        <label>1</label>
-                    </div>
-                    <label>Maçã Verde</label>
-                </div>
-                <div class="details-price">
-                    <label>R$ 4,99</label>
-                </div>
-              </li>
-              <li>
-                <div class="details-product">
-                    <div class="details-quant">
-                        <label>1</label>
-                    </div>
-                    <label>Maçã Verde</label>
-                </div>
-                <div class="details-price">
-                    <label>R$ 4,99</label>
+                    <label>{{ product.price }}</label>
                 </div>
               </li>
           </ul>
           <div class="details-order_total">
               <div class="total_group">
                   <label class="title-total">Total</label>
-                  <label>R$ 10,00</label>
+                  <label>R$ {{ parseFloat(item.total).toFixed(2).toString().replace(".", ",") }}</label>
               </div>
           </div>
       </div>
       <div class="details-order_price">
           <div class="price_group">
             <label class="title-price">Total</label>
-            <label>R$ 12,00</label>
+            <label>R$ {{ parseFloat(total).toFixed(2).toString().replace(".", ",") }}</label>
           </div>
       </div>
   </div>
@@ -56,7 +34,10 @@
 
 <script>
 export default {
-
+    props: {
+        clientProducts: Array,
+        total: Number
+    }
 }
 </script>
 

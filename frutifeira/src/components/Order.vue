@@ -5,68 +5,90 @@
       <label>voltar</label>
     </div>
     <h1>pedidos</h1>
-    <div class="order-card">
+    <div class="order-card" v-for="order in clientOrders" :key="order._id">
       <div class="card">
-        <div class="card-tag yellow-tag">
-          <label class="yellow-label">Em andamento</label>
+        <div class="card-tag green-tag">
+          <label class="green-label">{{ order.status }}</label>
         </div>
-        <h2>Pedido 152</h2>
+        <h2>Pedido {{ order.orderNumber }}</h2>
         <div class="card-info">
           <div class="card-info__item">
             <img src="../assets/time.svg" />
             <div class="info">
-              <span>Agendado para:</span>
-              <label>04/04/2022 às 20:35</label>
+              <span>Retirada: </span>
+              <label
+                >{{ order.scheduling.weekDay }},
+                {{ new Date(order.orderDate).toLocaleDateString("pt-br") }} às
+                {{ order.scheduling.schedule }}</label
+              >
             </div>
           </div>
           <div class="card-info__item">
             <img src="../assets/location.svg" />
             <div class="info">
-              <span>Condomínio Vila das Rosas</span>
-              <label
-                >Rua Joaquim Sales, 241 - Jardim Floresta - São Paulo/SP</label
-              >
+              <span>{{order.condominiumName}}</span>
+              <label>{{ order.condominiumAddress + " - "+ order.condominiumNeighborhood + " - " + order.condominiumCity + ", " + order.condominiumState}}</label>
             </div>
           </div>
         </div>
         <div class="card-buttons">
-          <button @click="openTimeline">Acompanhar pedido</button>
-          <button @click="openDetailsOrder">Ver Detalhes</button>
-          <button>QR Code</button>
+          <button class="card-buttons_details" @click="openDetailsOrder">
+            Ver Detalhes <img src="../assets/arrow-green-inicial.svg" />
+          </button>
         </div>
-        <Timeline v-if="isOpenTimeline" />
-        <DetailsOrder v-if="isOpenDetailsOrder" />
+        <DetailsOrder
+          v-if="isOpenDetailsOrder"
+          :clientProducts="order.items"
+          :total="order.totalPrice"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Timeline from "@/components/Timeline.vue";
+import axios from "axios";
+
 import DetailsOrder from "@/components/DetailsOrder.vue";
 
 export default {
   components: {
-    Timeline,
     DetailsOrder,
   },
   data() {
     return {
-      isOpenTimeline: false,
       isOpenDetailsOrder: false,
+      userId: "",
+      clientOrders: [],
     };
   },
+  created() {
+    this.getUserId();
+    this.getOrders();
+  },
   methods: {
-    openTimeline() {
-      if (this.isOpenDetailsOrder) this.openDetailsOrder();
-      return (this.isOpenTimeline = !this.isOpenTimeline);
-    },
     openDetailsOrder() {
-      if (this.isOpenTimeline) this.openTimeline();
       return (this.isOpenDetailsOrder = !this.isOpenDetailsOrder);
     },
     openOrder() {
       this.$emit("openOrder");
+    },
+    getUserId() {
+      this.userId = localStorage.getItem("id");
+    },
+    async getOrders() {
+      console.log("entrou");
+      const orders = await axios.get(
+        "http://localhost:5000/api/v1.0/orders/usuario/" + this.userId,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          },
+        }
+      );
+      this.clientOrders = orders.data;
     },
   },
 };
@@ -117,6 +139,7 @@ export default {
       width: 100%;
       border-radius: 16px;
       padding: 40px;
+      margin-bottom: 25px;
 
       &-tag {
         width: fit-content;
@@ -136,6 +159,14 @@ export default {
 
       .yellow-label {
         color: @yellow;
+      }
+
+      .green-tag {
+        background-color: @lightGreen;
+      }
+
+      .green-label {
+        color: @green;
       }
 
       h2 {
@@ -184,24 +215,21 @@ export default {
 
       &-buttons {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr;
         grid-gap: 20px;
 
         button {
-          border: 2px solid @green;
           background-color: transparent;
-          padding: 18px;
+          padding: 18px 18px 0 18px;
           border-radius: 6px;
           color: @green;
           text-transform: uppercase;
           letter-spacing: 0.1em;
           font-weight: 600;
           cursor: pointer;
-
-          &:hover {
-            background: @green;
-            color: white;
-          }
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
       }
     }
@@ -222,32 +250,30 @@ export default {
     }
 
     .order-card {
-    .card {
-      padding: 30px;
+      .card {
+        padding: 30px;
 
-      &-info {
-        padding-bottom: unset;
+        &-info {
+          padding-bottom: unset;
 
-        &__item {
-          margin-right: unset;
-          margin-bottom: 30px;
+          &__item {
+            margin-right: unset;
+            margin-bottom: 30px;
 
-          img {
-            width: 30px;
-            height: 30px;
+            img {
+              width: 30px;
+              height: 30px;
+            }
+          }
+        }
+
+        &-buttons {
+          button {
+            font-size: 11px;
           }
         }
       }
-
-      &-buttons {
-        grid-template-columns: 1fr;
-
-        button {
-          font-size: 11px;
-        }
-      }
     }
-  }
   }
 }
 
