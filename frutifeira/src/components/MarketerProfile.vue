@@ -175,7 +175,9 @@ export default {
   width: 100%;
   height: 100%;
   z-index: 2;
-  margin-top: -10px;
+  margin-top: @height-menu-desktop;
+  padding-bottom: @height-menu-desktop;
+  overflow: scroll;
 
   h1 {
     color: @green;
