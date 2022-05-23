@@ -92,7 +92,7 @@ export default {
     }
 
     @media (max-width: 425px) {
-        height: 285px;
+        height: 150px;
     }
 }
 </style>
