@@ -64,6 +64,7 @@
       :titleList="titleList"
       @openDetails="openDetails"
       :saleList="saleList"
+      v-if="this.marketersCondominiumList.length > 0"
     />
     <Footer />
   </div>
