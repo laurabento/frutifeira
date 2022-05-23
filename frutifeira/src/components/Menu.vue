@@ -136,7 +136,7 @@ export default {
   width: 495px;
   height: auto;
   position: fixed;
-  z-index: 2;
+  z-index: 3;
   background-color: white;
   border-radius: 0 0 16px 16px;
   box-shadow: 0px 30px 30px 7px #0000001a;
