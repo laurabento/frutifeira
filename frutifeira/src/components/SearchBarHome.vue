@@ -131,7 +131,7 @@ export default {
   align-items: center;
 
   &_items {
-    z-index: 1;
+    z-index: 2;
     background-color: @green;
     padding-right: @margin-body-desktop;
     padding-left: @margin-body-desktop;
