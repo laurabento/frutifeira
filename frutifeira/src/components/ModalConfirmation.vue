@@ -144,9 +144,9 @@ export default {
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 600px;
+    max-width: 520px;
     background-color: white;
-    padding: 50px;
+    padding: 40px;
     border-radius: 16px;
     position: relative;
     margin: @margin-body-desktop;
@@ -160,8 +160,8 @@ export default {
     }
 
     &-img {
-      width: 150px;
-      height: 150px;
+      width: 100px;
+      height: 100px;
     }
 
     p {
@@ -180,7 +180,7 @@ export default {
       width: 100%;
       gap: 50px;
       justify-content: center;
-      margin-top: 60px;
+      margin-top: 25px;
 
       button {
         background-color: @green;
